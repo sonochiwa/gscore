@@ -3,8 +3,14 @@ import Image from 'next/image';
 import logo from '/public/logo.svg';
 import { Container, Typography } from '../../../styles/main';
 import Link from 'next/link';
+// import Router from 'next/router';
 
 export default function () {
+
+  // const onClickHandler = () => {
+  //   Router.push('/')
+  // }
+
   return (
     <Footer>
       <Container>
@@ -17,14 +23,35 @@ export default function () {
             <List>
               <Item>Copyright © 2022 GScore</Item>
               <Item>All Rights Reserved</Item>
-              <Item><Link href='/cookies'><a>Cookies</a></Link></Item>
-              <Item><Link href='/privacy-policy'><a>Privacy Policy</a></Link></Item>
+              <Item><Link href={'/cookies'}><a>Cookies</a></Link></Item>
+              <Item><Link href={'/privacy-policy'}><a>Privacy Policy</a></Link></Item>
             </List>
           </div>
           <Socials>
-            <SocialItem><Image src='/icons/Facebook.svg' width='13.43' height='24.62' alt='Facebook' /></SocialItem>
-            <SocialItem><Image src='/icons/Twitter.svg' width='25.44' height='20.64' alt='Twitter' /></SocialItem>
-            <SocialItem><Image src='/icons/LinkedIn.svg' width='24.37' height='23.21' alt='LinkedIn' /></SocialItem>
+            <SocialItem>
+              <Link href='https://facebook.com'>
+                <a target='_blank'>
+                  <Image src='/icons/Facebook.svg' width='13.43' height='24.62' alt='Facebook' />
+                </a>
+              </Link>
+            </SocialItem>
+
+            <SocialItem>
+              <Link href='https://twitter.com'>
+                <a target='_blank'>
+                  <Image src='/icons/Twitter.svg' width='25.44' height='20.64' alt='Twitter' />
+                </a>
+              </Link>
+            </SocialItem>
+
+            <SocialItem>
+              <Link href='https://linkedin.com'>
+                <a target='_blank'>
+                  <Image src='/icons/LinkedIn.svg' width='24.37' height='23.21' alt='LinkedIn' />
+                </a>
+              </Link>
+            </SocialItem>
+
           </Socials>
         </FooterBottom>
       </Container>
@@ -91,5 +118,4 @@ const SocialItem = styled.div`
   height: 36px;
   align-items: center;
 `
-    
-  
+

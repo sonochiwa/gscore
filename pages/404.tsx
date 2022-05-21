@@ -5,7 +5,7 @@ import { Container, HeadingH2, Typography } from '../styles/main';
 
 export default function ErrorPage() {
   return (
-    <Layout>
+    <Layout title='Not Found'>
       <NewContainer>
         <HeadingH2>Page not found</HeadingH2>
         <Typography>
