@@ -3,14 +3,8 @@ import Image from 'next/image';
 import logo from '/public/logo.svg';
 import { Container, Typography } from '../../../styles/main';
 import Link from 'next/link';
-// import Router from 'next/router';
 
 export default function () {
-
-  // const onClickHandler = () => {
-  //   Router.push('/')
-  // }
-
   return (
     <Footer>
       <Container>
@@ -35,7 +29,6 @@ export default function () {
                 </a>
               </Link>
             </SocialItem>
-
             <SocialItem>
               <Link href='https://twitter.com'>
                 <a target='_blank'>
@@ -43,7 +36,6 @@ export default function () {
                 </a>
               </Link>
             </SocialItem>
-
             <SocialItem>
               <Link href='https://linkedin.com'>
                 <a target='_blank'>
@@ -51,7 +43,6 @@ export default function () {
                 </a>
               </Link>
             </SocialItem>
-
           </Socials>
         </FooterBottom>
       </Container>
@@ -59,14 +50,13 @@ export default function () {
   )
 };
 
-const Footer = styled.div`
+const Footer = styled.footer`
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
-  height: 362px;
-  padding-top: 60px;
-  padding-bottom: 42px;
+  /* height: 362px; */
+  padding: 60px 0 42px;
   border-top: 1px solid var(--color_700);
-  margin-top: 42px;
   Typography {
     margin-top: 100px;
   }
@@ -90,7 +80,7 @@ const FooterBottom = styled.div`
 
 const List = styled.ul`
   display: flex;
-`
+`;
 
 const Item = styled(Typography)`
   margin-right: 10px;
@@ -109,7 +99,7 @@ const Item = styled(Typography)`
 const Socials = styled.div`
   display: flex;
   flex-direction: row;
-`
+`;
 
 const SocialItem = styled.div`
   display: flex;
@@ -117,5 +107,5 @@ const SocialItem = styled.div`
   width: 36px;
   height: 36px;
   align-items: center;
-`
+`;
 

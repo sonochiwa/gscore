@@ -50,6 +50,10 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body, #__next {
+    height: 100%;
+  }
+
   body {
     background-color: var(--color_800);
     color: white;
@@ -85,8 +89,6 @@ export const GlobalStyles = createGlobalStyle`
   a {
     color: var(--color_100);
     text-decoration: none;
-    /* padding-bottom: 2px; */
-    /* border-bottom: 1px solid; */
   }
 `;
 
@@ -98,14 +100,60 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
+// UI kit
+
 export const PrimaryButton = styled.button`
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  margin: 4px;
+  padding: 20px 24px;
+  color: var(--color_100);
+  font-family: 'Thicccboi';
+  font-weight: 700;
   font-size: 16px;
   line-height: 18px;
   background-color: var(--primary_1);
+  box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
+  &:hover {
+    background-color: var(--red_400);
+  }
+  &:focus {
+    outline: 4px solid rgba(252, 88, 66, 0.3);
+  }
+  &:disabled {
+    opacity: .6;
+    &:hover {
+      background-color: var(--primary_1);
+    }
+  }
 `;
 
 export const SecondaryButton = styled.button`
-  
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  margin: 4px;
+  padding: 20px 24px;
+  color: var(--primary_1);
+  font-family: 'Thicccboi';
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  background-color: var(--color_100);
+  box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
+  &:hover {
+    color: var(--red_400);
+  }
+  &:focus {
+    outline: 4px solid rgba(255, 255, 255, 0.3);
+  }
+  &:disabled {
+    opacity: .6;
+    &:hover {
+      color: var(--primary_1);
+    }
+  }
 `;
 
 export const Logo = styled.div`

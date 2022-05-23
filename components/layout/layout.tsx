@@ -2,8 +2,9 @@ import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
-import Footer from "./footer";
 import Header from "./header";
+import Main from './main';
+import Footer from "./footer";
 
 interface ILayout {
   children: any;
@@ -22,17 +23,18 @@ export default function ({ children, title }: ILayout) {
 
       <Header />
 
-      {/* <nav>
-        <Link href="/"><a>Index</a></Link>
-        <Link href="/about"><a>About us</a></Link>
-        <Link href="/posts"><a>Posts</a></Link>
-      </nav> */}
+      <Wrapper>
+        <Main children={children} />
+        <Footer />
+      </Wrapper>
 
-      <main>
-        {children}
-      </main>
-
-      <Footer />
     </>
   )
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - 122px);
+`;
+

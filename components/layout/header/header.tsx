@@ -4,12 +4,6 @@ import logo from '/public/logo.svg';
 import Link from 'next/link';
 import { Container } from '../../../styles/main';
 
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  height: 122px;
-`;
-
 export default function () {
   return (
     <Header>
@@ -18,8 +12,11 @@ export default function () {
       </Container>
     </Header>
   )
-
 };
 
-
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  height: 122px;
+`;
 
