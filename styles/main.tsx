@@ -102,18 +102,27 @@ export const Container = styled.div`
 
 // UI kit
 
-export const PrimaryButton = styled.button`
+const Button = styled.button`
   cursor: pointer;
   border-radius: 4px;
   border: none;
   padding: 20px 24px;
-  color: var(--color_100);
   font-family: 'Thicccboi';
   font-weight: 700;
   font-size: 16px;
   line-height: 18px;
-  background-color: var(--primary_1);
   box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
+  &:active {
+    outline: none;
+  }
+  &:disabled {
+    opacity: .6;
+  }
+`
+
+export const PrimaryButton = styled(Button)`
+  color: var(--color_100);
+  background-color: var(--primary_1);
   &:hover {
     background-color: var(--red_400);
   }
@@ -121,23 +130,14 @@ export const PrimaryButton = styled.button`
     outline: 4px solid rgba(252, 88, 66, 0.3);
   }
   &:disabled {
-    opacity: .6;
     &:hover {
       background-color: var(--primary_1);
     }
   }
 `;
 
-export const SecondaryButton = styled.button`
-  cursor: pointer;
-  border-radius: 4px;
-  border: none;
-  padding: 20px 24px;
+export const SecondaryButton = styled(Button)`
   color: var(--primary_1);
-  font-family: 'Thicccboi';
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
   background-color: var(--color_100);
   box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
   &:hover {
@@ -147,7 +147,6 @@ export const SecondaryButton = styled.button`
     outline: 4px solid rgba(255, 255, 255, 0.3);
   }
   &:disabled {
-    opacity: .6;
     &:hover {
       color: var(--primary_1);
     }

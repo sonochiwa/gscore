@@ -8,8 +8,8 @@ export default function Index() {
     <Layout title="Main">
       <Container>
         <Typography color='var(--color_100)'>Index page</Typography>
-        <PrimaryButton>Click me</PrimaryButton>
-        <SecondaryButton>Click me</SecondaryButton>
+        <PrimaryButton>Default</PrimaryButton>
+        <SecondaryButton>Default</SecondaryButton>
       </Container>
       {/* <h1>Hello Next.JS!</h1>
       <p><Link href={'/about'}><a>About</a></Link></p>
