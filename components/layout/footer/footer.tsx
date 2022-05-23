@@ -54,7 +54,6 @@ const Footer = styled.footer`
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  /* height: 362px; */
   padding: 60px 0 42px;
   border-top: 1px solid var(--color_700);
   Typography {
@@ -108,4 +107,3 @@ const SocialItem = styled.div`
   height: 36px;
   align-items: center;
 `;
-

@@ -56,7 +56,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     background-color: var(--color_800);
-    color: white;
+    color: var(--color_100);
   }
 
   :root {
@@ -174,4 +174,42 @@ export const Typography = styled.p`
   line-height: 30px;
   color: var(--color_400);
   color: ${props => props.color};
+`;
+
+export const Input = styled.input.attrs(props => ({ type: 'text' }))`
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid var(--color_300);
+  padding: 23px 25px;
+  font-family: 'Thicccboi';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  caret-color: var(--primary_1);
+  box-shadow: 0px 2px 12px rgba(20, 20, 43, 0.06);
+  color: var(--color_700);
+  ::placeholder {
+    color: var(--color_500);
+  }
+  :focus {
+    border: 1px solid var(--color_500);
+  }
+  :disabled {
+    background-color: var(--color_300);
+    ::placeholder {
+      color: var(--color_700);
+    }
+  }
+  /* green { border: 1px solid var(--green_300); } */
+  /* red { border: 1px solid var(--red_300); } */
+`;
+
+export const Checkbox = styled.input.attrs(props => ({ type: 'checkbox' }))`
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background-color: red;
+  :checked {
+    background-color: var(--primary_1);
+  }
 `;

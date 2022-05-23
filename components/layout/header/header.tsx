@@ -19,4 +19,3 @@ const Header = styled.header`
   align-items: center;
   height: 122px;
 `;
-

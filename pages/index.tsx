@@ -1,7 +1,5 @@
-import Link from "next/link"
-import Head from "next/head"
-import Layout from "../components/layout"
-import { Container, PrimaryButton, SecondaryButton, Typography } from "../styles/main"
+import Layout from '../components/layout';
+import { Checkbox, Container, Input, PrimaryButton, SecondaryButton, Typography } from '../styles/main';
 
 export default function Index() {
   return (
@@ -10,12 +8,9 @@ export default function Index() {
         <Typography color='var(--color_100)'>Index page</Typography>
         <PrimaryButton>Default</PrimaryButton>
         <SecondaryButton>Default</SecondaryButton>
+        <Input placeholder="Placehoder" />
+        <Checkbox />
       </Container>
-      {/* <h1>Hello Next.JS!</h1>
-      <p><Link href={'/about'}><a>About</a></Link></p>
-      <p><Link href={'/posts'}><a>Posts</a></Link></p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <PrimaryButton>123</PrimaryButton> */}
     </Layout>
   )
-}
+};

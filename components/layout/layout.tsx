@@ -1,7 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
 import styled from "styled-components";
-import Image from "next/image";
 import Header from "./header";
 import Main from './main';
 import Footer from "./footer";
@@ -27,7 +25,6 @@ export default function ({ children, title }: ILayout) {
         <Main children={children} />
         <Footer />
       </Wrapper>
-
     </>
   )
 };
@@ -37,4 +34,3 @@ const Wrapper = styled.div`
   flex-direction: column;
   min-height: calc(100% - 122px);
 `;
-
