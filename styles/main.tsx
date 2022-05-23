@@ -106,7 +106,6 @@ export const PrimaryButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
   border: none;
-  margin: 4px;
   padding: 20px 24px;
   color: var(--color_100);
   font-family: 'Thicccboi';
@@ -133,7 +132,6 @@ export const SecondaryButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
   border: none;
-  margin: 4px;
   padding: 20px 24px;
   color: var(--primary_1);
   font-family: 'Thicccboi';
