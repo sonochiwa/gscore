@@ -44,6 +44,13 @@ export const GlobalStyles = createGlobalStyle`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('/fonts/DM Sans/DMSans-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -161,6 +168,7 @@ export const Logo = styled.div`
 
 export const HeadingH2 = styled.div`
   font-family: 'Thicccboi';
+  text-align: center;
   font-weight: 700;
   font-size: 44px;
   line-height: 54px;
@@ -202,14 +210,4 @@ export const Input = styled.input.attrs(props => ({ type: 'text' }))`
   }
   /* green { border: 1px solid var(--green_300); } */
   /* red { border: 1px solid var(--red_300); } */
-`;
-
-export const Checkbox = styled.input.attrs(props => ({ type: 'checkbox' }))`
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  background-color: red;
-  :checked {
-    background-color: var(--primary_1);
-  }
 `;

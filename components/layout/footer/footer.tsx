@@ -56,6 +56,7 @@ const Footer = styled.footer`
   flex-direction: column;
   padding: 60px 0 42px;
   border-top: 1px solid var(--color_700);
+  margin-top: 42px;
   Typography {
     margin-top: 100px;
   }
