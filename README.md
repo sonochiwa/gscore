@@ -1,3 +1,7 @@
+## Open in Vercel
+
+https://gscore-taupe.vercel.app/
+
 ## Getting Started
 
 First, run the development server:
