@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Layout from "../../components/layout";
 import { Container, HeadingH2, SecondaryButton } from "../../styles/main";
 
-export default function () {
+export default function HomeComponent() {
   return (
     <Layout title="Home">
       <Container>

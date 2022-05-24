@@ -4,7 +4,7 @@ import logo from '/public/logo.svg';
 import { Container, Typography } from '../../../styles/main';
 import Link from 'next/link';
 
-export default function () {
+export default function FooterComponent() {
   return (
     <Footer>
       <Container>

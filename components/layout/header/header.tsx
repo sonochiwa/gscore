@@ -4,7 +4,7 @@ import logo from '/public/logo.svg';
 import Link from 'next/link';
 import { Container } from '../../../styles/main';
 
-export default function () {
+export default function HeaderComponent() {
   return (
     <Header>
       <Container>

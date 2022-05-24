@@ -9,7 +9,7 @@ interface ILayout {
   title?: string;
 }
 
-export default function ({ children, title }: ILayout) {
+export default function LayoutComponent({ children, title }: ILayout) {
   return (
     <>
       <Head>
@@ -22,7 +22,7 @@ export default function ({ children, title }: ILayout) {
       <Header />
 
       <Wrapper>
-        <Main children={children} />
+        <Main>{children}</Main>
         <Footer />
       </Wrapper>
     </>

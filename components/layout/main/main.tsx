@@ -4,7 +4,7 @@ interface IMain {
   children: any;
 };
 
-export default function ({ children }: IMain) {
+export default function MainComponent({ children }: IMain) {
   return (
     <Main>
       {children}
