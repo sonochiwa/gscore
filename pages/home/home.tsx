@@ -1,6 +1,7 @@
+import Link from "next/link";
 import styled from "styled-components";
 import Layout from "../../components/layout";
-import { Container, HeadingH2, SecondaryButton } from "../../styles/main";
+import { Container, FilledCheckMark, HeadingH2, SecondaryButton, Typography } from "../../styles/main";
 
 export default function HomeComponent() {
   return (
@@ -8,56 +9,62 @@ export default function HomeComponent() {
       <Container>
         <HeadingH2>Get started with Gscore today!</HeadingH2>
         <Wrapper>
-          <PricingCard>
-            <CardTop>
-              <Price>$77</Price>
-              <Title>Single site license</Title>
-              <Text>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
-            </CardTop>
-            <CardBottom>
-              <CardUl>
-                <CardLi>Single site license</CardLi>
-                <CardLi>Special introductory pricing</CardLi>
-                <CardLi>Unlimited Pages and Keywords</CardLi>
-                <CardLi>Billed annually</CardLi>
-              </CardUl>
-              <CardButton>Get Gscore</CardButton>
-            </CardBottom>
-          </PricingCard>
+          <Cards>
+            <PricingCard>
+              <CardTop>
+                <Price>$77</Price>
+                <Title>Single site license</Title>
+                <Text>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
+              </CardTop>
+              <CardBottom>
+                <CardUl>
+                  <CardLi>Single site license</CardLi>
+                  <CardLi>Special introductory pricing</CardLi>
+                  <CardLi>Unlimited Pages and Keywords</CardLi>
+                  <CardLi>Billed annually</CardLi>
+                </CardUl>
+                <CardButton>Get Gscore</CardButton>
+              </CardBottom>
+            </PricingCard>
 
-          <PricingCardV2>
-            <CardTop>
-              <Price>$117</Price>
-              <Title>3 Site license</Title>
-              <Text>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
-            </CardTop>
-            <CardBottom>
-              <CardUl>
-                <CardLi>All features for 3 sites</CardLi>
-                <CardLi>Special introductory pricing</CardLi>
-                <CardLi>Unlimited Pages and Keywords</CardLi>
-                <CardLi>Billed annually</CardLi>
-              </CardUl>
-              <CardButton>Get Gscore</CardButton>
-            </CardBottom>
-          </PricingCardV2>
+            <PricingCardV2>
+              <CardTop>
+                <Price>$117</Price>
+                <Title>3 Site license</Title>
+                <Text>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
+              </CardTop>
+              <CardBottom>
+                <CardUl>
+                  <CardLi>All features for 3 sites</CardLi>
+                  <CardLi>Special introductory pricing</CardLi>
+                  <CardLi>Unlimited Pages and Keywords</CardLi>
+                  <CardLi>Billed annually</CardLi>
+                </CardUl>
+                <CardButton>Get Gscore</CardButton>
+              </CardBottom>
+            </PricingCardV2>
 
-          <PricingCard>
-            <CardTop>
-              <Price>$167</Price>
-              <Title>10 Site license</Title>
-              <Text>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
-            </CardTop>
-            <CardBottom>
-              <CardUl>
-                <CardLi>All features for 10 sites</CardLi>
-                <CardLi>Special introductory pricing</CardLi>
-                <CardLi>Unlimited Pages and Keywords</CardLi>
-                <CardLi>Billed annually</CardLi>
-              </CardUl>
-              <CardButton>Get Gscore</CardButton>
-            </CardBottom>
-          </PricingCard>
+            <PricingCard>
+              <CardTop>
+                <Price>$167</Price>
+                <Title>10 Site license</Title>
+                <Text>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
+              </CardTop>
+              <CardBottom>
+                <CardUl>
+                  <CardLi>All features for 10 sites</CardLi>
+                  <CardLi>Special introductory pricing</CardLi>
+                  <CardLi>Unlimited Pages and Keywords</CardLi>
+                  <CardLi>Billed annually</CardLi>
+                </CardUl>
+                <CardButton>Get Gscore</CardButton>
+              </CardBottom>
+            </PricingCard>
+          </Cards>
+          <HomeTextInfo>
+            <Typography color='var(--color_100)'>Have more than 10 sites?</Typography>
+            <Link href='/contact-us'><CardLink>Contact us</CardLink></Link>
+          </HomeTextInfo>
         </Wrapper>
       </Container>
     </Layout>
@@ -65,6 +72,28 @@ export default function HomeComponent() {
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const HomeTextInfo = styled.div`
+  margin-top: 33px;
+  text-align: center;
+`;
+
+const CardLink = styled.a`
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Thicccboi';
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--primary_1);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--primary_1);
+`;
+
+const Cards = styled.div`
   display: flex;
   gap: 28px;
 `;
@@ -112,7 +141,6 @@ const Text = styled.div`
 
 const CardBottom = styled.div`
   padding-top: 38px;
-
 `;
 
 const CardUl = styled.ul`
@@ -122,17 +150,18 @@ const CardUl = styled.ul`
 `;
 
 const CardLi = styled.li`
+  display: flex;
   font-family: 'Thicccboi';
   font-size: 18px;
   line-height: 26px;
   font-weight: 500;
   list-style-type: none;
-  height: 26px;
   ::before {
-    content: 'x';
+    content: url('/icons/BlackMark.svg');
+    height: 26px;
+    width: 26px;
     margin-right: 14px;
-    line-height: 26px;
-}
+  }
 `;
 
 const CardButton = styled(SecondaryButton)`
@@ -162,6 +191,12 @@ const PricingCardV2 = styled(PricingCard)`
     color: var(--primary_1);
     :hover {
       color: var(--primary_1);
+    }
+  }
+
+  ${CardLi}{
+    ::before {
+      content: url('/icons/OrangeMark.svg');
     }
   }
 `;

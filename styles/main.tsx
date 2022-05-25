@@ -99,6 +99,14 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
+// Icons
+
+export const FilledCheckMark = styled.div`
+  width: 26px;
+  height: 26px;
+  background-image: url('/icons/FilledCheckMark.svg');
+`;
+
 /* container width 1268px */
 export const Container = styled.div`
   width: 100%;

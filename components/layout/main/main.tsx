@@ -16,5 +16,3 @@ const Main = styled.main`
   display: flex;
   flex: 1 0 auto;
 `;
-
-

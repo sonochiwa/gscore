@@ -25,21 +25,21 @@ export default function FooterComponent() {
             <SocialItem>
               <Link href='https://facebook.com'>
                 <a target='_blank'>
-                  <Image src='/icons/Facebook.svg' width='13.43' height='24.62' alt='Facebook' />
+                  <Image src='/icons/socials/Facebook.svg' width='13.43' height='24.62' alt='Facebook' />
                 </a>
               </Link>
             </SocialItem>
             <SocialItem>
               <Link href='https://twitter.com'>
                 <a target='_blank'>
-                  <Image src='/icons/Twitter.svg' width='25.44' height='20.64' alt='Twitter' />
+                  <Image src='/icons/socials/Twitter.svg' width='25.44' height='20.64' alt='Twitter' />
                 </a>
               </Link>
             </SocialItem>
             <SocialItem>
               <Link href='https://linkedin.com'>
                 <a target='_blank'>
-                  <Image src='/icons/LinkedIn.svg' width='24.37' height='23.21' alt='LinkedIn' />
+                  <Image src='/icons/socials/LinkedIn.svg' width='24.37' height='23.21' alt='LinkedIn' />
                 </a>
               </Link>
             </SocialItem>
@@ -98,6 +98,8 @@ const Item = styled(Typography)`
 
 const Socials = styled.div`
   display: flex;
+  width: 140px;
+  justify-content: space-between;
   flex-direction: row;
 `;
 
