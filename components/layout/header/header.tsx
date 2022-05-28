@@ -4,7 +4,7 @@ import logo from '/public/logo.svg';
 import Link from 'next/link';
 import {Container, Typography} from '../../../styles/main';
 import {useState} from 'react';
-import {motion} from "framer-motion";
+import {motion} from 'framer-motion';
 
 export default function HeaderComponent() {
   const [open, setOpen] = useState(false);
@@ -79,6 +79,9 @@ const User = styled.div`
 `;
 
 const Login = styled.div`
+  ${Typography} {
+    cursor: pointer;
+  }
 `;
 
 const DropdownItem = styled.li`
