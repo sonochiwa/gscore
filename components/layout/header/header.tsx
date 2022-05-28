@@ -2,62 +2,64 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import logo from '/public/logo.svg';
 import Link from 'next/link';
-import {Container, Typography} from '../../../styles/main';
-import {useState} from 'react';
-import {motion} from 'framer-motion';
+import { Container, PrimaryButton, Typography } from '../../../styles/main';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function HeaderComponent() {
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useState(false);
 
   const variants = {
-    rotate: {rotateX: -180, transition: {duration: .2}},
-    stop: {rotate: 0, transition: {duration: .2}},
+    rotate: { rotateX: -180, transition: { duration: .2 } },
+    stop: { rotate: 0, transition: { duration: .2 } },
   };
 
   const onHandleLogout = () => {
-    setAuth(true)
+    setAuth(false)
     setOpen(false)
   };
 
   return (
-      <Header>
-        <Container>
-          <HeaderInner>
-            <Link href='/'><a><Image src={logo} width='170' height='42' alt='logo'/></a></Link>
-            {auth ? (
-                <Login onClick={() => setAuth(false)}>
-                  <Typography>
-                    Login
-                  </Typography>
-                </Login>
-            ) : (<User>
+    <Header>
+      <Container>
+        <HeaderInner>
+          <Link href='/'><a><Image src={logo} width='170' height='42' alt='logo' /></a></Link>
+          {auth ? (
+            <User>
               <LoginTypography><Link href='/123'><a>My subscriptions</a></Link></LoginTypography>
               <NameWrapper>
                 <UserName onClick={() => setOpen(!open)}>Alex</UserName>
                 <motion.div
-                    variants={variants}
-                    animate={open ? 'rotate' : 'stop'}
-                    style={{position: 'absolute', right: '0', display: 'flex'}}
+                  variants={variants}
+                  animate={open ? 'rotate' : 'stop'}
+                  style={{ position: 'absolute', right: '0', display: 'flex' }}
                 >
-                  <Image src='/icons/ChevronDown.svg' width='24' height='24'/>
+                  <Image src='/icons/ChevronDown.svg' width='24' height='24' />
                 </motion.div>
                 {open && (
-                    <motion.div
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                    >
-                      <Dropdown>
-                        <DropdownItem>Settings</DropdownItem>
-                        <DropdownItem onClick={onHandleLogout}>Logout</DropdownItem>
-                      </Dropdown>
-                    </motion.div>)}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <Dropdown>
+                      <DropdownItem>Settings</DropdownItem>
+                      <DropdownItem onClick={onHandleLogout}>Logout</DropdownItem>
+                    </Dropdown>
+                  </motion.div>)}
               </NameWrapper>
-            </User>)}
-          </HeaderInner>
-        </Container>
-      </Header>
+            </User>
+          ) : (
+            <Login onClick={() => setAuth(true)}>
+              <Typography>
+                <PrimaryButton>Get Gscore</PrimaryButton>
+              </Typography>
+            </Login>
+          )}
+        </HeaderInner>
+      </Container>
+    </Header>
   )
 };
 
