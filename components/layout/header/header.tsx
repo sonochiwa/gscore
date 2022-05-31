@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 import logo from '/public/logo.svg';
@@ -9,6 +10,8 @@ import { motion } from 'framer-motion';
 export default function HeaderComponent() {
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useState(false);
+
+  const router = useRouter();
 
   const variants = {
     rotate: { rotateX: -180, transition: { duration: .2 } },
@@ -51,9 +54,9 @@ export default function HeaderComponent() {
               </NameWrapper>
             </User>
           ) : (
-            <Login onClick={() => setAuth(true)}>
+            <Login>
               <Typography>
-                <PrimaryButton>Get Gscore</PrimaryButton>
+                <PrimaryButton onClick={() => router.push('/login')}>Get Gscore</PrimaryButton>
               </Typography>
             </Login>
           )}

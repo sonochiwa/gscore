@@ -1,3 +1,4 @@
+import { type } from 'os';
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
@@ -45,6 +46,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   @font-face {
+    font-family: 'Thicccboi';
+    src: url('/fonts/Thicccboi/THICCCBOI-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: 'DM Sans';
     src: url('/fonts/DM Sans/DMSans-Bold.woff') format('woff');
     font-weight: 700;
@@ -55,6 +63,11 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
   }
 
   html, body, #__next {
@@ -192,7 +205,7 @@ export const Typography = styled.p`
   color: ${props => props.color};
 `;
 
-export const Input = styled.input.attrs(props => ({ type: 'text' }))`
+export const Input = styled.input`
   border-radius: 6px;
   outline: none;
   border: 1px solid var(--color_300);
@@ -204,6 +217,7 @@ export const Input = styled.input.attrs(props => ({ type: 'text' }))`
   caret-color: var(--primary_1);
   box-shadow: 0px 2px 12px rgba(20, 20, 43, 0.06);
   color: var(--color_700);
+  width: 100%;
   ::placeholder {
     color: var(--color_500);
   }
