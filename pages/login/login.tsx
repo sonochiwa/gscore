@@ -1,11 +1,29 @@
-import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import Layout from "../../components/layout";
-import { Container, HeadingH2, Input, PrimaryButton, SecondaryButton, Typography } from "../../styles/main";
+import { Container, HeadingH2, TextInput, PrimaryButton, Typography } from "../../styles/main";
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+
+type FormValues = {
+  TextInput: string;
+  Username: string;
+  Email: string;
+  Password: string;
+}
 
 export default function HomeComponent() {
   const [tab, setTab] = useState(1);
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors }
+  } = useForm<FormValues>()
+
+  const onSubmit = (data: object) => {
+    console.log(data)
+  }
 
   return (
     <Layout title="Login">
@@ -35,10 +53,69 @@ export default function HomeComponent() {
               <>
                 <HeadingH2>Create account</HeadingH2>
                 <InputsDescription>You need to enter your name and email. We will send you a temporary password by email</InputsDescription>
-                <Input placeholder='Username' />
-                <Input placeholder='Email' />
-                <Input placeholder='Password' type='password' />
-                <PrimaryButton>Send password</PrimaryButton>
+
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Controller
+                    render={({
+                      field: { onChange, onBlur, value, name, ref },
+                      // fieldState: { isTouched, isDirty, error },
+                    }) => (
+                      <TextInput
+                        placeholder='Username'
+                        // value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={ref}
+                      />
+                    )}
+                    name="Username"
+                    control={control}
+                    rules={{ minLength: 10, required: "This is required." }}
+                  />
+                  {/* <ErrorMessage
+                    errors={errors}
+                    name="Username"
+                    render={({ message }) => <Typography>{message}</Typography>}
+                  /> */}
+
+                  <Controller
+                    render={({
+                      field: { onChange, onBlur, value, name, ref },
+                      fieldState: { isTouched, isDirty, error },
+                    }) => (
+                      <TextInput
+                        placeholder='Email'
+                        // value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={ref}
+                      />
+                    )}
+                    name="Email"
+                    control={control}
+                    rules={{ minLength: 10 }}
+                  />
+                  <Controller
+                    render={({
+                      field: { onChange, onBlur, value, name, ref },
+                      fieldState: { isTouched, isDirty, error },
+                    }) => (
+                      <TextInput
+                        placeholder='Password'
+                        // value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={ref}
+                      />
+                    )}
+                    name="Password"
+                    control={control}
+                    rules={{ minLength: 10 }}
+                  // type='password'
+                  />
+                  <PrimaryButton type='submit'>Send password</PrimaryButton>
+                </form>
+
                 <NextStep>
                   <Typography color='var(--color_100)'>Have an account?</Typography>
                   <Typography onClick={() => setTab(2)}>Go to the next step</Typography>
@@ -48,8 +125,8 @@ export default function HomeComponent() {
               tab === 2 ? (
                 <>
                   <HeadingH2>Log in</HeadingH2>
-                  <Input placeholder='Email' />
-                  <Input placeholder='Password' type='password' />
+                  <TextInput placeholder='Email' />
+                  <TextInput placeholder='Password' type='password' />
                   <PrimaryButton>Log in</PrimaryButton>
                 </>
               ) :
@@ -77,7 +154,6 @@ export default function HomeComponent() {
                 )
           }
         </Wrapper>
-
       </Container>
     </Layout>
   )
@@ -160,10 +236,10 @@ const Wrapper = styled.div`
   ${PrimaryButton} {
     width: 200px;
   }
-  ${Input} + ${Input} {
+  ${TextInput} + ${TextInput} {
     margin-top: 24px;
   }
-  ${Input} + ${PrimaryButton} {
+  ${TextInput} + ${PrimaryButton} {
     margin: 48px 0;
   }
 `;

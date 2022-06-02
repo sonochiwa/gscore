@@ -205,7 +205,7 @@ export const Typography = styled.p`
   color: ${props => props.color};
 `;
 
-export const Input = styled.input`
+export const TextInput = styled.input`
   border-radius: 6px;
   outline: none;
   border: 1px solid var(--color_300);
