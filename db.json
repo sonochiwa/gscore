@@ -1,7 +1,0 @@
-{
-  "posts": [
-    {
-      "id": 1, "title": "JavaScript Post", "body": "Lorem Ipsum la la la" },
-    { "id": 2, "title": "Python Post", "body": "Lorem Ipsum la la la" }
-  ]
-}

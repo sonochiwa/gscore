@@ -24,7 +24,6 @@ const Wrapper = styled.div`
   ${HeadingH2} {
     text-align: left;
     margin-bottom: 16px;
-    
   }
   ${PrimaryButton} {
     width: 200px;
