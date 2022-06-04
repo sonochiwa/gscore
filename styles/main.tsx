@@ -65,11 +65,6 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html {
-    overflow-x: hidden;
-    margin-right: calc(-1 * (100vw - 100%));
-  }
-
   html, body, #__next {
     height: 100%;
   }

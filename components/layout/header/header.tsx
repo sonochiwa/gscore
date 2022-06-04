@@ -56,7 +56,7 @@ export default function HeaderComponent() {
           ) : (
             <Login>
               <Typography>
-                <PrimaryButton onClick={() => router.push('/login')}>Get Gscore</PrimaryButton>
+                <PrimaryButton onClick={() => router.push('/sign-up')}>Get Gscore</PrimaryButton>
               </Typography>
             </Login>
           )}
