@@ -28,7 +28,7 @@ export default function HeaderComponent() {
       <Container>
         <HeaderInner>
           <Link href='/'><a><Image src={logo} width='170' height='42' alt='logo' /></a></Link>
-          {auth ? (
+          {auth && (
             <User>
               <LoginTypography><Link href='/123'><a>My subscriptions</a></Link></LoginTypography>
               <NameWrapper>
@@ -53,12 +53,6 @@ export default function HeaderComponent() {
                   </motion.div>)}
               </NameWrapper>
             </User>
-          ) : (
-            <Login>
-              <Typography>
-                <PrimaryButton onClick={() => router.push('/sign-up')}>Get Gscore</PrimaryButton>
-              </Typography>
-            </Login>
           )}
         </HeaderInner>
       </Container>
