@@ -228,3 +228,9 @@ export const TextInput = styled.input`
   /* green { border: 1px solid var(--green_300); } */
   /* red { border: 1px solid var(--red_300); } */
 `;
+
+export const ErrorP = styled.p`
+  font-family: 'Thicccboi';
+  color: var(--red_300);
+  margin-top: 5px;
+`

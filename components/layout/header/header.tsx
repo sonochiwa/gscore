@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 
 export default function HeaderComponent() {
   const [open, setOpen] = useState(false);
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
 
   const router = useRouter();
 

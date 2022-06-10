@@ -1,13 +1,15 @@
 import Layout from "../../components/layout";
 import styled from "styled-components";
-import { HeadingH2, TextInput, PrimaryButton, Typography } from "../../styles/main";
+import { HeadingH2, TextInput, PrimaryButton, Typography, ErrorP } from "../../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginNavigation from '../../components/login-navigation'
 import axios from 'axios';
-import { object, string, number, date, InferType } from 'yup';
+import { ErrorMessage } from '@hookform/error-message';
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-type FormValues = {
+interface FormValues {
   TextInput: string;
   username: string;
   email: string;
@@ -15,16 +17,22 @@ type FormValues = {
 };
 
 export default function SignUpPage() {
-  const { handleSubmit, control } = useForm<FormValues>();
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
-  const onSubmit = (data: FormValues) => {
-    axios.post('https://gscore-back.herokuapp.com/api/users/sign-up',
-      {
-        "username": `${data.username}`,
-        "email": `${data.email}`,
-        "password": `${data.password}`
-      }
-    ).then(response => { console.log(response) });
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await axios.post('https://gscore-back.herokuapp.com/api/users/sign-up',
+        {
+          "username": `${data.username}`,
+          "email": `${data.email}`,
+          "password": `${data.password}`
+        })
+      router.push('/sign-in')
+    } catch (e: any) {
+      setError(e.response?.data?.message || e.message);
+    }
   }
 
   return (
@@ -32,8 +40,14 @@ export default function SignUpPage() {
       <Wrapper>
         <LoginNavigation currentTab={1} />
         <HeadingH2>Create account</HeadingH2>
-        <InputsDescription>You need to enter your name and email.
-          We will send you a temporary password by email</InputsDescription>
+        <InputsDescription>
+          You need to enter your name and email.
+          We will send you a temporary password by email
+        </InputsDescription>
+
+        {error &&
+          <MainError>{error}</MainError>
+        }
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -47,7 +61,18 @@ export default function SignUpPage() {
             )}
             name="username"
             control={control}
-          // rules={{ minLength: 10, required: "Min username len - 10." }}
+            rules={{
+              required: 'Required field',
+              minLength: {
+                value: 8,
+                message: 'Min len 8'
+              },
+            }}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="username"
+            render={({ message }) => <ErrorP>{message}</ErrorP>}
           />
 
           <Controller
@@ -61,6 +86,18 @@ export default function SignUpPage() {
             )}
             name="email"
             control={control}
+            rules={{
+              required: 'Required field.',
+              pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Please enter a valid email.',
+              },
+            }}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => <ErrorP>{message}</ErrorP>}
           />
 
           <Controller
@@ -75,7 +112,14 @@ export default function SignUpPage() {
             )}
             name="password"
             control={control}
+            rules={{ required: 'Required field', minLength: { value: 10, message: 'Min len 6' } }}
           />
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({ message }) => <ErrorP>{message}</ErrorP>}
+          />
+
           <PrimaryButton type='submit'>Send password</PrimaryButton>
         </form>
 
@@ -122,10 +166,14 @@ const Wrapper = styled.div`
   ${PrimaryButton} {
     width: 200px;
   }
-  ${TextInput} + ${TextInput} {
+  ${TextInput}:not(:first-child) {
     margin-top: 24px;
   }
-  ${TextInput} + ${PrimaryButton} {
+  ${PrimaryButton} {
     margin: 48px 0;
   }
+`;
+
+const MainError = styled(ErrorP)`
+  margin-bottom: 20px;
 `;
