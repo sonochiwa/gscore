@@ -18,20 +18,24 @@ interface FormValues {
 
 export default function SignUpPage() {
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
 
   const onSubmit = async (data: FormValues) => {
     try {
+      setIsLoading(true);
       await axios.post('https://gscore-back.herokuapp.com/api/users/sign-up',
         {
           "username": `${data.username}`,
           "email": `${data.email}`,
           "password": `${data.password}`
         })
-      router.push('/sign-in')
+      setIsLoading(false);
+      router.push('/sign-in');
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
+      setIsLoading(false);
     }
   }
 
@@ -112,7 +116,7 @@ export default function SignUpPage() {
             )}
             name="password"
             control={control}
-            rules={{ required: 'Required field', minLength: { value: 10, message: 'Min len 6' } }}
+            rules={{ required: 'Required field', minLength: { value: 6, message: 'Min len 6' } }}
           />
           <ErrorMessage
             errors={errors}
@@ -120,7 +124,7 @@ export default function SignUpPage() {
             render={({ message }) => <ErrorP>{message}</ErrorP>}
           />
 
-          <PrimaryButton type='submit'>Send password</PrimaryButton>
+          <PrimaryButton type='submit' $loading={isLoading}>Send password</PrimaryButton>
         </form>
 
         <NextStep>

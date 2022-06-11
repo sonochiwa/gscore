@@ -68,7 +68,7 @@ export default function HomeComponent() {
           </HomeTextInfo>
         </Wrapper>
       </Container>
-    </Layout>
+    </Layout >
   )
 };
 

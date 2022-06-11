@@ -1,4 +1,3 @@
-import { type } from 'os';
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
@@ -125,7 +124,12 @@ export const Container = styled.div`
 
 // UI kit
 
-const Button = styled.button`
+interface IButton {
+  $loading?: any;
+}
+
+const Button = styled.button<IButton>`
+  position: relative;
   cursor: pointer;
   border-radius: 4px;
   border: none;
@@ -135,13 +139,39 @@ const Button = styled.button`
   font-size: 16px;
   line-height: 18px;
   box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
+  color: ${props => props.$loading ? 'transparent !important' : 'white'};
+
+  &::before {
+    @keyframes loading {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    position: absolute;
+    /* content: url('/icons/loading.svg'); */
+    content: ${props => props.$loading ? ' url(/icons/loading.svg)' : ''};
+    left: calc(50% - 9px);
+    width: 18px;
+    height: 18px;
+    color: ${props => props.$loading ? 'white' : 'transparent !important'};
+    animation-name: loading;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-delay: none;
+    animation-iteration-count: infinite;
+  }
+
   &:active {
     outline: none;
   }
   &:disabled {
     opacity: .6;
   }
-`
+`;
 
 export const PrimaryButton = styled(Button)`
   color: var(--color_100);
