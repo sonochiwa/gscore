@@ -1,11 +1,13 @@
 import Layout from "../../components/layout";
-import styled from "styled-components";
-import { HeadingH2, TextInput, PrimaryButton, ErrorP } from "../../styles/main";
-import { useForm, Controller } from "react-hook-form";
+import styled from 'styled-components';
+import { HeadingH2, TextInput, PrimaryButton, ErrorP } from '../../styles/main';
+import { useForm, Controller } from 'react-hook-form';
 import LoginNavigation from '../../components/login-navigation'
 import axios from 'axios';
-import { ErrorMessage } from "@hookform/error-message";
-import { useState } from "react";
+import { ErrorMessage } from '@hookform/error-message';
+import { useState } from 'react';
+import { setToken } from '../../store/root-slice';
+import { useAppDispatch } from '../../hooks/app-dispatch';
 
 interface FormValues {
   TextInput: string;
@@ -14,20 +16,33 @@ interface FormValues {
 };
 
 export default function SignInPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
   const [error, setError] = useState(null);
 
+  const dispatch = useAppDispatch();
+
+
   const onSubmit = async (data: FormValues) => {
     try {
+      dispatch(setToken({}));
+      
+      setIsLoading(true);
       await axios.post('https://gscore-back.herokuapp.com/api/users/sign-in',
         {
           'email': `${data.email}`,
           'password': `${data.password}`,
-        }).then(response => console.log(response))
+        })
+        .then(response => {
+          console.log(response);
+        });
+      setIsLoading(false);
+      ;
     } catch (e: any) {
+      setIsLoading(false);
       setError(e.response?.data?.message || e.message);
     }
-  }
+  };
 
   return (
     <Layout title="Sign in">
@@ -84,7 +99,7 @@ export default function SignInPage() {
             name="password"
             render={({ message }) => <ErrorP>{message}</ErrorP>}
           />
-          <PrimaryButton type='submit'>Log in</PrimaryButton>
+          <PrimaryButton type='submit' $loading={isLoading}>Log in</PrimaryButton>
         </form>
 
       </Wrapper>

@@ -6,11 +6,15 @@ import Link from 'next/link';
 import { Container, PrimaryButton, Typography } from '../../../styles/main';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useAppDispatch, useAppSelector } from '../../../hooks/app-dispatch';
+import { logOut } from '../../../store/root-slice';
 
 export default function HeaderComponent() {
+  const username = useAppSelector(state => state.root.username)
+  const token = useAppSelector(state => state.root.token)
   const [open, setOpen] = useState(false);
-  const [auth, setAuth] = useState(true);
-
+  const [auth, setAuth] = useState(false);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const variants = {
@@ -18,7 +22,9 @@ export default function HeaderComponent() {
     stop: { rotate: 0, transition: { duration: .2 } },
   };
 
-  const onHandleLogout = () => {
+  const onLogout = () => {
+    dispatch(logOut({}));
+    router.push('/')
     setAuth(false)
     setOpen(false)
   };
@@ -28,11 +34,11 @@ export default function HeaderComponent() {
       <Container>
         <HeaderInner>
           <Link href='/'><a><Image src={logo} width='170' height='42' alt='logo' /></a></Link>
-          {auth && (
+          {token != undefined && (
             <User>
               <LoginTypography><Link href='/123'><a>My subscriptions</a></Link></LoginTypography>
               <NameWrapper>
-                <UserName onClick={() => setOpen(!open)}>Alex</UserName>
+                <UserName onClick={() => setOpen(!open)}>{username}</UserName>
                 <motion.div
                   variants={variants}
                   animate={open ? 'rotate' : 'stop'}
@@ -48,7 +54,7 @@ export default function HeaderComponent() {
                   >
                     <Dropdown>
                       <DropdownItem>Settings</DropdownItem>
-                      <DropdownItem onClick={onHandleLogout}>Logout</DropdownItem>
+                      <DropdownItem onClick={onLogout}>Logout</DropdownItem>
                     </Dropdown>
                   </motion.div>)}
               </NameWrapper>

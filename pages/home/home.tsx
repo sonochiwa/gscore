@@ -1,9 +1,21 @@
 import Link from "next/link";
 import styled from "styled-components";
 import Layout from "../../components/layout";
+import { useAppSelector } from "../../hooks/app-dispatch";
 import { Container, HeadingH2, SecondaryButton, Typography } from "../../styles/main";
+import { useRouter } from 'next/router';
 
 export default function HomeComponent() {
+  const token = useAppSelector(state => state.root.token)
+  const router = useRouter();
+
+  const onGet = () => {
+    if (token === undefined) {
+      router.push('/sign-up')
+    } else {
+      router.push('/checkout')
+    }
+  }
 
   return (
     <Layout title="Home">
@@ -24,7 +36,7 @@ export default function HomeComponent() {
                   <CardLi>Unlimited Pages and Keywords</CardLi>
                   <CardLi>Billed annually</CardLi>
                 </CardUl>
-                <CardButton>Get Gscore</CardButton>
+                <CardButton onClick={onGet}>Get Gscore</CardButton>
               </CardBottom>
             </PricingCard>
 
@@ -41,7 +53,7 @@ export default function HomeComponent() {
                   <CardLi>Unlimited Pages and Keywords</CardLi>
                   <CardLi>Billed annually</CardLi>
                 </CardUl>
-                <CardButton>Get Gscore</CardButton>
+                <CardButton onClick={onGet}>Get Gscore</CardButton>
               </CardBottom>
             </PricingCardV2>
 
@@ -58,7 +70,7 @@ export default function HomeComponent() {
                   <CardLi>Unlimited Pages and Keywords</CardLi>
                   <CardLi>Billed annually</CardLi>
                 </CardUl>
-                <CardButton>Get Gscore</CardButton>
+                <CardButton onClick={onGet}>Get Gscore</CardButton>
               </CardBottom>
             </PricingCard>
           </Cards>

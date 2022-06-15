@@ -8,6 +8,8 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { setToken } from '../../store/root-slice';
+import { useAppDispatch } from '../../hooks/app-dispatch';
 
 interface FormValues {
   TextInput: string;
@@ -21,6 +23,8 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -31,13 +35,20 @@ export default function SignUpPage() {
           "email": `${data.email}`,
           "password": `${data.password}`
         })
+        .then((response) => {
+          dispatch(setToken({
+            response: response.data,
+            token: response.data.token,
+            username: response.data.username
+          }))
+        })
       setIsLoading(false);
       router.push('/sign-in');
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Layout title="Sign up">
