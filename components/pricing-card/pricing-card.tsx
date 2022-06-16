@@ -107,11 +107,11 @@ const CardLi = styled.li<isProfitProps>`
 
 const CardButton = styled(SecondaryButton)<isProfitProps>`
   margin-top: 32px;
-  color: ${props => props.isProfit ? ('var(--color_800)') : ('var(--primary_1)')};
+  color: ${props => props.isProfit ? ('var(--primary_1)') : ('var(--color_800)')};
   box-shadow: none;
   width: 100%;
   :hover {
-    color: ${props => props.isProfit ? ('var(--color_800)') : ('var(--primary_1)')};
+    color: ${props => props.isProfit ? ('var(--primary_1)') : ('var(--color_800)')};
   }
 `;
 
