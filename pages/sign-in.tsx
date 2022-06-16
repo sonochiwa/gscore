@@ -53,7 +53,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (token) {
-      router.push('/home')
+      router.push('/')
     }
   })
 
