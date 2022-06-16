@@ -4,8 +4,10 @@ import Layout from "../../components/layout";
 import { useAppSelector } from "../../hooks/app-dispatch";
 import { Container, HeadingH2, SecondaryButton, Typography } from "../../styles/main";
 import { useRouter } from 'next/router';
+import Button from "../../ui/Button";
+import axios from "axios";
 
-export default function HomeComponent() {
+export default function HomeComponent({ theme, primary, secondary }: any) {
   const token = useAppSelector(state => state.root.token)
   const router = useRouter();
 
@@ -20,6 +22,7 @@ export default function HomeComponent() {
   return (
     <Layout title="Home">
       <Container>
+        {/* <Button value='myButton' /> */}
         <HeadingH2>Get started with Gscore today!</HeadingH2>
         <Wrapper>
           <Cards>

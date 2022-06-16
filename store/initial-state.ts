@@ -1,7 +1,7 @@
 import { IInitialState } from './types'
 
 const initialState: IInitialState = {
-  token: '123',
+  token: undefined,
   id: '',
   username: 'username',
   email: ''

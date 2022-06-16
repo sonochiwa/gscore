@@ -152,7 +152,6 @@ const Button = styled.button<IButton>`
     }
 
     position: absolute;
-    /* content: url('/icons/loading.svg'); */
     content: ${props => props.$loading ? ' url(/icons/loading.svg)' : ''};
     left: calc(50% - 9px);
     width: 18px;
@@ -255,8 +254,6 @@ export const TextInput = styled.input`
       color: var(--color_700);
     }
   }
-  /* green { border: 1px solid var(--green_300); } */
-  /* red { border: 1px solid var(--red_300); } */
 `;
 
 export const ErrorP = styled.p`

@@ -7,9 +7,16 @@ const rootSlice = createSlice({
   initialState,
   reducers: {
 
-    setToken(state, action: PayloadAction<any>) {
+    signUp(state, action: PayloadAction<any>) {
       state.token = action.payload.token;
-      state.username = action.payload.username
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+    },
+
+    logIn(state, action: PayloadAction<any>) {
+      state.token = action.payload.token;
+      state.username = action.payload.username;
+      state.email = action.payload.email;
     },
 
     logOut(state, action: PayloadAction<any>) {
@@ -22,7 +29,8 @@ const rootSlice = createSlice({
 });
 
 export const {
-  setToken,
+  signUp,
+  logIn,
   logOut
 } = rootSlice.actions;
 

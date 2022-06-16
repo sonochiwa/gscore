@@ -8,11 +8,11 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { setToken } from '../../store/root-slice';
-import { useAppDispatch } from '../../hooks/app-dispatch';
+import { signUp } from '../../store/root-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks/app-dispatch';
 
 interface FormValues {
-  TextInput: string;
+  textinput: string;
   username: string;
   email: string;
   password: string;
@@ -31,21 +31,23 @@ export default function SignUpPage() {
       setIsLoading(true);
       await axios.post('https://gscore-back.herokuapp.com/api/users/sign-up',
         {
-          "username": `${data.username}`,
-          "email": `${data.email}`,
-          "password": `${data.password}`
+          username: data.username,
+          email: data.email,
+          password: data.password
         })
         .then((response) => {
-          dispatch(setToken({
-            response: response.data,
+          dispatch(signUp({
             token: response.data.token,
-            username: response.data.username
-          }))
-        })
-      setIsLoading(false);
+            username: response.data.username,
+            email: response.data.email,
+          }));
+        });
+      // setIsLoading(false);
       router.push('/sign-in');
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
+      // setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -79,8 +81,8 @@ export default function SignUpPage() {
             rules={{
               required: 'Required field',
               minLength: {
-                value: 8,
-                message: 'Min len 8'
+                value: 6,
+                message: 'Min len 6'
               },
             }}
           />
