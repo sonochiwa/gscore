@@ -1,13 +1,13 @@
-import Layout from "../../components/layout";
+import Layout from "../components/layout";
 import styled from 'styled-components';
-import { HeadingH2, TextInput, PrimaryButton, ErrorP } from '../../styles/main';
+import { HeadingH2, TextInput, PrimaryButton, ErrorP } from '../styles/main';
 import { useForm, Controller } from 'react-hook-form';
-import LoginNavigation from '../../components/login-navigation'
+import LoginNavigation from '../components/login-navigation'
 import axios from 'axios';
 import { ErrorMessage } from '@hookform/error-message';
 import { useEffect, useState } from 'react';
-import { logIn } from '../../store/root-slice';
-import { useAppDispatch, useAppSelector } from '../../hooks/app-dispatch';
+import { logIn } from '../store/root-slice';
+import { useAppDispatch, useAppSelector } from '../hooks/app-dispatch';
 import { useRouter } from "next/router";
 
 interface FormValues {

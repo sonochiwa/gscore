@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Layout from "../../components/layout";
-import { HeadingH2, TextInput, PrimaryButton, Typography } from "../../styles/main";
-import LoginNavigation from '../../components/login-navigation'
+import Layout from "../components/layout";
+import { HeadingH2, TextInput, PrimaryButton, Typography } from "../styles/main";
+import LoginNavigation from '../components/login-navigation'
 
 export default function CheckoutComponent() {
   return (

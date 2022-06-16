@@ -148,5 +148,6 @@ const UserName = styled(LoginTypography)`
   text-align: center;
   align-items: center;
   font-size: 22px;
-  margin-right: 31px;
+  padding-right: 31px;
+  z-index: 999;
 `;

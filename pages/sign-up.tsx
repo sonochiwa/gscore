@@ -1,15 +1,15 @@
-import Layout from "../../components/layout";
+import Layout from "../components/layout";
 import styled from "styled-components";
-import { HeadingH2, TextInput, PrimaryButton, Typography, ErrorP } from "../../styles/main";
+import { HeadingH2, TextInput, PrimaryButton, Typography, ErrorP } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
-import LoginNavigation from '../../components/login-navigation'
+import LoginNavigation from '../components/login-navigation'
 import axios from 'axios';
 import { ErrorMessage } from '@hookform/error-message';
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signUp } from '../../store/root-slice';
-import { useAppDispatch, useAppSelector } from '../../hooks/app-dispatch';
+import { signUp } from '../store/root-slice';
+import { useAppDispatch } from '../hooks/app-dispatch';
 
 interface FormValues {
   textinput: string;
