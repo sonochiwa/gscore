@@ -17,13 +17,13 @@ interface FormValues {
 };
 
 export default function SignInPage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const hasProducts = useAppSelector(state => state.root.cartProducts.length > 0);
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
+  const token = useAppSelector(state => state.root.token);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const token = useAppSelector(state => state.root.token)
-  const router = useRouter();
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -42,9 +42,7 @@ export default function SignInPage() {
             email: response.data.user.email,
           }));
         });
-      // setIsLoading(false);
     } catch (e: any) {
-      // setIsLoading(false);
       setError(e.response?.data?.message || e.message);
     } finally {
       setIsLoading(false);
@@ -52,72 +50,72 @@ export default function SignInPage() {
   };
 
   useEffect(() => {
-    if (token) {
-      router.push('/')
+    if (token && hasProducts) {
+      router.push('/checkout');
+    } else if (token) {
+      router.push('/');
     }
-  })
+  });
 
   return (
-    <>
-      <Layout title="Sign in">
-        <Wrapper>
-          <LoginNavigation currentTab={2} />
-          <HeadingH2>Log in</HeadingH2>
+    <Layout title="Sign in">
+      <Wrapper>
+        <LoginNavigation currentTab={2} />
+        <HeadingH2>Log in</HeadingH2>
 
-          {error &&
-            <MainError>{error}</MainError>
-          }
+        {error &&
+          <MainError>{error}</MainError>
+        }
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              render={({ field: { onChange, onBlur, ref } }) => (
-                <TextInput
-                  placeholder='Email'
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  ref={ref}
-                />
-              )}
-              name="email"
-              control={control}
-              rules={{
-                required: 'Required field.',
-                pattern: {
-                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: 'Please enter a valid email.',
-                },
-              }}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="email"
-              render={({ message }) => <ErrorP>{message}</ErrorP>}
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <TextInput
+                placeholder='Email'
+                onChange={onChange}
+                onBlur={onBlur}
+                ref={ref}
+              />
+            )}
+            name="email"
+            control={control}
+            rules={{
+              required: 'Required field.',
+              pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Please enter a valid email.',
+              },
+            }}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => <ErrorP>{message}</ErrorP>}
+          />
 
-            <Controller
-              render={({ field: { onChange, onBlur, ref } }) => (
-                <TextInput
-                  placeholder='Password'
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  ref={ref}
-                  type='password'
-                />
-              )}
-              name="password"
-              control={control}
-              rules={{ required: 'Required field', minLength: { value: 6, message: 'Min len 6' } }}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="password"
-              render={({ message }) => <ErrorP>{message}</ErrorP>}
-            />
-            <PrimaryButton type='submit' $loading={isLoading}>Log in</PrimaryButton>
-          </form>
-        </Wrapper>
-      </Layout>
-    </>
+          <Controller
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <TextInput
+                placeholder='Password'
+                onChange={onChange}
+                onBlur={onBlur}
+                ref={ref}
+                type='password'
+              />
+            )}
+            name="password"
+            control={control}
+            rules={{ required: 'Required field', minLength: { value: 6, message: 'Min len 6' } }}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({ message }) => <ErrorP>{message}</ErrorP>}
+          />
+          <PrimaryButton type='submit' $loading={isLoading}>Log in</PrimaryButton>
+        </form>
+      </Wrapper>
+    </Layout>
   )
 };
 

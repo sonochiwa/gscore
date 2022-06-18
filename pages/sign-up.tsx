@@ -25,7 +25,6 @@ export default function SignUpPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-
   const onSubmit = async (data: FormValues) => {
     try {
       setIsLoading(true);
@@ -42,11 +41,9 @@ export default function SignUpPage() {
             email: response.data.email,
           }));
         });
-      // setIsLoading(false);
       router.push('/sign-in');
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
-      // setIsLoading(false);
     } finally {
       setIsLoading(false);
     }

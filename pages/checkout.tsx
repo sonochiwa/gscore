@@ -2,8 +2,17 @@ import styled from "styled-components";
 import Layout from "../components/layout";
 import { HeadingH2, TextInput, PrimaryButton, Typography } from "../styles/main";
 import LoginNavigation from '../components/login-navigation'
+import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
+import { removeProductFromcart } from "../store/root-slice";
 
-export default function CheckoutComponent() {
+export default function CheckoutPage() {
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector(({ root }: any) => ({ products: root.cartProducts, total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0) }))
+
+  const onClearBasket = (index: number) => {
+    dispatch(removeProductFromcart({ index }))
+  };
+
   return (
     <Layout title="Checkout">
       <Wrapper>
@@ -15,14 +24,21 @@ export default function CheckoutComponent() {
             <Typography>Price</Typography>
           </Row>
           <Hr />
-          <Row>
-            <Typography>Single site license</Typography>
-            <Typography>$77</Typography>
-          </Row>
+          {cart.products.map((product: any, index: number) => (
+            <Row key={index}>
+              <Typography>{product.name} license</Typography>
+              <Row>
+                <Typography>${product.prices[0].price}</Typography>
+                <ClearBasket onClick={() => onClearBasket(index)} />
+              </Row>
+            </Row>
+          ))}
         </Package>
         <Total>
           <Typography>Total:</Typography>
-          <Typography>$77</Typography>
+          <Typography>
+            ${cart.total}
+          </Typography>
         </Total>
         <PrimaryButton>Purchase</PrimaryButton>
       </Wrapper>
@@ -94,4 +110,16 @@ const Total = styled.div`
     font-family: 'Thicccboi';
     color: var(--color_100)
   }
+`;
+
+const ClearBasket = styled.div`
+  cursor: pointer;
+  display: flex;
+  width: 24px;
+  height: 100%;
+  background-image: url('/icons/shopping-basket.svg');
+  background-size: 24px 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-left: 10px;
 `;

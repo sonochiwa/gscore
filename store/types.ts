@@ -3,4 +3,5 @@ export interface IInitialState {
   id: string;
   username: string;
   email: string;
+  cartProducts: any[];
 };

@@ -13,7 +13,6 @@ export default function HeaderComponent() {
   const username = useAppSelector(state => state.root.username)
   const token = useAppSelector(state => state.root.token)
   const [open, setOpen] = useState(false);
-  const [auth, setAuth] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -24,9 +23,8 @@ export default function HeaderComponent() {
 
   const onLogout = () => {
     dispatch(logOut({}));
-    router.push('/')
-    setAuth(false)
-    setOpen(false)
+    router.push('/');
+    setOpen(false);
   };
 
   return (
@@ -44,7 +42,7 @@ export default function HeaderComponent() {
                   animate={open ? 'rotate' : 'stop'}
                   style={{ position: 'absolute', right: '0', display: 'flex' }}
                 >
-                  <Image src='/icons/ChevronDown.svg' width='24' height='24' />
+                  <Image src='/icons/chevron-down.svg' width='24' height='24' />
                 </motion.div>
                 {open && (
                   <motion.div
@@ -53,7 +51,7 @@ export default function HeaderComponent() {
                     exit={{ opacity: 0 }}
                   >
                     <Dropdown>
-                      <DropdownItem>Settings</DropdownItem>
+                      <DropdownItem onClick={() => router.push('/settings')}>Settings</DropdownItem>
                       <DropdownItem onClick={onLogout}>Logout</DropdownItem>
                     </Dropdown>
                   </motion.div>)}

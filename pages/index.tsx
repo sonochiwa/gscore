@@ -4,22 +4,18 @@ import Layout from "../components/layout";
 import { Container, HeadingH2, SecondaryButton, Typography } from "../styles/main";
 import axios from "axios";
 import PricingCard from '../components/pricing-card'
-import { InferGetStaticPropsType } from 'next'
-import { useState } from "react";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data } = await axios.get('https://gscore-back.herokuapp.com/api/products');
 
   return {
     props: {
       products: data
-    },
-    revalidate: 120
+    }
   }
-}
+};
 
-function HomeComponent({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
-
+function HomePage({ products }: any) {
   return (
     <Layout title="Home">
       <Container>
@@ -63,10 +59,6 @@ const CardLink = styled.a`
 const Cards = styled.div`
   display: flex;
   gap: 28px;
-  /* & >:nth-child(2) {
-    margin-top: 50px;
-    background-color: var(--primary_1);
-  } */
 `;
 
-export default HomeComponent;
+export default HomePage;

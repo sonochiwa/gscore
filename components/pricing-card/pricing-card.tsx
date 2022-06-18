@@ -1,24 +1,28 @@
 import { useRouter } from "next/router";
-import styled from "styled-components"
-import { useAppSelector } from "../../hooks/app-dispatch";
+import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from '../../hooks/app-dispatch';
 import { SecondaryButton } from "../../styles/main";
+import { addProductToCart } from "../../store/root-slice";
 
-export default function PricingCardComponent({ prices, name, isProfit }: any) {
+export default function PricingCardComponent({ prices, name, isProfit, id }: any) {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const token = useAppSelector(state => state.root.token);
 
   const onGet = () => {
+    dispatch(addProductToCart({ prices, name, id }));
     if (token === undefined) {
       router.push('/sign-up')
     } else {
-      router.push('/checkout')
+      router.push({ pathname: '/checkout', query: { product_id: id } })
+
     }
   };
 
   return (
     <Root isProfit={isProfit}>
       <CardTop isProfit={isProfit}>
-        {prices.map(({ price, index }: any) => <Price key={index}>{price}</Price>)}
+        {prices.map(({ price }: any, index: number) => <Price key={index}>{price}</Price>)}
         <Title>{name} license</Title>
         <Text isProfit={isProfit}>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
       </CardTop>
@@ -37,7 +41,7 @@ export default function PricingCardComponent({ prices, name, isProfit }: any) {
 
 interface isProfitProps {
   isProfit?: any;
-}
+};
 
 const Root = styled.div<isProfitProps>`
   margin-top: ${props => props.isProfit ? '50px' : '100px'};
@@ -98,14 +102,14 @@ const CardLi = styled.li<isProfitProps>`
   font-weight: 400;
   list-style-type: none;
   ::before {
-    content: ${props => props.isProfit ? 'url(/icons/OrangeMark.svg)' : 'url(/icons/BlackMark.svg)'};
+    content: ${props => props.isProfit ? 'url(/icons/orange-mark.svg)' : 'url(/icons/black-mark.svg)'};
     height: 26px;
     width: 26px;
     margin-right: 14px;
   }
 `;
 
-const CardButton = styled(SecondaryButton)<isProfitProps>`
+const CardButton = styled(SecondaryButton) <isProfitProps>`
   margin-top: 32px;
   color: ${props => props.isProfit ? ('var(--primary_1)') : ('var(--color_800)')};
   box-shadow: none;
@@ -114,4 +118,3 @@ const CardButton = styled(SecondaryButton)<isProfitProps>`
     color: ${props => props.isProfit ? ('var(--primary_1)') : ('var(--color_800)')};
   }
 `;
-
