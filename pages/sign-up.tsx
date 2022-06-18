@@ -54,10 +54,10 @@ export default function SignUpPage() {
       <Wrapper>
         <LoginNavigation currentTab={1} />
         <HeadingH2>Create account</HeadingH2>
-        <InputsDescription>
+        <Subtitle>
           You need to enter your name and email.
           We will send you a temporary password by email
-        </InputsDescription>
+        </Subtitle>
 
         {error &&
           <MainError>{error}</MainError>
@@ -146,8 +146,7 @@ export default function SignUpPage() {
   )
 };
 
-const InputsDescription = styled.div`
-  width: 640px;
+const Subtitle = styled.div`
   font-size: 14px;
   font-family: 'Thicccboi';
   font-weight: 400;

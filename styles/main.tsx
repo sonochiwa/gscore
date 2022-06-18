@@ -107,7 +107,6 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 // Icons
-
 export const FilledCheckMark = styled.div`
   width: 26px;
   height: 26px;
@@ -211,9 +210,13 @@ export const Logo = styled.div`
   background-image: url('/logo.svg');
 `;
 
-export const HeadingH2 = styled.div`
+interface IHeadingH2 {
+  left?: boolean;
+}
+
+export const HeadingH2 = styled.div<IHeadingH2>`
   font-family: 'Thicccboi';
-  text-align: center;
+  text-align: ${ props => props.left ? 'left' : 'center'};
   font-weight: 700;
   font-size: 44px;
   line-height: 54px;

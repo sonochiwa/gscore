@@ -5,7 +5,7 @@ export default function settingsPage() {
   return (
     <Layout>
       <Container>
-        <HeadingH2 left>Settings</HeadingH2>
+        <HeadingH2 left>Subscriptions</HeadingH2>
       </Container>
     </Layout>
   )

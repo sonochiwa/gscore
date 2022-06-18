@@ -14,8 +14,7 @@ export default function PricingCardComponent({ prices, name, isProfit, id }: any
     if (token === undefined) {
       router.push('/sign-up')
     } else {
-      router.push({ pathname: '/checkout', query: { product_id: id } })
-
+      router.push({ pathname: '/checkout' })
     }
   };
 

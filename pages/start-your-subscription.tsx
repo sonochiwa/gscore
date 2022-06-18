@@ -1,25 +1,21 @@
-import styled from "styled-components";
 import Layout from "../components/layout";
-import { HeadingH2, TextInput, PrimaryButton, Typography } from "../styles/main";
-import LoginNavigation from '../components/login-navigation'
-import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
-import { removeProductFromcart } from "../store/root-slice";
+import styled from "styled-components";
+import { HeadingH2, PrimaryButton, Typography } from "../styles/main";
+import { useAppSelector } from "../hooks/app-dispatch";
 import { useRouter } from "next/router";
 
-export default function CheckoutPage() {
+export default function SubscribePage() {
   const cart = useAppSelector(({ root }: any) => ({ products: root.cartProducts, total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0) }))
-  const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const onClearBasket = (index: number) => {
-    dispatch(removeProductFromcart({ index }))
-  };
-
   return (
-    <Layout title="Checkout">
+    <Layout title='Start sub'>
       <Wrapper>
-        <LoginNavigation currentTab={3} />
-        <HeadingH2>Checkout</HeadingH2>
+        <HeadingH2 left>Start your subscription</HeadingH2>
+        <Subtitle>
+          We have sent you a payment receipt by e-mail and a
+          link to download the plugin with a license key.
+        </Subtitle>
         <Package>
           <Row>
             <Typography>Package name</Typography>
@@ -31,20 +27,13 @@ export default function CheckoutPage() {
               <Typography>{product.name} license</Typography>
               <Row>
                 <Typography>${product.prices[0].price}</Typography>
-                <ClearBasket onClick={() => onClearBasket(index)} />
               </Row>
             </Row>
           ))}
         </Package>
-        <Total>
-          <Typography>Total:</Typography>
-          <Typography>
-            ${cart.total}
-          </Typography>
-        </Total>
-        <PrimaryButton onClick={() => router.push('/start-your-subscription')}>Purchase</PrimaryButton>
+        <PrimaryButton type='submit' onClick={()=> router.push('/subscriptions')}>Go to my subscriptions</PrimaryButton>
       </Wrapper>
-    </Layout >
+    </Layout>
   )
 };
 
@@ -57,14 +46,17 @@ const Wrapper = styled.div`
     margin-bottom: 16px;
   }
   ${PrimaryButton} {
-    width: 200px;
+    margin-top: 48px;
+    width: 100%;
   }
-  ${TextInput} + ${TextInput} {
-    margin-top: 24px;
-  }
-  ${TextInput} + ${PrimaryButton} {
-    margin: 48px 0;
-  }
+`;
+
+const Subtitle = styled.div`
+  font-size: 14px;
+  font-family: 'Thicccboi';
+  font-weight: 400;
+  line-height: 24px;
+  margin-bottom: 32px;
 `;
 
 const Row = styled.div`
@@ -101,30 +93,4 @@ const Hr = styled.div`
   width: calc(100% + 64px);
   height: 1px;
   background-color: #969696;
-`;
-
-const Total = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 24px;
-  margin-bottom: 48px;
-  ${Typography} {
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 40px;
-    font-family: 'Thicccboi';
-    color: var(--color_100)
-  }
-`;
-
-const ClearBasket = styled.div`
-  cursor: pointer;
-  display: flex;
-  width: 24px;
-  height: 100%;
-  background-image: url('/icons/shopping-basket.svg');
-  background-size: 24px 24px;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-left: 10px;
 `;
