@@ -9,7 +9,7 @@ export default function SubscribePage() {
   const router = useRouter();
 
   return (
-    <Layout title='Start sub'>
+    <Layout title='Purchase'>
       <Wrapper>
         <HeadingH2 left>Start your subscription</HeadingH2>
         <Subtitle>

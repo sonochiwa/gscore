@@ -34,7 +34,7 @@ export default function HeaderComponent() {
           <Link href='/'><a><Image src={logo} width='170' height='42' alt='logo' /></a></Link>
           {token != undefined && (
             <User>
-              <LoginTypography><Link href='/123'><a>My subscriptions</a></Link></LoginTypography>
+              <LoginTypography><Link href='/subscriptions'><a>My subscriptions</a></Link></LoginTypography>
               <NameWrapper>
                 <UserName onClick={() => setOpen(!open)}>{username}</UserName>
                 <motion.div

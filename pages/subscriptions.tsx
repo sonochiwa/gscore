@@ -3,7 +3,7 @@ import { Container, HeadingH2 } from "../styles/main";
 
 export default function settingsPage() {
   return (
-    <Layout>
+    <Layout  title='Subscriptions'>
       <Container>
         <HeadingH2 left>Subscriptions</HeadingH2>
       </Container>
