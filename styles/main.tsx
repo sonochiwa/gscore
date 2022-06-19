@@ -223,6 +223,15 @@ export const HeadingH2 = styled.div<IHeadingH2>`
   color: var(--color_100);
 `;
 
+export const HeadingH3 = styled.div`
+  font-family: 'Thicccboi';
+  text-align: 'left';
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 54px;
+  color: var(--color_100);
+`;
+
 export const Typography = styled.p`
   font-family: 'Inter';
   font-weight: 500;

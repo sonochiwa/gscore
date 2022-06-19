@@ -30,7 +30,7 @@ const rootSlice = createSlice({
       state.email = action.payload.email;
     },
 
-    logOut(state, action: PayloadAction<any>) {
+    logOut(state) {
       state.cartProducts = [];
       state.token = undefined;
       state.id = '';

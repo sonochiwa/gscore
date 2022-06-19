@@ -5,15 +5,26 @@ import LoginNavigation from '../components/login-navigation'
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
 import { removeProductFromcart } from "../store/root-slice";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function CheckoutPage() {
-  const cart = useAppSelector(({ root }: any) => ({ products: root.cartProducts, total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0) }))
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const cart = useAppSelector(({ root }: any) => ({
+    products: root.cartProducts,
+    total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0)
+  }));
+  const token = useAppSelector(state => state.root.token);
 
   const onClearBasket = (index: number) => {
     dispatch(removeProductFromcart({ index }))
   };
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/sign-in');
+    }
+  });
 
   return (
     <Layout title="Checkout">

@@ -4,6 +4,9 @@ import Layout from "../components/layout";
 import { Container, HeadingH2, SecondaryButton, Typography } from "../styles/main";
 import axios from "axios";
 import PricingCard from '../components/pricing-card'
+import axiosInstance from "../services/axios-instance";
+import { useEffect } from "react";
+import { useAppSelector } from "../hooks/app-dispatch";
 
 export async function getServerSideProps() {
   const { data } = await axios.get('https://gscore-back.herokuapp.com/api/products');
@@ -16,6 +19,13 @@ export async function getServerSideProps() {
 };
 
 function HomePage({ products }: any) {
+  const token = useAppSelector(state => state.root.token);
+
+  useEffect(() => {
+    axiosInstance(token).get('/users/me')
+      .then(response => console.log(response));
+  }, []);
+
   return (
     <Layout title="Home">
       <Container>
