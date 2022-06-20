@@ -12,9 +12,9 @@ export default function PricingCardComponent({ prices, name, isProfit, id }: any
   const onGet = () => {
     dispatch(addProductToCart({ prices, name, id }));
     if (token === undefined) {
-      router.push('/sign-up')
+      router.push("/sign-up")
     } else {
-      router.push({ pathname: '/checkout' })
+      router.push({ pathname: "/checkout" })
     }
   };
 
@@ -43,9 +43,9 @@ interface isProfitProps {
 };
 
 const Root = styled.div<isProfitProps>`
-  margin-top: ${props => props.isProfit ? '50px' : '100px'};
+  margin-top: ${props => props.isProfit ? "50px" : "100px"};
   padding: 42px 48px;
-  background-color:  ${props => props.isProfit ? 'var(--primary_1)' : '#272727'};
+  background-color:  ${props => props.isProfit ? "var(--primary_1)" : "#272727"};
   border-radius: 12px;
   width: 100%;
   height: 100%;
@@ -53,11 +53,11 @@ const Root = styled.div<isProfitProps>`
 
 const CardTop = styled.div<isProfitProps>`
   padding-bottom: 40px;
-  border-bottom: ${props => props.isProfit ? '1px solid var(--color_100)' : '1px solid var(--color_500)'};
+  border-bottom: ${props => props.isProfit ? "1px solid var(--color_100)" : "1px solid var(--color_500)"};
 `;
 
 const Price = styled.div`
-  font-family: 'DM Sans';
+  font-family: "DM Sans";
   font-size: 54px;
   line-height: 66px;
   font-weight: 700;
@@ -65,7 +65,7 @@ const Price = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: 'Thicccboi';
+  font-family: "Thicccboi";
   font-size: 24px;
   font-weight: 700;
   line-height: 26px;
@@ -74,10 +74,10 @@ const Title = styled.div`
 `;
 
 const Text = styled.p<isProfitProps>`
-  font-family: 'Thicccboi';
+  font-family: "Thicccboi";
   font-size: 18px;
   line-height: 30px;
-  color: ${props => props.isProfit ? 'var(--color_100)' : 'var(--color_400)'};
+  color: ${props => props.isProfit ? "var(--color_100)" : "var(--color_400)"};
   font-weight: 400;
   text-align: center;
   margin-top: 8px;
@@ -101,7 +101,7 @@ const CardLi = styled.li<isProfitProps>`
   font-weight: 400;
   list-style-type: none;
   ::before {
-    content: ${props => props.isProfit ? 'url(/icons/orange-mark.svg)' : 'url(/icons/black-mark.svg)'};
+    content: ${props => props.isProfit ? "url(/icons/orange-mark.svg)" : "url(/icons/black-mark.svg)"};
     height: 26px;
     width: 26px;
     margin-right: 14px;
@@ -110,10 +110,10 @@ const CardLi = styled.li<isProfitProps>`
 
 const CardButton = styled(SecondaryButton) <isProfitProps>`
   margin-top: 32px;
-  color: ${props => props.isProfit ? ('var(--primary_1)') : ('var(--color_800)')};
+  color: ${props => props.isProfit ? "var(--primary_1)" : "var(--color_800)"};
   box-shadow: none;
   width: 100%;
   :hover {
-    color: ${props => props.isProfit ? ('var(--primary_1)') : ('var(--color_800)')};
+    color: ${props => props.isProfit ? "var(--primary_1)" : "var(--color_800)"};
   }
 `;

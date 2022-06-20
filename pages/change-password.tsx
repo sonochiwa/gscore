@@ -1,32 +1,32 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
 import { Container, HeadingH2, HeadingH3, PrimaryButton, TextInput, ErrorP, InputWrapper, MainError } from "../styles/main";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import axiosInstance from "../services/axios-instance";
-import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
-import { useEffect, useState } from "react";
-import SettingsNavigation from '../components/settings-navigation';
+import { useAppSelector } from "../hooks/app-dispatch";
+import { useState } from "react";
+import SettingsNavigation from "../components/settings-navigation";
 
 interface FormValues {
-  textinput: string;
-  currentpassword: string;
-  newpassword: string;
+  textInput: string;
+  currentPassword: string;
+  newPassword: string;
 };
 
 export default function SettingsPage() {
   const token = useAppSelector(state => state.root.token);
-  const { handleSubmit, control, formState: { errors }, reset, register } = useForm<FormValues>();
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const onSubmit = async (data: FormValues) => {
     try {
       setIsLoading(true);
-      if (data.currentpassword && data.newpassword) {
-        await axiosInstance(token).patch('/users/update-password', {
-          currentPassword: data.currentpassword,
-          newPassword: data.newpassword,
+      if (data.currentPassword && data.newPassword) {
+        await axiosInstance(token).patch("/users/update-password", {
+          currentPassword: data.currentPassword,
+          newPassword: data.newPassword,
         });
         setError(null);
         setIsLoading(false);
@@ -55,25 +55,25 @@ export default function SettingsPage() {
               <Controller
                 render={({ field: { onChange, onBlur, ref } }) => (
                   <TextInput
-                    placeholder='Current Password'
+                    placeholder="Current Password"
                     onChange={onChange}
                     onBlur={onBlur}
                     ref={ref}
                   />
                 )}
-                name="currentpassword"
+                name="currentPassword"
                 control={control}
                 rules={{
-                  required: 'Required field',
+                  required: "Required field",
                   minLength: {
                     value: 6,
-                    message: 'Min len 6'
+                    message: "Min len 6"
                   },
                 }}
               />
               <ErrorMessage
                 errors={errors}
-                name="currentpassword"
+                name="currentPassword"
                 render={({ message }) => <ErrorP>{message}</ErrorP>}
               />
             </InputWrapper>
@@ -82,30 +82,30 @@ export default function SettingsPage() {
               <Controller
                 render={({ field: { onChange, onBlur, ref } }) => (
                   <TextInput
-                    placeholder='New Password'
+                    placeholder="New Password"
                     onChange={onChange}
                     onBlur={onBlur}
                     ref={ref}
                   />
                 )}
-                name="newpassword"
+                name="newPassword"
                 control={control}
                 rules={{
-                  required: 'Required field',
+                  required: "Required field",
                   minLength: {
                     value: 6,
-                    message: 'Min len 6'
+                    message: "Min len 6"
                   },
                 }}
               />
               <ErrorMessage
                 errors={errors}
-                name="newpassword"
+                name="newPassword"
                 render={({ message }) => <ErrorP>{message}</ErrorP>}
               />
             </InputWrapper>
           </WrapperInner>
-          <PrimaryButton type='submit' $loading={isLoading}>Save all changes</PrimaryButton>
+          <PrimaryButton type="submit" $loading={isLoading}>Save all changes</PrimaryButton>
         </Wrapper>
       </Container>
     </Layout>

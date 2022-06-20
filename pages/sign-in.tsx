@@ -5,21 +5,19 @@ import { useForm, Controller } from 'react-hook-form';
 import LoginNavigation from '../components/login-navigation'
 import axios from 'axios';
 import { ErrorMessage } from '@hookform/error-message';
-import { useEffect, useState } from 'react';
-import { logIn } from '../store/root-slice';
+import { useState } from 'react';
+import { setAccessToken } from '../store/root-slice';
 import { useAppDispatch, useAppSelector } from '../hooks/app-dispatch';
 import { useRouter } from "next/router";
 
 interface FormValues {
-  textinput: string;
+  textInput: string;
   email: string;
   password: string;
 };
 
 export default function SignInPage() {
-  const hasProducts = useAppSelector(state => state.root.cartProducts.length > 0);
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
-  const token = useAppSelector(state => state.root.token);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();
@@ -35,14 +33,13 @@ export default function SignInPage() {
           password: data.password,
         })
         .then(response => {
-          dispatch(logIn({
+          dispatch(setAccessToken({
             token: response.data.token,
-            id: response.data.user.id,
             username: response.data.user.username,
             email: response.data.user.email,
           }));
         });
-      router.push('/');
+      router.push('/checkout');
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
     } finally {

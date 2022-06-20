@@ -1,59 +1,59 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
   @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter/Inter-Bold.woff2') format('woff2');
+    font-family: "Inter";
+    src: url("/fonts/Inter/Inter-Bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter/Inter-SemiBold.woff2') format('woff2');
+    font-family: "Inter";
+    src: url("/fonts/Inter/Inter-SemiBold.woff2") format("woff2");
     font-weight: 600;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter/Inter-Medium.woff2') format('woff2');
+    font-family: "Inter";
+    src: url("/fonts/Inter/Inter-Medium.woff2") format("woff2");
     font-weight: 500;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Thicccboi';
-    src: url('/fonts/Thicccboi/THICCCBOI-Bold.woff2') format('woff2');
+    font-family: "Thicccboi";
+    src: url("/fonts/Thicccboi/THICCCBOI-Bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Thicccboi';
-    src: url('/fonts/Thicccboi/THICCCBOI-SemiBold.woff2') format('woff2');
+    font-family: "Thicccboi";
+    src: url("/fonts/Thicccboi/THICCCBOI-SemiBold.woff2") format("woff2");
     font-weight: 600;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Thicccboi';
-    src: url('/fonts/Thicccboi/THICCCBOI-Medium.woff2') format('woff2');
+    font-family: "Thicccboi";
+    src: url("/fonts/Thicccboi/THICCCBOI-Medium.woff2") format("woff2");
     font-weight: 500;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Thicccboi';
-    src: url('/fonts/Thicccboi/THICCCBOI-Regular.woff2') format('woff2');
+    font-family: "Thicccboi";
+    src: url("/fonts/Thicccboi/THICCCBOI-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'DM Sans';
-    src: url('/fonts/DM Sans/DMSans-Bold.woff') format('woff');
+    font-family: "DM Sans";
+    src: url("/fonts/DM Sans/DMSans-Bold.woff") format("woff");
     font-weight: 700;
     font-style: normal;
   }
@@ -110,7 +110,7 @@ export const GlobalStyles = createGlobalStyle`
 export const FilledCheckMark = styled.div`
   width: 26px;
   height: 26px;
-  background-image: url('/icons/FilledCheckMark.svg');
+  background-image: url("/icons/FilledCheckMark.svg");
 `;
 
 /* container width 1268px */
@@ -128,17 +128,17 @@ interface IButton {
 }
 
 const Button = styled.button<IButton>`
+  font-family: "Thicccboi";
   position: relative;
   cursor: pointer;
   border-radius: 4px;
   border: none;
   padding: 20px 24px;
-  font-family: 'Thicccboi';
   font-weight: 700;
   font-size: 16px;
   line-height: 18px;
   box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
-  color: ${props => props.$loading ? 'transparent !important' : 'white'};
+  color: ${props => props.$loading ? "transparent !important" : "white"};
 
   &::before {
     @keyframes loading {
@@ -151,11 +151,11 @@ const Button = styled.button<IButton>`
     }
 
     position: absolute;
-    content: ${props => props.$loading ? ' url(/icons/loading.svg)' : ''};
+    content: ${props => props.$loading ? "url(/icons/loading.svg)" : ""};
     left: calc(50% - 9px);
     width: 18px;
     height: 18px;
-    color: ${props => props.$loading ? 'white' : 'transparent !important'};
+    color: ${props => props.$loading ? "white" : "transparent !important"};
     animation-name: loading;
     animation-timing-function: linear;
     animation-duration: 1s;
@@ -207,7 +207,7 @@ export const SecondaryButton = styled(Button)`
 export const Logo = styled.div`
   width: 170px;
   height: 42px;
-  background-image: url('/logo.svg');
+  background-image: url("/logo.svg");
 `;
 
 interface IHeadingH2 {
@@ -215,8 +215,8 @@ interface IHeadingH2 {
 }
 
 export const HeadingH2 = styled.div<IHeadingH2>`
-  font-family: 'Thicccboi';
-  text-align: ${props => props.left ? 'left' : 'center'};
+  font-family: "Thicccboi";
+  text-align: ${props => props.left ? "left" : "center"};
   font-weight: 700;
   font-size: 44px;
   line-height: 54px;
@@ -224,8 +224,8 @@ export const HeadingH2 = styled.div<IHeadingH2>`
 `;
 
 export const HeadingH3 = styled.div`
-  font-family: 'Thicccboi';
-  text-align: 'left';
+  font-family: "Thicccboi";
+  text-align: left;
   font-weight: 700;
   font-size: 28px;
   line-height: 54px;
@@ -233,7 +233,7 @@ export const HeadingH3 = styled.div`
 `;
 
 export const Typography = styled.p`
-  font-family: 'Inter';
+  font-family: "Inter";
   font-weight: 500;
   font-size: 18px;
   line-height: 30px;
@@ -242,11 +242,11 @@ export const Typography = styled.p`
 `;
 
 export const TextInput = styled.input`
+  font-family: "Thicccboi";
   border-radius: 6px;
   outline: none;
   border: 1px solid var(--color_300);
   padding: 23px 25px;
-  font-family: 'Thicccboi';
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
@@ -269,10 +269,9 @@ export const TextInput = styled.input`
 `;
 
 export const ErrorP = styled.p`
-  font-family: 'Thicccboi';
+  font-family: "Thicccboi";
   color: var(--red_300);
   font-size: 12px;
-
   position: absolute;
   bottom: -15px;
 `;
@@ -283,7 +282,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const MainError = styled.p`
-  font-family: 'Thicccboi';
+  font-family: "Thicccboi";
   color: var(--red_300);
   font-size: 12px;
 `;

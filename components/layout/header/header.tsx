@@ -1,13 +1,13 @@
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import Image from 'next/image';
-import logo from '/public/logo.svg';
-import Link from 'next/link';
-import { Container, PrimaryButton, Typography } from '../../../styles/main';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useAppDispatch, useAppSelector } from '../../../hooks/app-dispatch';
-import { logOut } from '../../../store/root-slice';
+import styled from "styled-components";
+import logo from "/public/logo.svg";
+import Image from "next/image";
+import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "../../../hooks/app-dispatch";
+import { Container } from "../../../styles/main";
+import { logOut } from "../../../store/root-slice";
+import { useRouter } from "next/router";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function HeaderComponent() {
   const username = useAppSelector(state => state.root.username)
@@ -19,42 +19,43 @@ export default function HeaderComponent() {
   const variants = {
     rotate: { rotateX: -180, transition: { duration: .2 } },
     stop: { rotate: 0, transition: { duration: .2 } },
+    visible: { opacity: 1, transition: { duration: .2 } },
+    hidden: { opacity: 0, transition: { duration: .2 } },
   };
 
   const onLogout = () => {
     dispatch(logOut());
     router.push('/');
-    setOpen(false);
   };
 
   return (
     <Header>
       <Container>
         <HeaderInner>
-          <Link href='/'><a><Image src={logo} width='170' height='42' alt='logo' /></a></Link>
+          <Link href='/'><a><Image src={logo} width="170" height="42" alt="" /></a></Link>
           {token != undefined && (
             <User>
-              <LoginTypography><Link href='/subscriptions'><a>My subscriptions</a></Link></LoginTypography>
+              <LoginTypography><Link href="/subscriptions"><a>My subscriptions</a></Link></LoginTypography>
               <NameWrapper>
                 <UserName onClick={() => setOpen(!open)}>{username}</UserName>
                 <motion.div
                   variants={variants}
-                  animate={open ? 'rotate' : 'stop'}
-                  style={{ position: 'absolute', right: '0', display: 'flex' }}
+                  animate={open ? "rotate" : "stop"}
+                  style={{ position: "absolute", right: "0", display: "flex" }}
                 >
-                  <Image src='/icons/chevron-down.svg' width='24' height='24' alt='img' />
+                  <Image src="/icons/chevron-down.svg" width="24" height="24" alt="" />
                 </motion.div>
-                {open && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <Dropdown>
-                      <DropdownItem onClick={() => router.push('/personal-info')}>Settings</DropdownItem>
-                      <DropdownItem onClick={onLogout}>Logout</DropdownItem>
-                    </Dropdown>
-                  </motion.div>)}
+
+                <motion.div
+                  variants={variants}
+                  initial="hidden"
+                  animate={open ? "visible" : "hidden"}
+                >
+                  <Dropdown>
+                    <DropdownItem onClick={() => router.push("/personal-info")}>Settings</DropdownItem>
+                    <DropdownItem onClick={onLogout}>Logout</DropdownItem>
+                  </Dropdown>
+                </motion.div>
               </NameWrapper>
             </User>
           )}
@@ -64,8 +65,7 @@ export default function HeaderComponent() {
   )
 };
 
-const Header = styled.header`
-`;
+const Header = styled.header``;
 
 const HeaderInner = styled.div`
   display: flex;
@@ -79,12 +79,6 @@ const User = styled.div`
   align-items: center;
   position: relative;
   gap: 32px;
-`;
-
-const Login = styled.div`
-  ${Typography} {
-    cursor: pointer;
-  }
 `;
 
 const DropdownItem = styled.li`

@@ -1,1 +1,1 @@
-export { default } from './settings-navigation'
+export { default } from "./settings-navigation";

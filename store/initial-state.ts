@@ -2,9 +2,8 @@ import { IInitialState } from './types'
 
 const initialState: IInitialState = {
   token: undefined,
-  id: '',
   username: 'username',
-  email: '',
+  email: 'example@email.com',
   cartProducts: [],
 };
 

@@ -1,15 +1,13 @@
-import Link from "next/link";
-import styled from "styled-components";
+import PricingCard from "../components/pricing-card";
 import Layout from "../components/layout";
-import { Container, HeadingH2, SecondaryButton, Typography } from "../styles/main";
+import styled from "styled-components";
+import Link from "next/link";
 import axios from "axios";
-import PricingCard from '../components/pricing-card'
-import axiosInstance from "../services/axios-instance";
-import { useEffect } from "react";
+import { Container, HeadingH2, Typography } from "../styles/main";
 import { useAppSelector } from "../hooks/app-dispatch";
 
 export async function getServerSideProps() {
-  const { data } = await axios.get('https://gscore-back.herokuapp.com/api/products');
+  const { data } = await axios.get("https://gscore-back.herokuapp.com/api/products");
 
   return {
     props: {
@@ -19,7 +17,6 @@ export async function getServerSideProps() {
 };
 
 function HomePage({ products }: any) {
-  const token = useAppSelector(state => state.root.token);
 
   return (
     <Layout title="Home">
@@ -30,8 +27,8 @@ function HomePage({ products }: any) {
             {products.map((product: any, index: number) => <PricingCard key={product.id} isProfit={index === 1} {...product} />)}
           </Cards>
           <HomeTextInfo>
-            <Typography color='var(--color_100)'>Have more than 10 sites?</Typography>
-            <Link href='/contact-us'><CardLink>Contact us</CardLink></Link>
+            <Typography color="var(--color_100)">Have more than 10 sites?</Typography>
+            <Link href="/contact-us"><CardLink>Contact us</CardLink></Link>
           </HomeTextInfo>
         </Wrapper>
       </Container>

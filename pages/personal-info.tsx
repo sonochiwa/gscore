@@ -10,7 +10,7 @@ import { useState } from "react";
 import SettingsNavigation from '../components/settings-navigation';
 
 interface FormValues {
-  textinput: string;
+  textInput: string;
   username: string;
   email: string;
 };
@@ -24,13 +24,13 @@ export default function SettingsPage() {
 
   const onSubmit = (data: FormValues) => {
     if (data.username) {
-      dispatch(setUsername(data.username));
+      dispatch(setUsername({ username: data.username }));
       axiosInstance(token).patch('/users', {
         username: data.username,
       })
     }
     if (data.email) {
-      dispatch(setEmail(data.email));
+      dispatch(setEmail({ email: data.email }));
       axiosInstance(token).patch('/users', {
         email: data.email,
       })

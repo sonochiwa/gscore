@@ -12,8 +12,8 @@ export default function SettingsNavigationComponent({ currentTab }: SettingsNavi
   return (
     <TabWrapper>
       <Tab tab={currentTab}>
-        <Typography onClick={() => router.push('/personal-info')} color='var(--color_100)'>Personal info</Typography>
-        <Typography onClick={() => router.push('/change-password')} color='var(--color_100)'>Change password</Typography>
+        <Typography onClick={() => router.push("/personal-info")} color="var(--color_100)">Personal info</Typography>
+        <Typography onClick={() => router.push("/change-password")} color="var(--color_100)">Change password</Typography>
       </Tab>
       <Hr />
     </TabWrapper>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { HeadingH2, TextInput, PrimaryButton, Typography } from "../styles/main";
-import LoginNavigation from '../components/login-navigation'
+import LoginNavigation from "../components/login-navigation";
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
 import { removeProductFromСart } from "../store/root-slice";
 import { useRouter } from "next/router";
@@ -22,7 +22,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!token) {
-      router.push('/sign-in');
+      router.push("/sign-in");
     }
   });
 
@@ -53,7 +53,7 @@ export default function CheckoutPage() {
             ${cart.total}
           </Typography>
         </Total>
-        <PrimaryButton onClick={() => router.push('/start-your-subscription')}>Purchase</PrimaryButton>
+        <PrimaryButton onClick={() => router.push("/start-your-subscription")}>Purchase</PrimaryButton>
       </Wrapper>
     </Layout >
   )
@@ -95,7 +95,7 @@ const Package = styled.div`
     font-weight: 400;
   }
   ${Typography} {
-    font-family: 'Thicccboi';
+    font-family: "Thicccboi";
     font-size: 24px;
     line-height: 34px;
     color: var(--color_100)
@@ -123,7 +123,7 @@ const Total = styled.div`
     font-size: 28px;
     font-weight: 700;
     line-height: 40px;
-    font-family: 'Thicccboi';
+    font-family: "Thicccboi";
     color: var(--color_100)
   }
 `;
@@ -133,7 +133,7 @@ const ClearBasket = styled.div`
   display: flex;
   width: 24px;
   height: 100%;
-  background-image: url('/icons/shopping-basket.svg');
+  background-image: url("/icons/shopping-basket.svg");
   background-size: 24px 24px;
   background-position: center;
   background-repeat: no-repeat;

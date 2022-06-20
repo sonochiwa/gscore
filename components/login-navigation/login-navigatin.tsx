@@ -13,18 +13,18 @@ export default function LoginNavigationComponent({ currentTab }: LoginNavigation
     <TabWrapper>
       <Tab tab={currentTab}>
         <TabItem>
-          <Typography color='var(--color_100)'>Create account</Typography>
-          <TabButton type='button' onClick={() => router.push('/sign-up')} />
+          <Typography color="var(--color_100)">Create account</Typography>
+          <TabButton type="button" onClick={() => router.push("/sign-up")} />
         </TabItem>
 
         <TabItem>
-          <Typography color='var(--color_100)'>Log in</Typography>
-          <TabButton type='button' onClick={() => router.push('/sign-in')} />
+          <Typography color="var(--color_100)">Log in</Typography>
+          <TabButton type="button" onClick={() => router.push("/sign-in")} />
         </TabItem>
 
         <TabItem>
-          <Typography color='var(--color_100)'>Checkout</Typography>
-          <TabButton type='button' onClick={() => router.push('/checkout')} />
+          <Typography color="var(--color_100)">Checkout</Typography>
+          <TabButton type="button" onClick={() => router.push("/checkout")} />
         </TabItem>
       </Tab>
     </TabWrapper>

@@ -9,7 +9,7 @@ export default function SubscribePage() {
   const router = useRouter();
 
   return (
-    <Layout title='Purchase'>
+    <Layout title="Purchase">
       <Wrapper>
         <HeadingH2 left>Start your subscription</HeadingH2>
         <Subtitle>
@@ -31,7 +31,7 @@ export default function SubscribePage() {
             </Row>
           ))}
         </Package>
-        <PrimaryButton type='submit' onClick={()=> router.push('/subscriptions')}>Go to my subscriptions</PrimaryButton>
+        <PrimaryButton type="submit" onClick={()=> router.push("/subscriptions")}>Go to my subscriptions</PrimaryButton>
       </Wrapper>
     </Layout>
   )

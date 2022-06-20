@@ -8,11 +8,11 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signUp } from '../store/root-slice';
+import { setAccessToken } from '../store/root-slice';
 import { useAppDispatch } from '../hooks/app-dispatch';
 
 interface FormValues {
-  textinput: string;
+  textInput: string;
   username: string;
   email: string;
   password: string;
@@ -28,20 +28,20 @@ export default function SignUpPage() {
   const onSubmit = async (data: FormValues) => {
     try {
       setIsLoading(true);
-      await axios.post('https://gscore-back.herokuapp.com/api/users/sign-up',
+      await axios.post("https://gscore-back.herokuapp.com/api/users/sign-up",
         {
           username: data.username,
           email: data.email,
           password: data.password
         })
         .then((response) => {
-          dispatch(signUp({
+          dispatch(setAccessToken({
             token: response.data.token,
             username: response.data.username,
             email: response.data.email,
           }));
         });
-      router.push('/');
+      router.push("/checkout");
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
     } finally {
@@ -77,10 +77,10 @@ export default function SignUpPage() {
               name="username"
               control={control}
               rules={{
-                required: 'Required field',
+                required: "Required field",
                 minLength: {
                   value: 6,
-                  message: 'Min len 6'
+                  message: "Min len 6"
                 },
               }}
             />
@@ -96,7 +96,7 @@ export default function SignUpPage() {
             <Controller
               render={({ field: { onChange, onBlur, ref } }) => (
                 <TextInput
-                  placeholder='Email'
+                  placeholder="Email"
                   onChange={onChange}
                   onBlur={onBlur}
                   ref={ref}
@@ -105,10 +105,10 @@ export default function SignUpPage() {
               name="email"
               control={control}
               rules={{
-                required: 'Required field.',
+                required: "Required field.",
                 pattern: {
                   value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: 'Please enter a valid email.',
+                  message: "Please enter a valid email.",
                 },
               }}
             />
@@ -123,16 +123,16 @@ export default function SignUpPage() {
             <Controller
               render={({ field: { onChange, onBlur, ref } }) => (
                 <TextInput
-                  placeholder='Password'
+                  placeholder="Password"
                   onChange={onChange}
                   onBlur={onBlur}
                   ref={ref}
-                  type='password'
+                  type="password"
                 />
               )}
               name="password"
               control={control}
-              rules={{ required: 'Required field', minLength: { value: 6, message: 'Min len 6' } }}
+              rules={{ required: "Required field", minLength: { value: 6, message: "Min len 6" } }}
             />
             <ErrorMessage
               errors={errors}
@@ -142,12 +142,12 @@ export default function SignUpPage() {
           </InputWrapper>
 
 
-          <PrimaryButton type='submit' $loading={isLoading}>Send password</PrimaryButton>
+          <PrimaryButton type="submit" $loading={isLoading}>Send password</PrimaryButton>
         </form>
 
         <NextStep>
-          <Typography color='var(--color_100)'>Have an account?</Typography>
-          <Link href='/sign-in'><a><Typography>Go to the next step</Typography></a></Link>
+          <Typography color="var(--color_100)">Have an account?</Typography>
+          <Link href="/sign-in"><a><Typography>Go to the next step</Typography></a></Link>
         </NextStep>
       </Wrapper>
     </Layout>
@@ -156,7 +156,7 @@ export default function SignUpPage() {
 
 const Subtitle = styled.div`
   font-size: 14px;
-  font-family: 'Thicccboi';
+  font-family: "Thicccboi";
   font-weight: 400;
   line-height: 24px;
   margin-bottom: 32px;

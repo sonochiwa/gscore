@@ -1,30 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import initialState from './initial-state';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import initialState from "./initial-state";
+import { IAddProductToCart, ISetAccessToken, IRemoveProductFromСart, ISetUsername, ISetEmail } from "./types";
 
 const rootSlice = createSlice({
-  name: 'root',
+  name: "root",
   initialState,
   reducers: {
-
-    signUp(state, action: PayloadAction<any>) {
-      state.token = action.payload.token;
-      state.username = action.payload.username;
-      state.email = action.payload.email;
-    },
-
-    addProductToCart(state, action: PayloadAction<any>) {
-      state.cartProducts.push(action.payload);
-    },
-
-    removeProductFromСart(state, action: PayloadAction<any>) {
-      state.cartProducts.splice(action.payload.index, 1);
-    },
-
-    clearLisence(state) {
-      state.cartProducts = [];
-    },
-
-    logIn(state, action: PayloadAction<any>) {
+    setAccessToken(state, action: PayloadAction<ISetAccessToken>) {
       state.token = action.payload.token;
       state.username = action.payload.username;
       state.email = action.payload.email;
@@ -33,29 +15,36 @@ const rootSlice = createSlice({
     logOut(state) {
       state.cartProducts = [];
       state.token = undefined;
-      state.id = '';
-      state.username = 'username';
-      state.email = '';
+      state.username = "username";
+      state.email = "example@email.com";
     },
 
-    setUsername(state, action: PayloadAction<any>) {
-      state.username = action.payload
+    addProductToCart(state, action: PayloadAction<IAddProductToCart>) {
+      state.cartProducts.push(action.payload);
     },
 
-    setEmail(state, action: PayloadAction<any>) {
-      state.email = action.payload
-    }
+    removeProductFromСart(state, action: PayloadAction<IRemoveProductFromСart>) {
+      state.cartProducts.splice(action.payload.index, 1);
+    },
+
+    setUsername(state, action: PayloadAction<ISetUsername>) {
+      state.username = action.payload.username
+    },
+
+    setEmail(state, action: PayloadAction<ISetEmail>) {
+      state.email = action.payload.email
+    },
   },
 });
 
 export const {
-  setUsername,
-  setEmail,
-  signUp,
+  setAccessToken,
+  logOut,
   addProductToCart,
   removeProductFromСart,
-  logIn,
-  logOut
+  setUsername,
+  setEmail,
+
 } = rootSlice.actions;
 
 export default rootSlice.reducer;
