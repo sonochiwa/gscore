@@ -16,7 +16,7 @@ const rootSlice = createSlice({
       state.cartProducts.push(action.payload);
     },
 
-    removeProductFromcart(state, action: PayloadAction<any>) {
+    removeProductFromСart(state, action: PayloadAction<any>) {
       state.cartProducts.splice(action.payload.index, 1);
     },
 
@@ -43,7 +43,7 @@ const rootSlice = createSlice({
 export const {
   signUp,
   addProductToCart,
-  removeProductFromcart,
+  removeProductFromСart,
   logIn,
   logOut
 } = rootSlice.actions;

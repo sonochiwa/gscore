@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import { HeadingH2, TextInput, PrimaryButton, Typography } from "../styles/main";
 import LoginNavigation from '../components/login-navigation'
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
-import { removeProductFromcart } from "../store/root-slice";
+import { removeProductFromСart } from "../store/root-slice";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -17,7 +17,7 @@ export default function CheckoutPage() {
   const token = useAppSelector(state => state.root.token);
 
   const onClearBasket = (index: number) => {
-    dispatch(removeProductFromcart({ index }))
+    dispatch(removeProductFromСart({ index }))
   };
 
   useEffect(() => {
