@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { HeadingH2, TextInput, PrimaryButton, Typography, ErrorP } from "../styles/main";
+import { HeadingH2, TextInput, PrimaryButton, Typography, ErrorP, InputWrapper, MainError } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginNavigation from '../components/login-navigation'
 import axios from 'axios';
@@ -41,7 +41,7 @@ export default function SignUpPage() {
             email: response.data.email,
           }));
         });
-      router.push('/sign-in');
+      router.push('/');
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
     } finally {
@@ -64,75 +64,83 @@ export default function SignUpPage() {
         }
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            render={({ field: { onChange, onBlur, ref } }) => (
-              <TextInput
-                placeholder='Username'
-                onChange={onChange}
-                onBlur={onBlur}
-                ref={ref}
-              />
-            )}
-            name="username"
-            control={control}
-            rules={{
-              required: 'Required field',
-              minLength: {
-                value: 6,
-                message: 'Min len 6'
-              },
-            }}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="username"
-            render={({ message }) => <ErrorP>{message}</ErrorP>}
-          />
+          <InputWrapper>
+            <Controller
+              render={({ field: { onChange, onBlur, ref } }) => (
+                <TextInput
+                  placeholder='Username'
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+              )}
+              name="username"
+              control={control}
+              rules={{
+                required: 'Required field',
+                minLength: {
+                  value: 6,
+                  message: 'Min len 6'
+                },
+              }}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="username"
+              render={({ message }) => <ErrorP>{message}</ErrorP>}
+            />
+          </InputWrapper>
 
-          <Controller
-            render={({ field: { onChange, onBlur, ref } }) => (
-              <TextInput
-                placeholder='Email'
-                onChange={onChange}
-                onBlur={onBlur}
-                ref={ref}
-              />
-            )}
-            name="email"
-            control={control}
-            rules={{
-              required: 'Required field.',
-              pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: 'Please enter a valid email.',
-              },
-            }}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="email"
-            render={({ message }) => <ErrorP>{message}</ErrorP>}
-          />
 
-          <Controller
-            render={({ field: { onChange, onBlur, ref } }) => (
-              <TextInput
-                placeholder='Password'
-                onChange={onChange}
-                onBlur={onBlur}
-                ref={ref}
-                type='password'
-              />
-            )}
-            name="password"
-            control={control}
-            rules={{ required: 'Required field', minLength: { value: 6, message: 'Min len 6' } }}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="password"
-            render={({ message }) => <ErrorP>{message}</ErrorP>}
-          />
+          <InputWrapper>
+            <Controller
+              render={({ field: { onChange, onBlur, ref } }) => (
+                <TextInput
+                  placeholder='Email'
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+              )}
+              name="email"
+              control={control}
+              rules={{
+                required: 'Required field.',
+                pattern: {
+                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'Please enter a valid email.',
+                },
+              }}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => <ErrorP>{message}</ErrorP>}
+            />
+          </InputWrapper>
+
+          <InputWrapper>
+            <Controller
+              render={({ field: { onChange, onBlur, ref } }) => (
+                <TextInput
+                  placeholder='Password'
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  ref={ref}
+                  type='password'
+                />
+              )}
+              name="password"
+              control={control}
+              rules={{ required: 'Required field', minLength: { value: 6, message: 'Min len 6' } }}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => <ErrorP>{message}</ErrorP>}
+            />
+          </InputWrapper>
+
 
           <PrimaryButton type='submit' $loading={isLoading}>Send password</PrimaryButton>
         </form>
@@ -179,14 +187,7 @@ const Wrapper = styled.div`
   ${PrimaryButton} {
     width: 200px;
   }
-  ${TextInput}:not(:first-child) {
-    margin-top: 24px;
-  }
   ${PrimaryButton} {
     margin: 48px 0;
   }
-`;
-
-const MainError = styled(ErrorP)`
-  margin-bottom: 20px;
 `;

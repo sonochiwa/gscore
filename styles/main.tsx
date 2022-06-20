@@ -216,7 +216,7 @@ interface IHeadingH2 {
 
 export const HeadingH2 = styled.div<IHeadingH2>`
   font-family: 'Thicccboi';
-  text-align: ${ props => props.left ? 'left' : 'center'};
+  text-align: ${props => props.left ? 'left' : 'center'};
   font-weight: 700;
   font-size: 44px;
   line-height: 54px;
@@ -271,5 +271,19 @@ export const TextInput = styled.input`
 export const ErrorP = styled.p`
   font-family: 'Thicccboi';
   color: var(--red_300);
-  margin-top: 5px;
-`
+  font-size: 12px;
+
+  position: absolute;
+  bottom: -15px;
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+  margin-top: 24px;
+`;
+
+export const MainError = styled.p`
+  font-family: 'Thicccboi';
+  color: var(--red_300);
+  font-size: 12px;
+`;

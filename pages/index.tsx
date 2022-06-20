@@ -21,11 +21,6 @@ export async function getServerSideProps() {
 function HomePage({ products }: any) {
   const token = useAppSelector(state => state.root.token);
 
-  useEffect(() => {
-    axiosInstance(token).get('/users/me')
-      .then(response => console.log(response));
-  }, []);
-
   return (
     <Layout title="Home">
       <Container>

@@ -68,7 +68,7 @@ interface ITab {
 const Tab = styled.div<ITab>`
   display: flex;
   gap: 16px;
-    ${TabItem}:nth-child(-n + ${props => props.tab}) ${TabButton}  {
+    ${TabItem}:nth-child(${props => props.tab}) ${TabButton}  {
     background-color: var(--primary_1);
   }
 `;

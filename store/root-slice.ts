@@ -36,11 +36,21 @@ const rootSlice = createSlice({
       state.id = '';
       state.username = 'username';
       state.email = '';
+    },
+
+    setUsername(state, action: PayloadAction<any>) {
+      state.username = action.payload
+    },
+
+    setEmail(state, action: PayloadAction<any>) {
+      state.email = action.payload
     }
   },
 });
 
 export const {
+  setUsername,
+  setEmail,
   signUp,
   addProductToCart,
   removeProductFromСart,
