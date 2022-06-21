@@ -1,7 +1,11 @@
 import { CSSProp, css } from "styled-components";
 
-export const ButtonTheme: { [key: string]: () => CSSProp } = {
-  primary: () => {
+interface ButtonThemeArgs {
+  loading?: boolean;
+}
+
+export const ButtonTheme: { [key: string]: (args: ButtonThemeArgs) => CSSProp } = {
+  primary: ({ loading }) => {
     return css`
       color: var(--color_100);
       background-color: var(--primary_1);
@@ -12,14 +16,19 @@ export const ButtonTheme: { [key: string]: () => CSSProp } = {
         outline: 4px solid rgba(252, 88, 66, 0.3);
       }
       &:disabled {
-        &:hover {
-          background-color: var(--primary_1);
-        }
+        ${loading
+        ? ''
+        : css`
+          opacity: .6;
+          &:hover {
+            background-color: var(--primary_1);
+          }
+        `}
       }
     `;
   },
 
-  secondary: () => {
+  secondary: ({ loading }) => {
     return css`
       color: var(--primary_1);
       background-color: var(--color_100);
@@ -30,8 +39,9 @@ export const ButtonTheme: { [key: string]: () => CSSProp } = {
         outline: 4px solid rgba(255, 255, 255, 0.3);
       }
       &:disabled {
+        opacity: .6;
         &:hover {
-          color: var(--primary_1);
+          background-color: var(--color_100);
         }
       }
     `;
