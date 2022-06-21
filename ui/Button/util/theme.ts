@@ -39,10 +39,14 @@ export const ButtonTheme: { [key: string]: (args: ButtonThemeArgs) => CSSProp } 
         outline: 4px solid rgba(255, 255, 255, 0.3);
       }
       &:disabled {
-        opacity: .6;
-        &:hover {
-          background-color: var(--color_100);
-        }
+        ${loading
+        ? ''
+        : css`
+          opacity: .6;
+          &:hover {
+            background-color: var(--color_100);
+          }
+        `}
       }
     `;
   }
