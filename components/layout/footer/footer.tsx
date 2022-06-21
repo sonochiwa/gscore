@@ -24,7 +24,7 @@ export default function FooterComponent() {
             <SocialItem>
               <Link href="https://facebook.com">
                 <a target="_blank">
-                  <Image src="/icons/socials/facebook.svg" width="13.43" height="24.62" alt="Facebook" />
+                  <Image src={"/icons/socials/facebook.svg"} width="13.43" height="24.62" alt="Facebook" />
                 </a>
               </Link>
             </SocialItem>

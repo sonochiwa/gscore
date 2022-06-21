@@ -149,7 +149,6 @@ const Button = styled.button<IButton>`
         transform: rotate(360deg);
       }
     }
-
     position: absolute;
     content: ${props => props.$loading ? "url(/icons/loading.svg)" : ""};
     left: calc(50% - 9px);
@@ -161,7 +160,7 @@ const Button = styled.button<IButton>`
     animation-duration: 1s;
     animation-delay: none;
     animation-iteration-count: infinite;
-  }
+  };
 
   &:active {
     outline: none;
@@ -190,7 +189,6 @@ export const PrimaryButton = styled(Button)`
 export const SecondaryButton = styled(Button)`
   color: var(--primary_1);
   background-color: var(--color_100);
-  box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
   &:hover {
     color: var(--red_400);
   }
@@ -212,7 +210,7 @@ export const Logo = styled.div`
 
 interface IHeadingH2 {
   left?: boolean;
-}
+};
 
 export const HeadingH2 = styled.div<IHeadingH2>`
   font-family: "Thicccboi";
