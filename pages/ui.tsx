@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { Container } from "../styles/main";
 import Button from "../ui/Button";
@@ -19,3 +18,4 @@ export default function UiPage() {
     </Container >
   )
 };
+

@@ -28,11 +28,11 @@ const rootSlice = createSlice({
     },
 
     setUsername(state, action: PayloadAction<ISetUsername>) {
-      state.username = action.payload.username
+      state.username = action.payload.username;
     },
 
     setEmail(state, action: PayloadAction<ISetEmail>) {
-      state.email = action.payload.email
+      state.email = action.payload.email;
     },
   },
 });

@@ -15,6 +15,9 @@ export interface ISetAccessToken {
 };
 
 export interface IAddProductToCart {
+  prices: string;
+  name: string;
+  id: string;
 };
 
 export interface IRemoveProductFromСart {
