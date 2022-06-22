@@ -14,7 +14,7 @@ const rootSlice = createSlice({
     logOut(state) {
       state.cartProducts = [];
       state.token = undefined;
-      state.username = "username";
+      state.username = undefined;
     },
 
     addProductToCart(state, action: PayloadAction<IAddProductToCart>) {

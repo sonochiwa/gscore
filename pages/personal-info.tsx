@@ -17,13 +17,18 @@ interface FormValues {
   email: string;
 };
 
+interface ISchema {
+  username?: string;
+  email?: string;
+};
+
 const schema = yup.object().shape({
   username: yup.string().min(4).notRequired(),
-  email: yup.string().email().notRequired(),
-});
+  email: yup.string().email().notRequired()
+}).test('oneOfRequired', (schema: ISchema) => { return schema.username != null || schema.email != null })
 
 export default function SettingsPage() {
-  const { handleSubmit, control, formState: { errors }, reset } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 export interface IInitialState {
-  token: string | undefined;
-  username: string;
+  token?: string;
+  username?: string;
   cartProducts: ICartProducts[];
 };
 

@@ -36,7 +36,7 @@ export default function HeaderComponent() {
             <User>
               <LoginTypography><Link href="/subscriptions"><a>My subscriptions</a></Link></LoginTypography>
               <NameWrapper>
-                <UserName onClick={() => setOpen(!open)}>{username}</UserName>
+                <UserName onClick={() => setOpen(!open)}>{username ? username : 'username'}</UserName>
                 <motion.div
                   variants={variants}
                   animate={open ? "rotate" : "stop"}
