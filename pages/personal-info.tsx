@@ -2,8 +2,8 @@ import Layout from "../components/layout";
 import styled from "styled-components";
 import { Container, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
-import { setEmail, setUsername } from "../store/root-slice";
+import { useAppDispatch } from "../hooks/app-dispatch";
+import { setUsername } from "../store/root-slice";
 import SettingsNavigation from '../components/settings-navigation';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,9 +23,7 @@ const schema = yup.object().shape({
 });
 
 export default function SettingsPage() {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
-  const username = useAppSelector(state => state.root.username);
-  const email = useAppSelector(state => state.root.email);
+  const { handleSubmit, control, formState: { errors }, reset } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();
@@ -33,18 +31,15 @@ export default function SettingsPage() {
   const onSubmit = async (data: FormValues) => {
     try {
       setIsActive(true);
-      if (username !== '') {
+      await api.auth.updateUser({
+        username: data.username,
+        email: data.email
+      }).then(response => console.log(response))
+
+      if (data.username) {
         dispatch(setUsername({ username: data.username }));
-        await api.auth.updateUser({
-          username: data.username
-        }).then(response => console.log(response))
       }
-      if (email !== '') {
-        dispatch(setEmail({ email: data.email }));
-        await api.auth.updateUser({
-          email: data.email
-        }).then(response => console.log(response))
-      }
+
       alert('user info updated');
       setError(null);
     } catch (e: any) {
@@ -69,7 +64,6 @@ export default function SettingsPage() {
                 placeholder="Username"
                 onChange={onChange}
                 onBlur={onBlur}
-                defaultValue={username}
                 errors={errors}
               />
             )}
@@ -84,7 +78,6 @@ export default function SettingsPage() {
                 placeholder="Email"
                 onChange={onChange}
                 onBlur={onBlur}
-                defaultValue={email}
                 errors={errors}
               />
             )}

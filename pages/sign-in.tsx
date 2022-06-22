@@ -43,7 +43,6 @@ export default function SignInPage() {
           dispatch(setAccessToken({
             token: response.data.token,
             username: response.data.user.username,
-            email: response.data.user.email,
           }));
         });
       router.push('/checkout');
@@ -59,8 +58,8 @@ export default function SignInPage() {
       <Wrapper>
         <LoginNavigation currentTab={2} />
         <HeadingH2>Log in</HeadingH2>
-        {error && <ErrorText>{error}</ErrorText>}
         <Form onSubmit={handleSubmit(onSubmit)}>
+          {error && <ErrorText>{error}</ErrorText>}
 
           <Controller
             render={({ field: { onChange, onBlur } }) => (

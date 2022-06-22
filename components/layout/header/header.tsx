@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import logo from "/public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../../../hooks/app-dispatch";
@@ -32,7 +31,7 @@ export default function HeaderComponent() {
     <Header>
       <Container>
         <HeaderInner>
-          <Link href='/'><a><Image src={logo} width="170" height="42" alt="" /></a></Link>
+          <Link href="/"><a><Image src="/logo.svg" width="170" height="42" alt="" /></a></Link>
           {token != undefined && (
             <User>
               <LoginTypography><Link href="/subscriptions"><a>My subscriptions</a></Link></LoginTypography>

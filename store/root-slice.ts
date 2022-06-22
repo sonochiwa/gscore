@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import initialState from "./initial-state";
-import { IAddProductToCart, ISetAccessToken, IRemoveProductFromСart, ISetUsername, ISetEmail } from "./types";
+import { IAddProductToCart, ISetAccessToken, IRemoveProductFromСart, ISetUsername } from "./types";
 
 const rootSlice = createSlice({
   name: "root",
@@ -9,14 +9,12 @@ const rootSlice = createSlice({
     setAccessToken(state, action: PayloadAction<ISetAccessToken>) {
       state.token = action.payload.token;
       state.username = action.payload.username;
-      state.email = action.payload.email;
     },
 
     logOut(state) {
       state.cartProducts = [];
       state.token = undefined;
       state.username = "username";
-      state.email = "example@email.com";
     },
 
     addProductToCart(state, action: PayloadAction<IAddProductToCart>) {
@@ -30,10 +28,6 @@ const rootSlice = createSlice({
     setUsername(state, action: PayloadAction<ISetUsername>) {
       state.username = action.payload.username;
     },
-
-    setEmail(state, action: PayloadAction<ISetEmail>) {
-      state.email = action.payload.email;
-    },
   },
 });
 
@@ -43,7 +37,6 @@ export const {
   addProductToCart,
   removeProductFromСart,
   setUsername,
-  setEmail,
 
 } = rootSlice.actions;
 

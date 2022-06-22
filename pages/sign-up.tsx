@@ -46,7 +46,6 @@ export default function SignUpPage() {
           dispatch(setAccessToken({
             token: response.data.token,
             username: response.data.username,
-            email: response.data.email,
           }));
         });
       router.push("/checkout");
@@ -66,8 +65,8 @@ export default function SignUpPage() {
           You need to enter your name and email.
           We will send you a temporary password by email
         </Subtitle>
-        {error && <ErrorText>{error}</ErrorText>}
         <Form onSubmit={handleSubmit(onSubmit)}>
+          {error && <ErrorText>{error}</ErrorText>}
 
           <Controller
             render={({ field: { onChange, onBlur } }) => (
@@ -154,9 +153,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 620px;
   width: 100%;
-  ${ErrorText} {
-    margin-bottom: 12px;
-  }
+
   ${HeadingH2} {
     text-align: left;
     margin-bottom: 16px;
