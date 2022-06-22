@@ -2,7 +2,7 @@ import { CSSProp, css } from "styled-components";
 
 interface ButtonThemeArgs {
   loading?: boolean;
-}
+};
 
 export const ButtonTheme: { [key: string]: (args: ButtonThemeArgs) => CSSProp } = {
   primary: ({ loading }) => {

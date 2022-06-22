@@ -153,7 +153,6 @@ const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 620px;
   width: 100%;
-
   ${HeadingH2} {
     text-align: left;
     margin-bottom: 16px;

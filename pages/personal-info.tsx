@@ -24,8 +24,8 @@ interface ISchema {
 
 const schema = yup.object().shape({
   username: yup.string().min(4).notRequired(),
-  email: yup.string().email().notRequired()
-}).test('oneOfRequired', (schema: ISchema) => { return schema.username != null || schema.email != null })
+  email: yup.string().email().notRequired(),
+}).test('oneOfRequired', (schema: ISchema) => { return schema.username != null || schema.email != null });
 
 export default function SettingsPage() {
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
@@ -39,11 +39,11 @@ export default function SettingsPage() {
       await api.auth.updateUser({
         username: data.username,
         email: data.email
-      }).then(response => console.log(response))
+      }).then(response => console.log(response));
 
       if (data.username) {
         dispatch(setUsername({ username: data.username }));
-      }
+      };
 
       alert('user info updated');
       setError(null);
@@ -51,7 +51,7 @@ export default function SettingsPage() {
       setError(e.response?.data?.message || e.message);
     } finally {
       setIsActive(false);
-    }
+    };
   };
 
   return (
