@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 interface SettingsNavigation {
   currentTab: number;
-}
+};
 
 export default function SettingsNavigationComponent({ currentTab }: SettingsNavigation) {
   const router = useRouter();
@@ -29,7 +29,7 @@ const TabWrapper = styled.div`
 
 interface ITab {
   tab: number;
-}
+};
 
 const Tab = styled.div<ITab>`
   display: flex;
@@ -41,7 +41,7 @@ const Tab = styled.div<ITab>`
   & :nth-child(${props => props.tab}) {
     color: var(--primary_1);
     margin-bottom: -2px;
-    border-bottom: 3px solid var(--primary_1);
+    border-bottom: 2px solid var(--primary_1);
     z-index: 999;
   }
 `;

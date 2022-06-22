@@ -1,21 +1,26 @@
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from '../../hooks/app-dispatch';
-import { SecondaryButton } from "../../styles/main";
 import { addProductToCart } from "../../store/root-slice";
+import Button from "../../ui/Button";
+import styled from "styled-components";
+import { IAddProductToCart } from "../../store/types";
 
-export default function PricingCardComponent({ prices, name, isProfit, id }: any) {
+interface IPricingCardComponent extends IAddProductToCart {
+  isProfit: boolean;
+}
+
+export default function PricingCardComponent({ prices, name, isProfit }: IPricingCardComponent) {
+  const token = useAppSelector(state => state.root.token);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const token = useAppSelector(state => state.root.token);
 
-  const onGet = () => {
-    dispatch(addProductToCart({ prices, name, id }));
+  const handleGet = () => {
+    dispatch(addProductToCart({ prices, name }));
     if (token === undefined) {
       router.push("/sign-up")
     } else {
       router.push({ pathname: "/checkout" })
-    }
+    };
   };
 
   return (
@@ -23,7 +28,8 @@ export default function PricingCardComponent({ prices, name, isProfit, id }: any
       <CardTop isProfit={isProfit}>
         {prices.map(({ price }: any, index: number) => <Price key={index}>{price}</Price>)}
         <Title>{name} license</Title>
-        <Text isProfit={isProfit}>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</Text>
+        <Text isProfit={isProfit}>Get the advanced WordPress plugin
+          that optimizes content with GSC keywords at one low annual price</Text>
       </CardTop>
       <CardBottom>
         <CardUl>
@@ -32,14 +38,14 @@ export default function PricingCardComponent({ prices, name, isProfit, id }: any
           <CardLi isProfit={isProfit}>Unlimited Pages and Keywords</CardLi>
           <CardLi isProfit={isProfit}>Billed annually</CardLi>
         </CardUl>
-        <CardButton isProfit={isProfit} onClick={onGet}>Get Gscore</CardButton>
+        <CardButton isProfit={isProfit} onClick={handleGet}>Get Gscore</CardButton>
       </CardBottom>
     </Root >
   )
 };
 
 interface isProfitProps {
-  isProfit?: any;
+  isProfit?: boolean;
 };
 
 const Root = styled.div<isProfitProps>`
@@ -108,7 +114,7 @@ const CardLi = styled.li<isProfitProps>`
   }
 `;
 
-const CardButton = styled(SecondaryButton) <isProfitProps>`
+const CardButton = styled(Button) <isProfitProps>`
   margin-top: 32px;
   color: ${props => props.isProfit ? "var(--primary_1)" : "var(--color_800)"};
   box-shadow: none;

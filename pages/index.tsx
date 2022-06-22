@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
 import { Container, HeadingH2, Typography } from "../styles/main";
-import { useAppSelector } from "../hooks/app-dispatch";
 
 export async function getServerSideProps() {
   const { data } = await axios.get("https://gscore-back.herokuapp.com/api/products");

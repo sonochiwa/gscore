@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, useState } from "react";
+import { ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 import { ButtonTheme, LoaderTheme } from "./util/theme";
 
@@ -6,12 +6,12 @@ type ButtonVariant = "primary" | "secondary";
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
-  theme?: ButtonVariant;
+  theme: ButtonVariant;
 };
 
 const Button: React.FC<IButton> = ({ isLoading, theme, children, disabled, ...props }: IButton) => {
   return (
-    <Root $loading={isLoading} $theme={theme} disabled={disabled || isLoading} {...props}>
+    <Root type="submit" $loading={isLoading} $theme={theme} disabled={disabled || isLoading} {...props}>
       {isLoading ? <Loader $theme={theme} /> : children}
     </Root>
   )
@@ -23,7 +23,12 @@ interface IRoot {
 };
 
 const Root = styled.button<IRoot>`
+  margin-top: 24px;
+  position: relative;
+  width: min-content;
+  white-space: nowrap;
   cursor: pointer;
+  min-width: 200px;
   height: 58px;
   font-family: "Thicccboi";
   border-radius: 4px;
@@ -49,7 +54,9 @@ const Loader = styled.div<ILoader>`
       transform: rotate(360deg);
     }
   }
+  position: absolute;
   left: calc(50% - 9px);
+  top: calc(50% - 9px);
   width: 18px;
   height: 18px;
   color: white;

@@ -1,122 +1,114 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { Container, HeadingH2, HeadingH3, PrimaryButton, TextInput, ErrorP, InputWrapper } from "../styles/main";
+import { Container, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
-import axiosInstance from "../services/axios-instance";
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
 import { setEmail, setUsername } from "../store/root-slice";
-import { useState } from "react";
 import SettingsNavigation from '../components/settings-navigation';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
+import { useState } from "react";
+import api from "../services";
 
 interface FormValues {
-  textInput: string;
   username: string;
   email: string;
 };
 
+const schema = yup.object().shape({
+  username: yup.string().min(4).notRequired(),
+  email: yup.string().email().notRequired(),
+});
+
 export default function SettingsPage() {
-  const dispatch = useAppDispatch();
-  const token = useAppSelector(state => state.root.token);
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const username = useAppSelector(state => state.root.username);
   const email = useAppSelector(state => state.root.email);
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
+  const [isActive, setIsActive] = useState(false);
+  const [error, setError] = useState(null);
+  const dispatch = useAppDispatch();
 
-  const onSubmit = (data: FormValues) => {
-    if (data.username) {
-      dispatch(setUsername({ username: data.username }));
-      axiosInstance(token).patch('/users', {
-        username: data.username,
-      })
-    }
-    if (data.email) {
-      dispatch(setEmail({ email: data.email }));
-      axiosInstance(token).patch('/users', {
-        email: data.email,
-      })
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setIsActive(true);
+      if (username !== '') {
+        dispatch(setUsername({ username: data.username }));
+        await api.auth.updateUser({
+          username: data.username
+        }).then(response => console.log(response))
+      }
+      if (email !== '') {
+        dispatch(setEmail({ email: data.email }));
+        await api.auth.updateUser({
+          email: data.email
+        }).then(response => console.log(response))
+      }
+      alert('user info updated');
+      setError(null);
+    } catch (e: any) {
+      setError(e.response?.data?.message || e.message);
+    } finally {
+      setIsActive(false);
     }
   };
 
   return (
-    <Layout title='Settings'>
+    <Layout title="Settings">
       <Container>
         <HeadingH2 left>Settings</HeadingH2>
         <SettingsNavigation currentTab={1} />
-        <Wrapper onSubmit={handleSubmit(onSubmit)}>
-          <WrapperInner>
-            <HeadingH3>Presonal info</HeadingH3>
-            <InputWrapper>
-              <Controller
-                render={({ field: { onChange, onBlur, ref } }) => (
-                  <TextInput
-                    placeholder='Username'
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    ref={ref}
-                    defaultValue={username}
-                  />
-                )}
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <HeadingH3>Presonal info</HeadingH3>
+          {error && <ErrorText>{error}</ErrorText>}
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
                 name="username"
-                control={control}
-                rules={{
-                  required: false,
-                  minLength: {
-                    value: 6,
-                    message: 'Min len 6'
-                  },
-                }}
-              />
-              <ErrorMessage
+                placeholder="Username"
+                onChange={onChange}
+                onBlur={onBlur}
+                defaultValue={username}
                 errors={errors}
-                name="username"
-                render={({ message }) => <ErrorP>{message}</ErrorP>}
               />
-            </InputWrapper>
-            <InputWrapper>
-              <Controller
-                render={({ field: { onChange, onBlur, ref } }) => (
-                  <TextInput
-                    placeholder='Email'
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    ref={ref}
-                    defaultValue={email}
-                  />
-                )}
+            )}
+            name="username"
+            control={control}
+          />
+
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
                 name="email"
-                control={control}
-                rules={{
-                  required: false,
-                  pattern: {
-                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: 'Please enter a valid email.',
-                  },
-                }}
-              />
-              <ErrorMessage
+                placeholder="Email"
+                onChange={onChange}
+                onBlur={onBlur}
+                defaultValue={email}
                 errors={errors}
-                name="email"
-                render={({ message }) => <ErrorP>{message}</ErrorP>}
               />
-            </InputWrapper>
-          </WrapperInner>
-          <PrimaryButton type='submit'>Save all changes</PrimaryButton>
-        </Wrapper>
+            )}
+            name="email"
+            control={control}
+          />
+
+          <Button
+            theme="primary"
+            isLoading={isActive}
+            disabled={isActive}
+            onClick={() => onSubmit}
+          >Save</Button>
+
+        </Form>
       </Container>
     </Layout>
   )
 };
 
-const Wrapper = styled.form`
-    ${TextInput} {
-    max-width: 512px;
-    width: 100%;
-  }
-`;
-
-const WrapperInner = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 24px;
   width: 100%;
   max-width: 512px;
   margin-bottom: 48px;

@@ -1,20 +1,21 @@
 import styled from "styled-components";
 import Layout from "../components/layout";
-import { HeadingH2, TextInput, PrimaryButton, Typography } from "../styles/main";
+import { HeadingH2, Typography } from "../styles/main";
 import LoginNavigation from "../components/login-navigation";
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
 import { removeProductFromСart } from "../store/root-slice";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Button from "../ui/Button";
 
 export default function CheckoutPage() {
+  const token = useAppSelector(state => state.root.token);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const cart = useAppSelector(({ root }: any) => ({
     products: root.cartProducts,
     total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0)
   }));
-  const token = useAppSelector(state => state.root.token);
 
   const onClearBasket = (index: number) => {
     dispatch(removeProductFromСart({ index }))
@@ -30,7 +31,7 @@ export default function CheckoutPage() {
     <Layout title="Checkout">
       <Wrapper>
         <LoginNavigation currentTab={3} />
-        <HeadingH2>Checkout</HeadingH2>
+        <HeadingH2 left>Checkout</HeadingH2>
         <Package>
           <Row>
             <Typography>Package name</Typography>
@@ -53,7 +54,10 @@ export default function CheckoutPage() {
             ${cart.total}
           </Typography>
         </Total>
-        <PrimaryButton onClick={() => router.push("/start-your-subscription")}>Purchase</PrimaryButton>
+        <Button
+          theme="primary"
+          onClick={() => router.push("/start-your-subscription")}
+        >Purchase</Button>
       </Wrapper>
     </Layout >
   )
@@ -64,17 +68,7 @@ const Wrapper = styled.div`
   max-width: 620px;
   width: 100%;
   ${HeadingH2} {
-    text-align: left;
     margin-bottom: 16px;
-  }
-  ${PrimaryButton} {
-    width: 200px;
-  }
-  ${TextInput} + ${TextInput} {
-    margin-top: 24px;
-  }
-  ${TextInput} + ${PrimaryButton} {
-    margin: 48px 0;
   }
 `;
 
@@ -117,8 +111,7 @@ const Hr = styled.div`
 const Total = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
-  margin-bottom: 48px;
+  margin: 24px 0;
   ${Typography} {
     font-size: 28px;
     font-weight: 700;

@@ -1,15 +1,19 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { HeadingH2, PrimaryButton, Typography } from "../styles/main";
+import { HeadingH2, Subtitle, Typography } from "../styles/main";
 import { useAppSelector } from "../hooks/app-dispatch";
 import { useRouter } from "next/router";
+import Button from "../ui/Button";
 
 export default function SubscribePage() {
-  const cart = useAppSelector(({ root }: any) => ({ products: root.cartProducts, total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0) }))
   const router = useRouter();
+  const cart = useAppSelector(({ root }: any) => ({
+    products: root.cartProducts,
+    total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0)
+  }));
 
   return (
-    <Layout title="Purchase">
+    <Layout title="Start your subscription">
       <Wrapper>
         <HeadingH2 left>Start your subscription</HeadingH2>
         <Subtitle>
@@ -31,7 +35,11 @@ export default function SubscribePage() {
             </Row>
           ))}
         </Package>
-        <PrimaryButton type="submit" onClick={()=> router.push("/subscriptions")}>Go to my subscriptions</PrimaryButton>
+        <Button
+          theme="primary"
+          onClick={() => router.push("/subscriptions")}
+          style={{ width: "100%" }}
+        >Go to my subscriptions</Button>
       </Wrapper>
     </Layout>
   )
@@ -45,18 +53,6 @@ const Wrapper = styled.div`
     text-align: left;
     margin-bottom: 16px;
   }
-  ${PrimaryButton} {
-    margin-top: 48px;
-    width: 100%;
-  }
-`;
-
-const Subtitle = styled.div`
-  font-size: 14px;
-  font-family: 'Thicccboi';
-  font-weight: 400;
-  line-height: 24px;
-  margin-bottom: 32px;
 `;
 
 const Row = styled.div`
@@ -69,6 +65,7 @@ const Package = styled.div`
   background-color: #272727;
   border-radius: 12px;
   padding: 48px 32px;
+  margin-bottom: 24px;
   ${Row}:first-child ${Typography} {
     font-weight: 700;
   }

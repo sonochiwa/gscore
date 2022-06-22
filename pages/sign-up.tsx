@@ -1,40 +1,48 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { HeadingH2, TextInput, PrimaryButton, Typography, ErrorP, InputWrapper, MainError } from "../styles/main";
+import { HeadingH2, Typography, ErrorText, Subtitle } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginNavigation from '../components/login-navigation'
-import axios from 'axios';
-import { ErrorMessage } from '@hookform/error-message';
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setAccessToken } from '../store/root-slice';
 import { useAppDispatch } from '../hooks/app-dispatch';
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import api from "./../services";
 
 interface FormValues {
-  textInput: string;
   username: string;
   email: string;
   password: string;
 };
 
+const schema = yup.object().shape({
+  username: yup.string().min(4).required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+});
+
 export default function SignUpPage() {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
-  const [isLoading, setIsLoading] = useState(false);
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
-  const router = useRouter();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const onSubmit = async (data: FormValues) => {
     try {
-      setIsLoading(true);
-      await axios.post("https://gscore-back.herokuapp.com/api/users/sign-up",
-        {
-          username: data.username,
-          email: data.email,
-          password: data.password
-        })
+      setIsActive(true);
+      await api.auth.signUp({
+        username: data.username,
+        email: data.email,
+        password: data.password
+      })
         .then((response) => {
+          console.log(response);
           dispatch(setAccessToken({
             token: response.data.token,
             username: response.data.username,
@@ -45,7 +53,7 @@ export default function SignUpPage() {
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
     } finally {
-      setIsLoading(false);
+      setIsActive(false);
     }
   };
 
@@ -58,93 +66,60 @@ export default function SignUpPage() {
           You need to enter your name and email.
           We will send you a temporary password by email
         </Subtitle>
+        {error && <ErrorText>{error}</ErrorText>}
+        <Form onSubmit={handleSubmit(onSubmit)}>
 
-        {error &&
-          <MainError>{error}</MainError>
-        }
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
+                name="username"
+                placeholder="Username"
+                onChange={onChange}
+                onBlur={onBlur}
+                errors={errors}
+              />
+            )}
+            name="username"
+            control={control}
+          />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InputWrapper>
-            <Controller
-              render={({ field: { onChange, onBlur, ref } }) => (
-                <TextInput
-                  placeholder='Username'
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  ref={ref}
-                />
-              )}
-              name="username"
-              control={control}
-              rules={{
-                required: "Required field",
-                minLength: {
-                  value: 6,
-                  message: "Min len 6"
-                },
-              }}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="username"
-              render={({ message }) => <ErrorP>{message}</ErrorP>}
-            />
-          </InputWrapper>
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
+                name="email"
+                placeholder="Email"
+                onChange={onChange}
+                onBlur={onBlur}
+                errors={errors}
+              />
+            )}
+            name="email"
+            control={control}
+          />
 
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
+                name="password"
+                placeholder="Password"
+                onChange={onChange}
+                onBlur={onBlur}
+                type="password"
+                errors={errors}
+              />
+            )}
+            name="password"
+            control={control}
+          />
 
-          <InputWrapper>
-            <Controller
-              render={({ field: { onChange, onBlur, ref } }) => (
-                <TextInput
-                  placeholder="Email"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  ref={ref}
-                />
-              )}
-              name="email"
-              control={control}
-              rules={{
-                required: "Required field.",
-                pattern: {
-                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: "Please enter a valid email.",
-                },
-              }}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="email"
-              render={({ message }) => <ErrorP>{message}</ErrorP>}
-            />
-          </InputWrapper>
+          <Button
+            theme="primary"
+            isLoading={isActive}
+            disabled={isActive}
+            onClick={() => onSubmit}
+          >Send password</Button>
 
-          <InputWrapper>
-            <Controller
-              render={({ field: { onChange, onBlur, ref } }) => (
-                <TextInput
-                  placeholder="Password"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  ref={ref}
-                  type="password"
-                />
-              )}
-              name="password"
-              control={control}
-              rules={{ required: "Required field", minLength: { value: 6, message: "Min len 6" } }}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="password"
-              render={({ message }) => <ErrorP>{message}</ErrorP>}
-            />
-          </InputWrapper>
-
-
-          <PrimaryButton type="submit" $loading={isLoading}>Send password</PrimaryButton>
-        </form>
-
+        </Form>
         <NextStep>
           <Typography color="var(--color_100)">Have an account?</Typography>
           <Link href="/sign-in"><a><Typography>Go to the next step</Typography></a></Link>
@@ -154,17 +129,16 @@ export default function SignUpPage() {
   )
 };
 
-const Subtitle = styled.div`
-  font-size: 14px;
-  font-family: "Thicccboi";
-  font-weight: 400;
-  line-height: 24px;
-  margin-bottom: 32px;
+const Form = styled.form`
+  display: grid;
+  flex-direction: column;
+  gap: 24px;
 `;
 
 const NextStep = styled.div`
   display: flex;
   gap: 8px;
+  margin-top: 48px;
   ${Typography} {
     display: inline-block;
     font-size: 16px;
@@ -180,14 +154,11 @@ const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 620px;
   width: 100%;
+  ${ErrorText} {
+    margin-bottom: 12px;
+  }
   ${HeadingH2} {
     text-align: left;
     margin-bottom: 16px;
-  }
-  ${PrimaryButton} {
-    width: 200px;
-  }
-  ${PrimaryButton} {
-    margin: 48px 0;
   }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface IMain {
-  children: any;
+  children: React.ReactNode;
 };
 
 export default function MainComponent({ children }: IMain) {

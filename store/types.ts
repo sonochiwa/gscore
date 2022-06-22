@@ -2,11 +2,17 @@ export interface IInitialState {
   token: string | undefined;
   username: string;
   email: string;
-  cartProducts: any[];
+  cartProducts: ICartProducts[];
 };
 
 export interface ICartProducts {
-};
+  name: string;
+  prices: IPrice[];
+}
+
+interface IPrice {
+  price: string;
+}
 
 export interface ISetAccessToken {
   token: string;
@@ -15,9 +21,8 @@ export interface ISetAccessToken {
 };
 
 export interface IAddProductToCart {
-  prices: string;
+  prices: IPrice[];
   name: string;
-  id: string;
 };
 
 export interface IRemoveProductFromСart {

@@ -1,127 +1,102 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { Container, HeadingH2, HeadingH3, PrimaryButton, TextInput, ErrorP, InputWrapper, MainError } from "../styles/main";
+import { Container, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import axiosInstance from "../services/axios-instance";
-import { useAppSelector } from "../hooks/app-dispatch";
 import { useState } from "react";
 import SettingsNavigation from "../components/settings-navigation";
+import api from "../services";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface FormValues {
-  textInput: string;
   currentPassword: string;
   newPassword: string;
 };
 
+const schema = yup.object().shape({
+  currentPassword: yup.string().min(6).required(),
+  newPassword: yup.string().min(6).required()
+});
+
 export default function SettingsPage() {
-  const token = useAppSelector(state => state.root.token);
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>();
-  const [isLoading, setIsLoading] = useState(false);
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      setIsLoading(true);
+      setIsActive(true);
       if (data.currentPassword && data.newPassword) {
-        await axiosInstance(token).patch("/users/update-password", {
+        await api.auth.updatePassword({
           currentPassword: data.currentPassword,
-          newPassword: data.newPassword,
-        });
-        setError(null);
-        setIsLoading(false);
-        alert('password updated');
+          newPassword: data.newPassword
+        })
       }
+      alert('password updated');
+      setError(null);
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
-      setIsLoading(false);
+    } finally {
+      setIsActive(false);
     }
   };
 
   return (
-    <Layout title='Settings'>
+    <Layout title="Settings">
       <Container>
         <HeadingH2 left>Settings</HeadingH2>
         <SettingsNavigation currentTab={2} />
-        <Wrapper onSubmit={handleSubmit(onSubmit)}>
-          <WrapperInner>
-            <HeadingH3>Change password</HeadingH3>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <HeadingH3>Change password</HeadingH3>
+          {error && <ErrorText>{error}</ErrorText>}
 
-            {error &&
-              <MainError>{error}</MainError>
-            }
-
-            <InputWrapper>
-              <Controller
-                render={({ field: { onChange, onBlur, ref } }) => (
-                  <TextInput
-                    placeholder="Current Password"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    ref={ref}
-                  />
-                )}
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
                 name="currentPassword"
-                control={control}
-                rules={{
-                  required: "Required field",
-                  minLength: {
-                    value: 6,
-                    message: "Min len 6"
-                  },
-                }}
-              />
-              <ErrorMessage
+                placeholder="Current Password"
+                onChange={onChange}
+                onBlur={onBlur}
                 errors={errors}
-                name="currentPassword"
-                render={({ message }) => <ErrorP>{message}</ErrorP>}
               />
-            </InputWrapper>
+            )}
+            name="currentPassword"
+            control={control}
+          />
 
-            <InputWrapper>
-              <Controller
-                render={({ field: { onChange, onBlur, ref } }) => (
-                  <TextInput
-                    placeholder="New Password"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    ref={ref}
-                  />
-                )}
+          <Controller
+            render={({ field: { onChange, onBlur } }) => (
+              <Input
                 name="newPassword"
-                control={control}
-                rules={{
-                  required: "Required field",
-                  minLength: {
-                    value: 6,
-                    message: "Min len 6"
-                  },
-                }}
-              />
-              <ErrorMessage
+                placeholder="New Password"
+                onChange={onChange}
+                onBlur={onBlur}
                 errors={errors}
-                name="newPassword"
-                render={({ message }) => <ErrorP>{message}</ErrorP>}
               />
-            </InputWrapper>
-          </WrapperInner>
-          <PrimaryButton type="submit" $loading={isLoading}>Save all changes</PrimaryButton>
-        </Wrapper>
+            )}
+            name="newPassword"
+            control={control}
+          />
+
+          <Button
+            theme="primary"
+            isLoading={isActive}
+            disabled={isActive}
+            onClick={() => onSubmit}
+          >Save</Button>
+
+        </Form>
       </Container>
     </Layout>
   )
 };
 
-const Wrapper = styled.form`
-    ${TextInput} {
-    max-width: 512px;
-    width: 100%;
-  }
-`;
-
-const WrapperInner = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 24px;
   width: 100%;
   max-width: 512px;
   margin-bottom: 48px;

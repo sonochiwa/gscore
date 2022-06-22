@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 interface LoginNavigation {
   currentTab: number;
-}
+};
 
 export default function LoginNavigationComponent({ currentTab }: LoginNavigation) {
   const router = useRouter();
@@ -63,7 +63,7 @@ const TabItem = styled.label`
 
 interface ITab {
   tab: number;
-}
+};
 
 const Tab = styled.div<ITab>`
   display: flex;

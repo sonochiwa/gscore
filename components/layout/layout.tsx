@@ -5,7 +5,7 @@ import Main from "./main";
 import Footer from "./footer";
 
 interface ILayout {
-  children: any;
+  children: React.ReactNode;
   title?: string;
 }
 

@@ -71,6 +71,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     background-color: var(--color_800);
     color: var(--color_100);
+    padding: 0 15px;
   }
 
   :root {
@@ -123,85 +124,6 @@ export const Container = styled.div`
 
 // UI kit
 
-interface IButton {
-  $loading?: any;
-}
-
-const Button = styled.button<IButton>`
-  font-family: "Thicccboi";
-  position: relative;
-  cursor: pointer;
-  border-radius: 4px;
-  border: none;
-  padding: 20px 24px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-  box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
-  color: ${props => props.$loading ? "transparent !important" : "white"};
-
-  &::before {
-    @keyframes loading {
-      from {
-        transform: rotate(0);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-    position: absolute;
-    content: ${props => props.$loading ? "url(/icons/loading.svg)" : ""};
-    left: calc(50% - 9px);
-    width: 18px;
-    height: 18px;
-    color: ${props => props.$loading ? "white" : "transparent !important"};
-    animation-name: loading;
-    animation-timing-function: linear;
-    animation-duration: 1s;
-    animation-delay: none;
-    animation-iteration-count: infinite;
-  };
-
-  &:active {
-    outline: none;
-  }
-  &:disabled {
-    opacity: .6;
-  }
-`;
-
-export const PrimaryButton = styled(Button)`
-  color: var(--color_100);
-  background-color: var(--primary_1);
-  &:hover {
-    background-color: var(--red_400);
-  }
-  &:focus {
-    outline: 4px solid rgba(252, 88, 66, 0.3);
-  }
-  &:disabled {
-    &:hover {
-      background-color: var(--primary_1);
-    }
-  }
-`;
-
-export const SecondaryButton = styled(Button)`
-  color: var(--primary_1);
-  background-color: var(--color_100);
-  &:hover {
-    color: var(--red_400);
-  }
-  &:focus {
-    outline: 4px solid rgba(255, 255, 255, 0.3);
-  }
-  &:disabled {
-    &:hover {
-      color: var(--primary_1);
-    }
-  }
-`;
-
 export const Logo = styled.div`
   width: 170px;
   height: 42px;
@@ -239,48 +161,17 @@ export const Typography = styled.p`
   color: ${props => props.color};
 `;
 
-export const TextInput = styled.input`
+export const ErrorText = styled.p`
+  margin-top: 2px;
   font-family: "Thicccboi";
-  border-radius: 6px;
-  outline: none;
-  border: 1px solid var(--color_300);
-  padding: 23px 25px;
-  font-weight: 400;
   font-size: 16px;
-  line-height: 18px;
-  caret-color: var(--primary_1);
-  box-shadow: 0px 2px 12px rgba(20, 20, 43, 0.06);
-  color: var(--color_700);
-  width: 100%;
-  ::placeholder {
-    color: var(--color_500);
-  }
-  :focus {
-    border: 1px solid var(--color_500);
-  }
-  :disabled {
-    background-color: var(--color_300);
-    ::placeholder {
-      color: var(--color_700);
-    }
-  }
-`;
-
-export const ErrorP = styled.p`
-  font-family: "Thicccboi";
   color: var(--red_300);
-  font-size: 12px;
-  position: absolute;
-  bottom: -15px;
 `;
 
-export const InputWrapper = styled.div`
-  position: relative;
-  margin-top: 24px;
-`;
-
-export const MainError = styled.p`
-  font-family: "Thicccboi";
-  color: var(--red_300);
-  font-size: 12px;
+export const Subtitle = styled.div`
+  font-size: 14px;
+  font-family: 'Thicccboi';
+  font-weight: 400;
+  line-height: 24px;
+  margin-bottom: 32px;
 `;
