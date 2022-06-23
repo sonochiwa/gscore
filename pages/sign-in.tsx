@@ -1,15 +1,15 @@
 import Layout from "../components/layout";
 import styled from 'styled-components';
-import { HeadingH2, ErrorText } from '../styles/main';
-import { useForm, Controller } from 'react-hook-form';
-import LoginNavigation from '../components/login-navigation'
-import { useState } from 'react';
-import { setAccessToken } from '../store/root-slice';
-import { useAppDispatch } from '../hooks/app-dispatch';
+import { HeadingH2, ErrorText } from "../styles/main";
+import { useForm, Controller } from "react-hook-form";
+import LoginTab from "../ui/LoginTab";
+import { useState } from "react";
+import { setAccessToken } from "../store/root-slice";
+import { useAppDispatch } from "../hooks/app-dispatch";
 import { useRouter } from "next/router";
 import api from "./../services";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 
@@ -56,7 +56,7 @@ export default function SignInPage() {
   return (
     <Layout title="Sign in">
       <Wrapper>
-        <LoginNavigation currentTab={2} />
+        <LoginTab currentTab={2} />
         <HeadingH2>Log in</HeadingH2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           {error && <ErrorText>{error}</ErrorText>}

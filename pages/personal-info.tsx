@@ -4,7 +4,7 @@ import { Container, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch } from "../hooks/app-dispatch";
 import { setUsername } from "../store/root-slice";
-import SettingsNavigation from '../components/settings-navigation';
+import SettingsTab from "../ui/SettingsTab";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../ui/Input";
@@ -27,7 +27,7 @@ const schema = yup.object().shape({
   email: yup.string().email().notRequired(),
 }).test('oneOfRequired', (schema: ISchema) => { return schema.username != null || schema.email != null });
 
-export default function SettingsPage() {
+export default function PersonalInfoPage() {
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
@@ -58,7 +58,7 @@ export default function SettingsPage() {
     <Layout title="Settings">
       <Container>
         <HeadingH2 left>Settings</HeadingH2>
-        <SettingsNavigation currentTab={1} />
+        <SettingsTab currentTab={1} />
         <Form onSubmit={handleSubmit(onSubmit)}>
           <HeadingH3>Presonal info</HeadingH3>
           {error && <ErrorText>{error}</ErrorText>}

@@ -13,6 +13,7 @@ interface IInput extends InputHTMLAttributes<HTMLInputElement> {
 const Input = ({ errorMessage, isValid, name, children, ...props }: IInput) => {
   const invalid = isValid.invalid;
   const isTouched = isValid.isTouched;
+  const isDirty = isValid.isDirty;
 
   return (
     <div>
@@ -32,7 +33,7 @@ const Input = ({ errorMessage, isValid, name, children, ...props }: IInput) => {
 
 interface IRoot {
   $isValid?: any;
-}
+};
 
 const Root = styled.input<IRoot>`
   width: 100%;

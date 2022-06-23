@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Container, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-import SettingsNavigation from "../components/settings-navigation";
+import SettingsTab from "../ui/SettingsTab";
 import api from "../services";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
@@ -20,7 +20,7 @@ const schema = yup.object().shape({
   newPassword: yup.string().min(6).required()
 });
 
-export default function SettingsPage() {
+export default function ChangePasswordPage() {
   const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
@@ -47,7 +47,7 @@ export default function SettingsPage() {
     <Layout title="Settings">
       <Container>
         <HeadingH2 left>Settings</HeadingH2>
-        <SettingsNavigation currentTab={2} />
+        <SettingsTab currentTab={2} />
         <Form onSubmit={handleSubmit(onSubmit)}>
           <HeadingH3>Change password</HeadingH3>
           {error && <ErrorText>{error}</ErrorText>}

@@ -2,11 +2,11 @@ import { Typography } from "../../styles/main";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-interface SettingsNavigation {
+interface SettingsTab {
   currentTab: number;
 };
 
-export default function SettingsNavigationComponent({ currentTab }: SettingsNavigation) {
+export default function SettingsTab({ currentTab }: SettingsTab) {
   const router = useRouter();
 
   return (

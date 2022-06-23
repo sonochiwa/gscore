@@ -148,7 +148,7 @@ export const HeadingH3 = styled.div`
   text-align: left;
   font-weight: 700;
   font-size: 28px;
-  line-height: 54px;
+  line-height: 40px;
   color: var(--color_100);
 `;
 

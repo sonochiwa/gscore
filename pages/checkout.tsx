@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { HeadingH2, Typography } from "../styles/main";
-import LoginNavigation from "../components/login-navigation";
+import LoginTab from "../ui/LoginTab";
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
 import { removeProductFromСart } from "../store/root-slice";
 import { useRouter } from "next/router";
@@ -30,7 +30,7 @@ export default function CheckoutPage() {
   return (
     <Layout title="Checkout">
       <Wrapper>
-        <LoginNavigation currentTab={3} />
+        <LoginTab currentTab={3} />
         <HeadingH2 left>Checkout</HeadingH2>
         <Package>
           <Row>

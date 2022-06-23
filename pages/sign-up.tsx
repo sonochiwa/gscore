@@ -2,7 +2,7 @@ import Layout from "../components/layout";
 import styled from "styled-components";
 import { HeadingH2, Typography, ErrorText, Subtitle } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
-import LoginNavigation from '../components/login-navigation'
+import LoginTab from "../ui/LoginTab";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -61,7 +61,7 @@ export default function SignUpPage() {
   return (
     <Layout title="Sign up">
       <Wrapper>
-        <LoginNavigation currentTab={1} />
+        <LoginTab currentTab={1} />
         <HeadingH2>Create account</HeadingH2>
         <Subtitle>
           You need to enter your name and email.

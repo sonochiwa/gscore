@@ -2,11 +2,11 @@ import { Typography } from "../../styles/main";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-interface LoginNavigation {
+interface LoginTab {
   currentTab: number;
 };
 
-export default function LoginNavigationComponent({ currentTab }: LoginNavigation) {
+export default function LoginTab({ currentTab }: LoginTab) {
   const router = useRouter();
 
   return (
