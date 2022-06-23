@@ -4,18 +4,87 @@ import Image from "next/image";
 import Button from "../ui/Button";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import PrimaryCard from "../ui/PrimaryCard";
+import { useState } from "react";
+import api from "../services";
+import axios from "axios";
+import axiosInstance from "../services/axios-instance";
 
-export default function SubscriptionsPage() {
+interface IPosition {
+  position: any;
+}
+
+interface ICurrentCard {
+  currentCard: number;
+}
+
+// api.auth.subscribeSelf({}).then(response => console.log(response.data));
+
+export async function getServerSidePropss() {
+  const data = await api.auth.subscribeSelf({}).then(response => console.log(response.data));
+
+  return {
+    props: {
+      subscriptions: data
+    }
+  }
+};
+
+interface ISubscriptionsPage {
+  subscriptions: any;
+}
+
+export default function SubscriptionsPage({ subscriptions }: ISubscriptionsPage) {
   const router = useRouter();
-  const subs = false;
+  const subs = true;
+  const [position, setPosition] = useState<any>(0);
+  const [currentCard, setCurrentCard] = useState<any>(1);
+  const maxCards = 4;
+
+  const onSubmit = async (data: any) => { };
+
+  const handlePrev = () => {
+    if (position < 0) {
+      setPosition(position + 648);
+      setCurrentCard(currentCard - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (position <= 0 && currentCard <= maxCards - 1) {
+      setPosition(position - 648);
+      setCurrentCard(currentCard + 1);
+    }
+  };
+
+  console.log(subscriptions)
 
   return (
     <Layout title="Subscriptions">
       <Container>
-        <HeadingH2 left>My subscriptions</HeadingH2>
+        {/* {subscriptions.map((sub: any, index: number) => <p>{index}</p>)} */}
+        {subscriptions}
+
+        <Row>
+          <HeadingH2 left>My subscriptions</HeadingH2>
+          <NewButton theme="primary">Upgrade</NewButton>
+        </Row>
         {subs ? (
           <>
-            sub list
+            <CarouselWrapper>
+              <Carousel $position={position}>
+                <PrimaryCard disabled={false} />
+                <PrimaryCard disabled={true} />
+                <PrimaryCard disabled={true} />
+                <PrimaryCard disabled={true} />
+              </Carousel>
+            </CarouselWrapper>
+
+            <ControlWrapper>
+              <Arrow onClick={handlePrev} />
+              <Position>{currentCard}<span>/4</span></Position>
+              <Arrow onClick={handleNext} />
+            </ControlWrapper>
           </>
         ) : (
           <NoSubsWrapper>
@@ -56,4 +125,68 @@ const StyledButton = styled(Button)`
   width: 164px;
   min-width: 164px;
   height: 70px;
+`;
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 44px;
+`;
+
+const NewButton = styled(Button)`
+  min-width: 152px;
+  margin-top: 0;
+`;
+
+const CarouselWrapper = styled.div`
+  position: relative;
+  width: calc(100vw - (100vw - 100%) / 2);
+  height: 327px;
+  overflow-x: hidden;
+`;
+
+interface ICarousel {
+  $position: any;
+};
+
+const Carousel = styled.div<ICarousel>`
+  transition: .3s ease-in-out;
+  display: flex;
+  top: 0;
+  position: absolute;
+  gap: 28px;
+  margin-left: ${props => props.$position + "px"};
+`;
+
+const ControlWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 160px;
+  margin-top: 24px;
+  & :last-child {
+    transform: rotate(180deg);
+  }
+`;
+
+const Arrow = styled.button`
+  cursor: pointer;
+  background-image: url('/icons/arrow.svg');
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: none;
+`;
+
+const Position = styled.p`
+  font-family: 'Thicccboi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 28px;
+  color: #FFFFFF;
+  & span {
+    opacity: .3;
+  }
 `;

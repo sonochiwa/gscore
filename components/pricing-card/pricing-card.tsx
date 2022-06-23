@@ -5,11 +5,11 @@ import Button from "../../ui/Button";
 import styled from "styled-components";
 import { IAddProductToCart } from "../../store/types";
 
-interface IPricingCardComponent extends IAddProductToCart {
+interface IPricingCard extends IAddProductToCart {
   isProfit: boolean;
-}
+};
 
-export default function PricingCardComponent({ prices, name, isProfit }: IPricingCardComponent) {
+const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit }) => {
   const token = useAppSelector(state => state.root.token);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -123,3 +123,5 @@ const CardButton = styled(Button) <isProfitProps>`
     color: ${props => props.isProfit ? "var(--primary_1)" : "var(--color_800)"};
   }
 `;
+
+export default PricingCard;

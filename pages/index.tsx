@@ -15,7 +15,11 @@ export async function getServerSideProps() {
   }
 };
 
-function HomePage({ products }: any) {
+interface IHomePage {
+  products: any;
+}
+
+export default function HomePage({ products }: IHomePage) {
 
   return (
     <Layout title="Home">
@@ -61,5 +65,3 @@ const Cards = styled.div`
   display: flex;
   gap: 28px;
 `;
-
-export default HomePage;

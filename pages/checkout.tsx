@@ -12,6 +12,7 @@ export default function CheckoutPage() {
   const token = useAppSelector(state => state.root.token);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  
   const cart = useAppSelector(({ root }: any) => ({
     products: root.cartProducts,
     total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0)

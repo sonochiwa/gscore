@@ -5,6 +5,7 @@ const endpoints = {
   signIn: (data: object) => axios.post("/users/sign-in", data),
   updatePassword: (data: object) => axios.patch("/users/update-password", data),
   updateUser: (data: object) => axios.patch("/users", data),
+  subscribeSelf: (data: object) => axios.get("/subscribe/self", data),
 };
 
 export default endpoints;

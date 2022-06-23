@@ -10,7 +10,7 @@ interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   isValid: any;
 };
 
-const Input = ({ errorMessage, isValid, name, children, ...props }: IInput) => {
+const Input: React.FC<IInput> = ({ errorMessage, isValid, name, children, ...props }: IInput) => {
   const invalid = isValid.invalid;
   const isTouched = isValid.isTouched;
   const isDirty = isValid.isDirty;

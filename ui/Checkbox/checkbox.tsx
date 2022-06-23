@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const Checkbox = () => {
+interface ICheckbox {
+
+}
+
+const Checkbox: React.FC<ICheckbox> = () => {
   return (
     <Root>
       <input type="checkbox" />
@@ -8,8 +12,6 @@ const Checkbox = () => {
     </Root>
   )
 };
-
-export default Checkbox;
 
 const Root = styled.label`
   & input {
@@ -69,3 +71,5 @@ const Root = styled.label`
     opacity: .5;
   }
 `;
+
+export default Checkbox;

@@ -72,6 +72,7 @@ export const GlobalStyles = createGlobalStyle`
     background-color: var(--color_800);
     color: var(--color_100);
     padding: 0 15px;
+    overflow-x: hidden;
   }
 
   :root {

@@ -2,11 +2,11 @@ import { Typography } from "../../styles/main";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-interface SettingsTab {
+interface ISettingsTab {
   currentTab: number;
 };
 
-export default function SettingsTab({ currentTab }: SettingsTab) {
+const SettingsTab: React.FC<ISettingsTab> = ({ currentTab }) => {
   const router = useRouter();
 
   return (
@@ -51,3 +51,5 @@ const Hr = styled.div`
   height: 2px;
   background-color: var(--color_600);
 `;
+
+export default SettingsTab;

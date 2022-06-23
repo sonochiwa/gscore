@@ -2,11 +2,11 @@ import { Typography } from "../../styles/main";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-interface LoginTab {
+interface ILoginTab {
   currentTab: number;
 };
 
-export default function LoginTab({ currentTab }: LoginTab) {
+const LoginTab: React.FC<ILoginTab> = ({ currentTab }) => {
   const router = useRouter();
 
   return (
@@ -72,3 +72,5 @@ const Tab = styled.div<ITab>`
     background-color: var(--primary_1);
   }
 `;
+
+export default LoginTab;

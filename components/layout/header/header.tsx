@@ -18,8 +18,8 @@ export default function HeaderComponent() {
   const variants = {
     rotate: { rotateX: -180, transition: { duration: .2 } },
     stop: { rotate: 0, transition: { duration: .2 } },
-    visible: { opacity: 1, transition: { duration: .2 } },
-    hidden: { opacity: 0, transition: { duration: .2 } },
+    visible: { scale: 1, transition: { duration: .2 } },
+    hidden: { scale: 0, transition: { duration: .2 } },
   };
 
   const onLogout = () => {
@@ -64,7 +64,10 @@ export default function HeaderComponent() {
   )
 };
 
-const Header = styled.header``;
+const Header = styled.header`
+  position: relative;
+  z-index: 999;
+`;
 
 const HeaderInner = styled.div`
   display: flex;
@@ -140,5 +143,4 @@ const UserName = styled(LoginTypography)`
   align-items: center;
   font-size: 22px;
   padding-right: 31px;
-  z-index: 999;
 `;
