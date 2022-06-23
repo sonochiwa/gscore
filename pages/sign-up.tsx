@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { HeadingH2, Typography, ErrorText, Subtitle } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginNavigation from '../components/login-navigation'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setAccessToken } from '../store/root-slice';
@@ -27,11 +27,13 @@ const schema = yup.object().shape({
 });
 
 export default function SignUpPage() {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, formState: { errors }, getFieldState } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  useEffect(() => console.log(getFieldState('username')));
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -69,27 +71,29 @@ export default function SignUpPage() {
           {error && <ErrorText>{error}</ErrorText>}
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            name="username"
+            control={control}
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="username"
                 placeholder="Username"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
-            name="username"
-            control={control}
           />
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="email"
                 placeholder="Email"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="email"
@@ -97,14 +101,15 @@ export default function SignUpPage() {
           />
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="password"
                 placeholder="Password"
                 onChange={onChange}
                 onBlur={onBlur}
                 type="password"
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="password"

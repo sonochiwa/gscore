@@ -62,13 +62,14 @@ export default function SignInPage() {
           {error && <ErrorText>{error}</ErrorText>}
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="email"
                 placeholder="Email"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="email"
@@ -76,14 +77,15 @@ export default function SignInPage() {
           />
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="password"
                 placeholder="Password"
                 onChange={onChange}
                 onBlur={onBlur}
                 type="password"
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="password"

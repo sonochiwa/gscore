@@ -53,13 +53,14 @@ export default function SettingsPage() {
           {error && <ErrorText>{error}</ErrorText>}
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="currentPassword"
                 placeholder="Current Password"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="currentPassword"
@@ -67,13 +68,14 @@ export default function SettingsPage() {
           />
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="newPassword"
                 placeholder="New Password"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="newPassword"

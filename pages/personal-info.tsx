@@ -63,13 +63,14 @@ export default function SettingsPage() {
           <HeadingH3>Presonal info</HeadingH3>
           {error && <ErrorText>{error}</ErrorText>}
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="username"
                 placeholder="Username"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="username"
@@ -77,13 +78,14 @@ export default function SettingsPage() {
           />
 
           <Controller
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field: { onChange, onBlur }, fieldState }) => (
               <Input
                 name="email"
                 placeholder="Email"
                 onChange={onChange}
                 onBlur={onBlur}
-                errors={errors}
+                errorMessage={errors}
+                isValid={fieldState}
               />
             )}
             name="email"
