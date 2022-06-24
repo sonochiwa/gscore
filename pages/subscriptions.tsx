@@ -79,8 +79,9 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
             </ControlWrapper>
 
             <Cards>
-              <SecondaryCard isActive={true} />
-              <SecondaryCard isActive={false} />
+              <SecondaryCard isActive='Active' />
+              <SecondaryCard isActive='Hold' />
+              <SecondaryCard isActive='Inactive' />
             </Cards>
 
           </>

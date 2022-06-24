@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import Checkbox from "../Checkbox";
 import useCopyToClipboard from "../../hooks/copy-to-clipboard";
+import Button from "../Button";
+import { StatusTheme } from "./util/theme";
+
+type Status = 'Active' | 'Inactive' | 'Hold';
 
 interface ISecondaryCard {
-  isActive: boolean;
+  isActive: Status;
 }
 
 const SecondaryCard: React.FC<ISecondaryCard> = ({ isActive }) => {
@@ -27,24 +31,29 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ isActive }) => {
       </Col>
 
       <DomainWrapper>
-        <CardText>Domain</CardText>
-        <InputWrapper>
+        <DomainCol>
+          <CardText>Domain</CardText>
           <DomainInput />
-        </InputWrapper>
+        </DomainCol>
+        {isActive === 'Inactive' &&
+          <NewButtonWrapper>
+            <NewButton theme='secondary'>Activate</NewButton>
+          </NewButtonWrapper>
+        }
       </DomainWrapper>
 
-      <Col>
+      <StatusCol>
         <CardText>Status</CardText>
         <StatusWrapper>
-          <Status>Active</Status>
+          <Status $isActive={isActive}>{isActive}</Status>
         </StatusWrapper>
-      </Col>
+      </StatusCol>
     </Root>
   )
 };
 
 interface IRoot {
-  $isActive: boolean;
+  $isActive: Status;
 };
 
 const Root = styled.div<IRoot>`
@@ -63,9 +72,17 @@ const Col = styled.div`
   height: 98px;
 `;
 
+const DomainCol = styled(Col)`
+  width: 100%;
+`;
+
+const StatusCol = styled(Col)`
+  flex-direction: column;
+`;
+
 const DomainWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 98px;
   width: 100%;
   max-width: 620px;
@@ -74,10 +91,6 @@ const DomainWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const InputWrapper = styled.div`
-
 `;
 
 const DomainInput = styled.input`
@@ -150,13 +163,31 @@ const StatusWrapper = styled.div`
   height: 68px;
 `;
 
-const Status = styled.div`
+interface IStatus {
+  $isActive?: Status;
+}
+
+const Status = styled.p<IStatus>`
   font-family: 'Thicccboi';
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
   line-height: 28px;
-  color: #05C168;
+  ${({ $isActive }) => $isActive && StatusTheme[$isActive]};
+`;
+
+const NewButton = styled(Button)`
+  min-width: 111px;
+  height: 58px;
+  margin-left: 30px;
+`;
+
+const NewButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: bottom;
 `;
 
 export default SecondaryCard;
