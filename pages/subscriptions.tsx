@@ -5,36 +5,32 @@ import Button from "../ui/Button";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import PrimaryCard from "../ui/PrimaryCard";
-import { useState } from "react";
 import api from "../services";
-import axios from "axios";
+import { useState } from "react";
 import axiosInstance from "../services/axios-instance";
 
-interface IPosition {
-  position: any;
-}
+axiosInstance('https://gscore-back.herokuapp.com/api/subscribe/self').then(response => console.log(response))
 
-interface ICurrentCard {
-  currentCard: number;
-}
-
-// api.auth.subscribeSelf({}).then(response => console.log(response.data));
-
-export async function getServerSidePropss() {
-  const data = await api.auth.subscribeSelf({}).then(response => console.log(response.data));
+export async function getServerSideProps() {
+  // const { data }: any = await api.auth.subscribeSelf();
+  
+  // const { data } = await axiosInstance('https://gscore-back.herokuapp.com/api/subscribe/self');
 
   return {
     props: {
-      subscriptions: data
+      subscriptions: [{}]
     }
   }
 };
 
+
 interface ISubscriptionsPage {
   subscriptions: any;
-}
+};
 
 export default function SubscriptionsPage({ subscriptions }: ISubscriptionsPage) {
+  // console.log(subscriptions);
+
   const router = useRouter();
   const subs = true;
   const [position, setPosition] = useState<any>(0);
@@ -57,14 +53,10 @@ export default function SubscriptionsPage({ subscriptions }: ISubscriptionsPage)
     }
   };
 
-  console.log(subscriptions)
-
   return (
     <Layout title="Subscriptions">
       <Container>
-        {/* {subscriptions.map((sub: any, index: number) => <p>{index}</p>)} */}
-        {subscriptions}
-
+        {/* {subscriptions.map((sub: any, index: number) => <p key={index}>{index}</p>)} */}
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
           <NewButton theme="primary">Upgrade</NewButton>

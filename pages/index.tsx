@@ -4,9 +4,10 @@ import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
 import { Container, HeadingH2, Typography } from "../styles/main";
+import api from "../services";
 
 export async function getServerSideProps() {
-  const { data } = await axios.get("https://gscore-back.herokuapp.com/api/products");
+  const { data }: any = await api.auth.products();
 
   return {
     props: {
@@ -16,7 +17,7 @@ export async function getServerSideProps() {
 };
 
 interface IHomePage {
-  products: any;
+  products: [];
 }
 
 export default function HomePage({ products }: IHomePage) {
