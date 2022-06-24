@@ -83,7 +83,10 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
               <SecondaryCard isActive='Hold' />
               <SecondaryCard isActive='Inactive' />
             </Cards>
-
+            <Wrapper>
+              <Text>Select the domains you want to keep</Text>
+              <ConfirmButton theme="primary">Confirm</ConfirmButton>
+            </Wrapper>
           </>
         ) : (
           <NoSubsWrapper>
@@ -96,8 +99,6 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
             </NoSubs>
           </NoSubsWrapper>
         )}
-        <Container>
-        </Container>
       </Container>
     </Layout >
   )
@@ -195,6 +196,27 @@ const Cards = styled.div`
   flex-direction: column;
   gap: 32px;
   margin-top: 32px;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+`;
+
+const Text = styled.p`
+  font-family: 'THICCCBOI';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  color: #FFFFFF;
+`;
+
+const ConfirmButton = styled(Button)`
+  min-width: 148px;
+  margin-top: 0;
 `;
 
 export default SubscriptionsPage;
