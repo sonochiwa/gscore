@@ -1,40 +1,48 @@
 import styled from "styled-components";
 import Button from "../Button";
+import dateFormat from "dateformat";
+
+
 
 interface IPrimaryCard {
-  disabled?: boolean;
+  status: string;
+  product: { name: string, prices: Array<any> };
+  currentPeriodEnd: string;
+  handleView: () => {};
+  isActive: boolean;
 }
 
-const PrimaryCard: React.FC<IPrimaryCard> = ({ disabled }) => {
+const PrimaryCard: React.FC<IPrimaryCard> = ({ status, product, currentPeriodEnd, handleView, isActive }) => {
   return (
-    <Root $disabled={disabled}>
+    <Root $disabled={!isActive}>
       <Row>
         <Logo>Gscore</Logo>
-        <Status>Active</Status>
+        <Status>{status.toLowerCase()}</Status>
       </Row>
       <Hr />
       <Row>
-        <LicenseInfo>Single site license</LicenseInfo>
-        <LicenseInfo>$77</LicenseInfo>
+        <LicenseInfo>{product.name} license</LicenseInfo>
+        <LicenseInfo>${product.prices[0]?.price}</LicenseInfo>
       </Row>
-      <DateInfo>valid until 21.10.2022</DateInfo>
+      <DateInfo>valid until {dateFormat(Number(currentPeriodEnd) * 1000, "d.mm.yyyy")}</DateInfo>
 
-      <NewButton theme="secondary">View</NewButton>
+      <NewButton theme="secondary" onClick={handleView}>View</NewButton>
     </Root>
   );
 };
 
 interface IRoot {
   $disabled?: boolean;
-}
+};
 
 const Root = styled.div<IRoot>`
+  transition: .2s;
   position: relative;
   padding: 48px 32px;
   background-color: #393939;
   border-radius: 12px;
   min-width: 620px;
-  ${props => props.$disabled && 'opacity: 0.6; user-select: none; pointer-events: none;'}
+  ${props => props.$disabled && 'opacity: 0.6; user-select: none;'}
 `;
 
 const Row = styled.div`
@@ -58,6 +66,7 @@ const Status = styled.p`
   font-size: 22px;
   line-height: 28px;
   color: #05C168;
+  text-transform: capitalize;
 `;
 
 const Hr = styled.div`

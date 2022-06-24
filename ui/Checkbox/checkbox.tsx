@@ -1,13 +1,9 @@
 import styled from "styled-components";
 
-interface ICheckbox {
-
-}
-
-const Checkbox: React.FC<ICheckbox> = () => {
+const Checkbox: React.FC<any> = (props) => {
   return (
     <Root>
-      <input type="checkbox" />
+      <input type="checkbox" {...props} />
       <span />
     </Root>
   )

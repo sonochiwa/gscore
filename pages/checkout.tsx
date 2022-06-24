@@ -7,19 +7,25 @@ import { removeProductFromСart } from "../store/root-slice";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Button from "../ui/Button";
+import api from "../services";
 
 export default function CheckoutPage() {
   const token = useAppSelector(state => state.root.token);
+  const productId = useAppSelector(state => state.root.cartProduct[0]?.prices[0]?.productId);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  
+
   const cart = useAppSelector(({ root }: any) => ({
-    products: root.cartProducts,
-    total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0)
+    product: root.cartProduct[0],
   }));
 
-  const onClearBasket = (index: number) => {
-    dispatch(removeProductFromСart({ index }))
+  const onClearBasket = () => {
+    dispatch(removeProductFromСart());
+  };
+
+  const onSubmit = () => {
+    router.push("/start-your-subscription");
+    api.auth.buyProduct({ priceId: productId });
   };
 
   useEffect(() => {
@@ -39,26 +45,33 @@ export default function CheckoutPage() {
             <Typography>Price</Typography>
           </Row>
           <Hr />
-          {cart.products.map((product: any, index: number) => (
-            <Row key={index}>
-              <Typography>{product.name} license</Typography>
+          {cart.product &&
+            <Row>
+              <Typography>{cart.product?.name} license</Typography>
               <Row>
-                <Typography>${product.prices[0].price}</Typography>
-                <ClearBasket onClick={() => onClearBasket(index)} />
+                <Typography>${cart.product?.prices[0]?.price}</Typography>
+                <ClearBasket onClick={() => onClearBasket()} />
               </Row>
             </Row>
-          ))}
+          }
         </Package>
-        <Total>
-          <Typography>Total:</Typography>
-          <Typography>
-            ${cart.total}
-          </Typography>
-        </Total>
-        <Button
-          theme="primary"
-          onClick={() => router.push("/start-your-subscription")}
-        >Purchase</Button>
+        {cart.product &&
+          <Total>
+            <Typography>Total:</Typography>
+            <Typography>
+              ${cart.product?.prices[0]?.price}
+            </Typography>
+          </Total>
+        }
+        {cart.product &&
+          <Button
+            theme="primary"
+            onClick={onSubmit}
+          >
+            Purchase
+          </Button>
+        }
+
       </Wrapper>
     </Layout >
   )

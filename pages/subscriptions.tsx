@@ -6,31 +6,40 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import PrimaryCard from "../ui/PrimaryCard";
 import api from "../services";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SecondaryCard from "../ui/SecondaryCard";
 
-// api.auth.subscribeSelf().then(response => console.log(response))
-
-export async function getServerSideProps() {
-  // const { data } = await api.auth.subscribeSelf();
-
-  return {
-    props: {
-      subscriptions: []
-    }
-  }
-};
-
 interface ISubscriptionsPage {
-  subscriptions?: any;
 };
 
-const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
+const SubscriptionsPage: React.FC<ISubscriptionsPage> = () => {
   const router = useRouter();
   const subs = true;
   const [position, setPosition] = useState<any>(0);
   const [currentCard, setCurrentCard] = useState<any>(1);
-  const maxCards = 4;
+  const [subscriptionList, setSubscriptionList] = useState<Array<any>>([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(0);
+
+  const getSubscriptionList = async () => {
+    setLoading(true);
+
+    try {
+      const { data } = await api.auth.subscribeSelf();
+
+      console.log(data);
+      setSubscriptionList(data);
+      setSelectedProduct(0);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getSubscriptionList();
+  }, []);
 
   // const onSubmit = async (data: any) => { };
 
@@ -42,41 +51,61 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
   };
 
   const handleNext = () => {
-    if (position <= 0 && currentCard <= maxCards - 1) {
+    if (position <= 0 && currentCard < subscriptionList.length) {
       setPosition(position - 648);
       setCurrentCard(currentCard + 1);
     }
   };
 
+  const handleActive = async (code: string) => {
+    const { data } = await api.auth.activateCode(code);
+    setSubscriptionList(subscriptionList.map(subscription => ({
+      ...subscription,
+      codes: subscription.codes.map(
+        (codeData: any) => codeData.code === code ? data : codeData
+      )
+    })))
+  };
+
   return (
     <Layout title="Subscriptions">
       <Container>
-        {/* {subscriptions.map((sub: any, index: number) => <p key={index}>{index}</p>)} */}
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
-          <NewButton theme="primary">Upgrade</NewButton>
+          <NewButton theme="primary" onClick={() => router.push('/')}>Upgrade</NewButton>
         </Row>
         {subs ? (
           <>
             <CarouselWrapper>
               <Carousel $position={position}>
-                <PrimaryCard disabled={false} />
-                <PrimaryCard disabled={true} />
-                <PrimaryCard disabled={true} />
-                <PrimaryCard disabled={true} />
+
+                {subscriptionList.map((subscription: any, index: number) => (
+                  <PrimaryCard
+                    key={index}
+                    isActive={index === selectedProduct}
+                    handleView={() => setSelectedProduct(index)}
+                    {...subscription}
+                  />
+                ))}
+
               </Carousel>
             </CarouselWrapper>
             <ControlWrapper>
               <Arrow onClick={handlePrev} />
-              <Position>{currentCard}<span>/4</span></Position>
+              <Position>{currentCard}<span>/{subscriptionList.length}</span></Position>
               <Arrow onClick={handleNext} />
             </ControlWrapper>
 
             <Cards>
-              <SecondaryCard isActive="Active" />
-              <SecondaryCard isActive="Hold" />
-              <SecondaryCard isActive="Inactive" />
+
+              {subscriptionList[selectedProduct]?.codes.map(({ id, code, status, origin }: any) => (
+                <SecondaryCard key={id} code={code} status={status} handleActive={handleActive} origin={origin} />
+              ))}
+
             </Cards>
+
+
+
             <Wrapper>
               <Text>Select the domains you want to keep</Text>
               <ConfirmButton theme="primary">Confirm</ConfirmButton>

@@ -12,17 +12,18 @@ const rootSlice = createSlice({
     },
 
     logOut(state) {
-      state.cartProducts = [];
+      state.cartProduct = [];
       state.token = undefined;
       state.username = undefined;
     },
 
     addProductToCart(state, action: PayloadAction<IAddProductToCart>) {
-      state.cartProducts.push(action.payload);
+      state.cartProduct = [];
+      state.cartProduct.push(action.payload);
     },
 
-    removeProductFromСart(state, action: PayloadAction<IRemoveProductFromСart>) {
-      state.cartProducts.splice(action.payload.index, 1);
+    removeProductFromСart(state) {
+      state.cartProduct = [];
     },
 
     setUsername(state, action: PayloadAction<ISetUsername>) {

@@ -8,8 +8,7 @@ import Button from "../ui/Button";
 export default function SubscribePage() {
   const router = useRouter();
   const cart = useAppSelector(({ root }: any) => ({
-    products: root.cartProducts,
-    total: root.cartProducts.reduce((acc: number, { prices }: any) => acc + Number(prices[0].price), 0)
+    product: root.cartProduct[0],
   }));
 
   return (
@@ -26,14 +25,12 @@ export default function SubscribePage() {
             <Typography>Price</Typography>
           </Row>
           <Hr />
-          {cart.products.map((product: any, index: number) => (
-            <Row key={index}>
-              <Typography>{product.name} license</Typography>
-              <Row>
-                <Typography>${product.prices[0].price}</Typography>
-              </Row>
+          <Row>
+            <Typography>{cart.product.name} license</Typography>
+            <Row>
+              <Typography>${cart.product.prices[0].price}</Typography>
             </Row>
-          ))}
+          </Row>
         </Package>
         <Button
           theme="primary"

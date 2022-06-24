@@ -3,7 +3,7 @@ import { IInitialState } from './types'
 const initialState: IInitialState = {
   token: undefined,
   username: undefined,
-  cartProducts: [],
+  cartProduct: [],
 };
 
 export default initialState;

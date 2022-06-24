@@ -3,41 +3,44 @@ import Checkbox from "../Checkbox";
 import useCopyToClipboard from "../../hooks/copy-to-clipboard";
 import Button from "../Button";
 import { StatusTheme } from "./util/theme";
+import { useState } from "react";
 
-type Status = 'Active' | 'Inactive' | 'Hold';
+type Status = 'ACTIVE' | 'INACTIVE' | 'HOLD';
 
 interface ISecondaryCard {
-  isActive: Status;
-}
+  status: Status;
+  code: string;
+  handleActive: (code: string) => Promise<void>;
+  origin: string;
+};
 
-const SecondaryCard: React.FC<ISecondaryCard> = ({ isActive }) => {
-  const [value, copy] = useCopyToClipboard()
-  const xValue = 'hello world'
+const SecondaryCard: React.FC<ISecondaryCard> = ({ status, code, handleActive, origin }) => {
+  const [_, copy] = useCopyToClipboard();
 
   return (
-    <Root $isActive={isActive}>
+    <Root $status={status}>
       <Col>
         <CheckboxWrapper>
-          <Checkbox />
+          <Checkbox disabled={status !== 'HOLD'} />
         </CheckboxWrapper>
       </Col>
 
       <Col>
         <CardText>License code</CardText>
         <ButtonWrapper>
-          <LicenseCodeInput defaultValue={xValue} />
-          <LicenseCodeButton onClick={() => copy(xValue)} />
+          <LicenseCodeInput value={code} />
+          <LicenseCodeButton onClick={() => copy(code)} />
         </ButtonWrapper>
       </Col>
 
       <DomainWrapper>
         <DomainCol>
           <CardText>Domain</CardText>
-          <DomainInput />
+          <DomainInput value={origin} />
         </DomainCol>
-        {isActive === 'Inactive' &&
+        {status === 'INACTIVE' &&
           <NewButtonWrapper>
-            <NewButton theme='secondary'>Activate</NewButton>
+            <NewButton theme='secondary' onClick={() => handleActive(code)}>Activate</NewButton>
           </NewButtonWrapper>
         }
       </DomainWrapper>
@@ -45,7 +48,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ isActive }) => {
       <StatusCol>
         <CardText>Status</CardText>
         <StatusWrapper>
-          <Status $isActive={isActive}>{isActive}</Status>
+          <Status $status={status}>{status}</Status>
         </StatusWrapper>
       </StatusCol>
     </Root>
@@ -53,7 +56,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ isActive }) => {
 };
 
 interface IRoot {
-  $isActive: Status;
+  $status: Status;
 };
 
 const Root = styled.div<IRoot>`
@@ -164,7 +167,7 @@ const StatusWrapper = styled.div`
 `;
 
 interface IStatus {
-  $isActive?: Status;
+  $status?: Status;
 }
 
 const Status = styled.p<IStatus>`
@@ -173,7 +176,7 @@ const Status = styled.p<IStatus>`
   font-weight: 700;
   font-size: 22px;
   line-height: 28px;
-  ${({ $isActive }) => $isActive && StatusTheme[$isActive]};
+  ${({ $status }) => $status && StatusTheme[$status]};
 `;
 
 const NewButton = styled(Button)`

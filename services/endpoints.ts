@@ -7,6 +7,8 @@ const endpoints = {
   updateUser: (data: object) => axios.patch("/users", data),
   products: () => axios.get("/products"),
   subscribeSelf: () => axios.get("/subscribe/self"),
+  activateCode: (code: string) => axios.post("/code/activate", { code }),
+  buyProduct: (data: object) => axios.post("/payments/buy", data),
 };
 
 export default endpoints;

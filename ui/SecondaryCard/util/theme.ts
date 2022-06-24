@@ -1,19 +1,19 @@
 import { CSSProp, css } from "styled-components";
 
 export const StatusTheme: { [key: string]: () => CSSProp } = {
-  Active: () => {
+  ACTIVE: () => {
     return css`
       color: #05C168;
     `;
   },
 
-  Inactive: () => {
+  INACTIVE: () => {
     return css`
       color: #FF5A65;;
     `;
   },
 
-  Hold: () => {
+  HOLD: () => {
     return css`
       color: #FF9E2C;
     `;

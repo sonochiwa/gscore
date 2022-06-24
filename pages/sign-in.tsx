@@ -30,27 +30,23 @@ export default function SignInPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (credentials: FormValues) => {
+    setError(null);
+    setIsActive(true);
+    
     try {
-      setError(null);
-      setIsActive(true);
-      await api.auth.signIn({
-        email: data.email,
-        password: data.password
-      })
-        .then(response => {
-          console.log(response)
-          dispatch(setAccessToken({
-            token: response.data.token,
-            username: response.data.user.username,
-          }));
-        });
+      const { data } = await api.auth.signIn(credentials);
+      
+      dispatch(setAccessToken({
+        token: data.token,
+        username: data.user.username,
+      }));
       router.push('/checkout');
-    } catch (e: any) {
-      setError(e.response?.data?.message || e.message);
-    } finally {
-      setIsActive(false);
-    }
+    } catch (error: any) {
+      setError(error.response?.data?.message || error.message);
+    };
+
+    setIsActive(false);
   };
 
   return (

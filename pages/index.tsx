@@ -2,7 +2,6 @@ import PricingCard from "../components/pricing-card";
 import Layout from "../components/layout";
 import styled from "styled-components";
 import Link from "next/link";
-import axios from "axios";
 import { Container, HeadingH2, Typography } from "../styles/main";
 import api from "../services";
 

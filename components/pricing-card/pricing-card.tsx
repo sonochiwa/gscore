@@ -7,15 +7,16 @@ import { IAddProductToCart } from "../../store/types";
 
 interface IPricingCard extends IAddProductToCart {
   isProfit: boolean;
+  prices: any;
 };
 
-const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit }) => {
+const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit, productId }) => {
   const token = useAppSelector(state => state.root.token);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleGet = () => {
-    dispatch(addProductToCart({ prices, name }));
+    dispatch(addProductToCart({ prices, name, productId }));
     if (token === undefined) {
       router.push("/sign-up")
     } else {
@@ -40,7 +41,7 @@ const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit }) => {
         </CardUl>
         <CardButton isProfit={isProfit} onClick={handleGet}>Get Gscore</CardButton>
       </CardBottom>
-    </Root >
+    </Root>
   )
 };
 
