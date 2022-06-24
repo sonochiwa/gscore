@@ -7,38 +7,32 @@ import { useRouter } from "next/router";
 import PrimaryCard from "../ui/PrimaryCard";
 import api from "../services";
 import { useState } from "react";
-import axiosInstance from "../services/axios-instance";
 import SecondaryCard from "../ui/SecondaryCard";
 
-axiosInstance('https://gscore-back.herokuapp.com/api/subscribe/self').then(response => console.log(response))
+// api.auth.subscribeSelf().then(response => console.log(response))
 
 export async function getServerSideProps() {
-  // const { data }: any = await api.auth.subscribeSelf();
-
-  // const { data } = await axiosInstance('https://gscore-back.herokuapp.com/api/subscribe/self');
+  // const { data } = await api.auth.subscribeSelf();
 
   return {
     props: {
-      subscriptions: [{}]
+      subscriptions: []
     }
   }
 };
 
-
 interface ISubscriptionsPage {
-  subscriptions: any;
+  subscriptions?: any;
 };
 
 const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
-  // console.log(subscriptions);
-
   const router = useRouter();
   const subs = true;
   const [position, setPosition] = useState<any>(0);
   const [currentCard, setCurrentCard] = useState<any>(1);
   const maxCards = 4;
 
-  const onSubmit = async (data: any) => { };
+  // const onSubmit = async (data: any) => { };
 
   const handlePrev = () => {
     if (position < 0) {
@@ -79,9 +73,9 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
             </ControlWrapper>
 
             <Cards>
-              <SecondaryCard isActive='Active' />
-              <SecondaryCard isActive='Hold' />
-              <SecondaryCard isActive='Inactive' />
+              <SecondaryCard isActive="Active" />
+              <SecondaryCard isActive="Hold" />
+              <SecondaryCard isActive="Inactive" />
             </Cards>
             <Wrapper>
               <Text>Select the domains you want to keep</Text>

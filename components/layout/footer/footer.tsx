@@ -24,21 +24,21 @@ export default function FooterComponent() {
             <SocialItem>
               <Link href="https://facebook.com">
                 <a target="_blank">
-                  <Image src={"/icons/socials/facebook.svg"} width="13.43" height="24.62" alt="Facebook" />
+                  <Image src={"/icons/facebook.svg"} width="13.43" height="24.62" alt="Facebook" />
                 </a>
               </Link>
             </SocialItem>
             <SocialItem>
               <Link href="https://twitter.com">
                 <a target="_blank">
-                  <Image src="/icons/socials/twitter.svg" width="25.44" height="20.64" alt="Twitter" />
+                  <Image src="/icons/twitter.svg" width="25.44" height="20.64" alt="Twitter" />
                 </a>
               </Link>
             </SocialItem>
             <SocialItem>
               <Link href="https://linkedin.com">
                 <a target="_blank">
-                  <Image src="/icons/socials/linkedIn.svg" width="24.37" height="23.21" alt="LinkedIn" />
+                  <Image src="/icons/linkedIn.svg" width="24.37" height="23.21" alt="LinkedIn" />
                 </a>
               </Link>
             </SocialItem>

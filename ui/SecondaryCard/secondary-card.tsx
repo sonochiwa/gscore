@@ -25,7 +25,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ isActive }) => {
       <Col>
         <CardText>License code</CardText>
         <ButtonWrapper>
-          <LicenseCodeInput value={xValue} />
+          <LicenseCodeInput defaultValue={xValue} />
           <LicenseCodeButton onClick={() => copy(xValue)} />
         </ButtonWrapper>
       </Col>
