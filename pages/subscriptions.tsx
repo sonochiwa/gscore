@@ -195,3 +195,5 @@ const Cards = styled.div`
   gap: 32px;
   margin-top: 32px;
 `;
+
+export default SubscriptionsPage;
