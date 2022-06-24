@@ -8,12 +8,13 @@ import PrimaryCard from "../ui/PrimaryCard";
 import api from "../services";
 import { useState } from "react";
 import axiosInstance from "../services/axios-instance";
+import SecondaryCard from "../ui/SecondaryCard";
 
 axiosInstance('https://gscore-back.herokuapp.com/api/subscribe/self').then(response => console.log(response))
 
 export async function getServerSideProps() {
   // const { data }: any = await api.auth.subscribeSelf();
-  
+
   // const { data } = await axiosInstance('https://gscore-back.herokuapp.com/api/subscribe/self');
 
   return {
@@ -28,7 +29,7 @@ interface ISubscriptionsPage {
   subscriptions: any;
 };
 
-export default function SubscriptionsPage({ subscriptions }: ISubscriptionsPage) {
+const SubscriptionsPage: React.FC<ISubscriptionsPage> = ({ subscriptions }) => {
   // console.log(subscriptions);
 
   const router = useRouter();
@@ -71,12 +72,17 @@ export default function SubscriptionsPage({ subscriptions }: ISubscriptionsPage)
                 <PrimaryCard disabled={true} />
               </Carousel>
             </CarouselWrapper>
-
             <ControlWrapper>
               <Arrow onClick={handlePrev} />
               <Position>{currentCard}<span>/4</span></Position>
               <Arrow onClick={handleNext} />
             </ControlWrapper>
+
+            <Cards>
+              <SecondaryCard isActive={true} />
+              <SecondaryCard isActive={false} />
+            </Cards>
+
           </>
         ) : (
           <NoSubsWrapper>
@@ -181,4 +187,11 @@ const Position = styled.p`
   & span {
     opacity: .3;
   }
+`;
+
+const Cards = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 32px;
 `;

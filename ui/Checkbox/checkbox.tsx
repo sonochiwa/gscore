@@ -23,6 +23,8 @@ const Root = styled.label`
     display: inline-flex;
     align-items: center;
     user-select: none;
+    width: 30px;
+    height: 30px;
   }
   & ::before {
     cursor: pointer;
@@ -35,7 +37,6 @@ const Root = styled.label`
     border: 1px solid var(--color_400);
     background-color: var(--color_100);
     border-radius: 7px;
-    margin-right: 0.5em;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 50% 50%;
