@@ -28,7 +28,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ status, code, handleActive, o
       <Col>
         <CardText>License code</CardText>
         <ButtonWrapper>
-          <LicenseCodeInput value={code} />
+          <LicenseCodeInput defaultValue={code} />
           <LicenseCodeButton onClick={() => copy(code)} />
         </ButtonWrapper>
       </Col>
@@ -36,7 +36,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ status, code, handleActive, o
       <DomainWrapper>
         <DomainCol>
           <CardText>Domain</CardText>
-          <DomainInput value={origin} />
+          <DomainInput defaultValue={origin} />
         </DomainCol>
         {status === 'INACTIVE' &&
           <NewButtonWrapper>

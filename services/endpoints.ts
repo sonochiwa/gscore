@@ -9,6 +9,7 @@ const endpoints = {
   subscribeSelf: () => axios.get("/subscribe/self"),
   activateCode: (code: string) => axios.post("/code/activate", { code }),
   buyProduct: (data: object) => axios.post("/payments/buy", data),
+  upgradeProduct: (data: object) => axios.post("/subscribe/change-product", data),
 };
 
 export default endpoints;

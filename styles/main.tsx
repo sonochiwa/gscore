@@ -1,5 +1,17 @@
 import styled, { createGlobalStyle } from "styled-components";
 
+const size = {
+  mobile: '375px',
+  tablet: '768px',
+  laptop: '1440px',
+};
+
+export const device = {
+  mobileS: `(min-width: ${size.mobile})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+};
+
 export const GlobalStyles = createGlobalStyle`
 
   @font-face {

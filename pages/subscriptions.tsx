@@ -9,39 +9,47 @@ import api from "../services";
 import { useEffect, useState } from "react";
 import SecondaryCard from "../ui/SecondaryCard";
 
-interface ISubscriptionsPage {
-};
-
-const SubscriptionsPage: React.FC<ISubscriptionsPage> = () => {
+const SubscriptionsPage: React.FC = () => {
   const router = useRouter();
   const subs = true;
   const [position, setPosition] = useState<any>(0);
   const [currentCard, setCurrentCard] = useState<any>(1);
   const [subscriptionList, setSubscriptionList] = useState<Array<any>>([]);
-  const [loading, setLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(0);
+  const productId = subscriptionList[selectedProduct]?.productId;
+  const subscribeId = subscriptionList[selectedProduct]?.id;
+
+  const handleDowngrade = async () => {
+    await api.auth.upgradeProduct({
+      productId: productId - 1,
+      subscribeId: subscribeId
+    });
+    const { data } = await api.auth.subscribeSelf();
+    setSubscriptionList(data);
+  };
+
+  const handleUpgrade = async () => {
+    await api.auth.upgradeProduct({
+      productId: productId + 1,
+      subscribeId: subscribeId
+    });
+    const { data } = await api.auth.subscribeSelf();
+    setSubscriptionList(data);
+  };
 
   const getSubscriptionList = async () => {
-    setLoading(true);
-
     try {
       const { data } = await api.auth.subscribeSelf();
-
-      console.log(data);
       setSubscriptionList(data);
       setSelectedProduct(0);
     } catch (error) {
       console.error(error);
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
     getSubscriptionList();
   }, []);
-
-  // const onSubmit = async (data: any) => { };
 
   const handlePrev = () => {
     if (position < 0) {
@@ -72,9 +80,12 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = () => {
       <Container>
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
-          <NewButton theme="primary" onClick={() => router.push('/')}>Upgrade</NewButton>
+          <div>
+            <NewButton theme="primary" onClick={handleDowngrade}>Downgrade</NewButton>
+            <NewButton theme="primary" onClick={handleUpgrade}>Upgrade</NewButton>
+          </div>
         </Row>
-        {subs ? (
+        {subscriptionList.length > 0 ? (
           <>
             <CarouselWrapper>
               <Carousel $position={position}>
@@ -90,6 +101,7 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = () => {
 
               </Carousel>
             </CarouselWrapper>
+
             <ControlWrapper>
               <Arrow onClick={handlePrev} />
               <Position>{currentCard}<span>/{subscriptionList.length}</span></Position>
@@ -97,14 +109,10 @@ const SubscriptionsPage: React.FC<ISubscriptionsPage> = () => {
             </ControlWrapper>
 
             <Cards>
-
               {subscriptionList[selectedProduct]?.codes.map(({ id, code, status, origin }: any) => (
                 <SecondaryCard key={id} code={code} status={status} handleActive={handleActive} origin={origin} />
               ))}
-
             </Cards>
-
-
 
             <Wrapper>
               <Text>Select the domains you want to keep</Text>
@@ -160,6 +168,7 @@ const Row = styled.div`
 const NewButton = styled(Button)`
   min-width: 152px;
   margin-top: 0;
+  margin-left: 24px;
 `;
 
 const CarouselWrapper = styled.div`

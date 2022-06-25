@@ -27,7 +27,7 @@ const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit, productId
   return (
     <Root isProfit={isProfit}>
       <CardTop isProfit={isProfit}>
-        {prices.map(({ price }: any, index: number) => <Price key={index}>{price}</Price>)}
+        {prices.map(({ price }: any, index: number) => <Price key={index}>${price}</Price>)}
         <Title>{name} license</Title>
         <Text isProfit={isProfit}>Get the advanced WordPress plugin
           that optimizes content with GSC keywords at one low annual price</Text>
