@@ -8,20 +8,35 @@ import { useState } from "react";
 type Status = 'ACTIVE' | 'INACTIVE' | 'HOLD';
 
 interface ISecondaryCard {
+  id: string;
   status: Status;
   code: string;
-  handleActive: (code: string) => Promise<void>;
   origin: string;
+  handleActive: (code: string) => Promise<void>;
+  handleChecked: (id: string) => Promise<void>;
+  handleFilter: (id: string) => Promise<void>;
 };
 
-const SecondaryCard: React.FC<ISecondaryCard> = ({ status, code, handleActive, origin }) => {
+const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActive, handleChecked, handleFilter, origin }) => {
   const [_, copy] = useCopyToClipboard();
+  const [isChecked, setIsChecked] = useState(false);
+
+  const onChecked = (id: string) => {
+    handleChecked(id);
+    setIsChecked(!isChecked);
+  };
+
+  const onFilter = (id: string) => {
+    handleFilter(id);
+    setIsChecked(!isChecked);
+  };
 
   return (
     <Root $status={status}>
       <Col>
         <CheckboxWrapper>
-          <Checkbox disabled={status !== 'HOLD'} />
+          {/* <Checkbox disabled={status !== 'HOLD'} onClick={() => (isChecked ? handleChecked(id) : handleFilter(id))} /> */}
+          <Checkbox disabled={status !== 'HOLD'} onClick={() => (!isChecked ? (onChecked(id)) : (onFilter(id)))} />
         </CheckboxWrapper>
       </Col>
 

@@ -10,6 +10,7 @@ const endpoints = {
   activateCode: (code: string) => axios.post("/code/activate", { code }),
   buyProduct: (data: object) => axios.post("/payments/buy", data),
   upgradeProduct: (data: object) => axios.post("/subscribe/change-product", data),
+  codeManage: (data: object) => axios.put("/code/manage", data),
 };
 
 export default endpoints;

@@ -11,13 +11,27 @@ import SecondaryCard from "../ui/SecondaryCard";
 
 const SubscriptionsPage: React.FC = () => {
   const router = useRouter();
-  const subs = true;
   const [position, setPosition] = useState<any>(0);
   const [currentCard, setCurrentCard] = useState<any>(1);
   const [subscriptionList, setSubscriptionList] = useState<Array<any>>([]);
   const [selectedProduct, setSelectedProduct] = useState(0);
   const productId = subscriptionList[selectedProduct]?.productId;
   const subscribeId = subscriptionList[selectedProduct]?.id;
+  const [checked, setChecked] = useState<any>([]);
+
+
+  const handleConfirm = async () => {
+    console.log('confirm')
+    // const codes = await api.auth.subscribeSelf().then(response => response.data[selectedProduct].codes.map((code: any) => code.id));
+
+    await api.auth.codeManage({
+      codesIds: checked,
+      subscribeId: subscribeId
+    });
+    setChecked([]);
+    const { data } = await api.auth.subscribeSelf();
+    setSubscriptionList(data);
+  }
 
   const handleDowngrade = async () => {
     await api.auth.upgradeProduct({
@@ -75,9 +89,23 @@ const SubscriptionsPage: React.FC = () => {
     })))
   };
 
+  const handleChecked = async (id: string) => {
+    setChecked([...checked, id]);
+    console.log(checked)
+    // console.log('checked')
+  };
+
+  const handleFilter = async (id: string) => {
+    const filtered = checked.filter((item: any) => item !== id)
+    setChecked(filtered)
+    console.log(checked)
+    // console.log('filtered')
+  }
+
   return (
     <Layout title="Subscriptions">
       <Container>
+        {checked.length}
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
           {subscriptionList.length > 0 && (
@@ -112,13 +140,22 @@ const SubscriptionsPage: React.FC = () => {
 
             <Cards>
               {subscriptionList[selectedProduct]?.codes.map(({ id, code, status, origin }: any) => (
-                <SecondaryCard key={id} code={code} status={status} handleActive={handleActive} origin={origin} />
+                <SecondaryCard
+                  key={id}
+                  code={code}
+                  status={status}
+                  handleActive={handleActive}
+                  handleChecked={handleChecked}
+                  handleFilter={handleFilter}
+                  origin={origin}
+                  id={id}
+                />
               ))}
             </Cards>
 
             <Wrapper>
               <Text>Select the domains you want to keep</Text>
-              <ConfirmButton theme="primary">Confirm</ConfirmButton>
+              <ConfirmButton theme="primary" onClick={handleConfirm}>Confirm</ConfirmButton>
             </Wrapper>
           </>
         ) : (
