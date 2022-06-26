@@ -35,7 +35,6 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActiv
     <Root $status={status}>
       <Col>
         <CheckboxWrapper>
-          {/* <Checkbox disabled={status !== 'HOLD'} onClick={() => (isChecked ? handleChecked(id) : handleFilter(id))} /> */}
           <Checkbox disabled={status !== 'HOLD'} onClick={() => (!isChecked ? (onChecked(id)) : (onFilter(id)))} />
         </CheckboxWrapper>
       </Col>

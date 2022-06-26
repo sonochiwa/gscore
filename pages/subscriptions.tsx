@@ -91,21 +91,16 @@ const SubscriptionsPage: React.FC = () => {
 
   const handleChecked = async (id: string) => {
     setChecked([...checked, id]);
-    console.log(checked)
-    // console.log('checked')
   };
 
   const handleFilter = async (id: string) => {
     const filtered = checked.filter((item: any) => item !== id)
     setChecked(filtered)
-    console.log(checked)
-    // console.log('filtered')
-  }
+  };
 
   return (
     <Layout title="Subscriptions">
       <Container>
-        {checked.length}
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
           {subscriptionList.length > 0 && (
