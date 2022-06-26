@@ -80,10 +80,12 @@ const SubscriptionsPage: React.FC = () => {
       <Container>
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
-          <div>
-            <NewButton theme="primary" onClick={handleDowngrade}>Downgrade</NewButton>
-            <NewButton theme="primary" onClick={handleUpgrade}>Upgrade</NewButton>
-          </div>
+          {subscriptionList.length > 0 && (
+            <div>
+              <NewButton theme="primary" onClick={handleDowngrade}>Downgrade</NewButton>
+              <NewButton theme="primary" onClick={handleUpgrade}>Upgrade</NewButton>
+            </div>
+          )}
         </Row>
         {subscriptionList.length > 0 ? (
           <>
