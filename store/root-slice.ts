@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import initialState from "./initial-state";
-import { IAddProductToCart, ISetAccessToken, IRemoveProductFromСart, ISetUsername } from "./types";
+import { ISetAccessToken, ISetUsername, IProducts } from "./types";
 
 const rootSlice = createSlice({
   name: "root",
@@ -12,18 +12,16 @@ const rootSlice = createSlice({
     },
 
     logOut(state) {
-      state.cartProduct = [];
+      // state = initialState;
       state.token = undefined;
-      state.username = undefined;
     },
 
-    addProductToCart(state, action: PayloadAction<IAddProductToCart>) {
-      state.cartProduct = [];
-      state.cartProduct.push(action.payload);
+    addProductToCart(state, action: PayloadAction<IProducts>) {
+      state.products = [action.payload];
     },
 
     removeProductFromСart(state) {
-      state.cartProduct = [];
+      state.products = [];
     },
 
     setUsername(state, action: PayloadAction<ISetUsername>) {

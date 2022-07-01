@@ -7,8 +7,8 @@ import Button from "../ui/Button";
 
 export default function SubscribePage() {
   const router = useRouter();
-  const cart = useAppSelector(({ root }: any) => ({
-    product: root.cartProduct[0],
+  const cart = useAppSelector(({ root }) => ({
+    product: root.products[0],
   }));
 
   return (

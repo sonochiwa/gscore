@@ -19,5 +19,11 @@ export const InputTheme: { [key: string]: () => CSSProp } = {
       background-repeat: no-repeat;
       background-position: calc(100% - 18px);
     `;
+  },
+
+  default: () => {
+    return css`
+      outline: 1px solid var(--color_300);
+  `;
   }
 };

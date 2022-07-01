@@ -5,28 +5,26 @@ import Button from "../Button";
 import { StatusTheme } from "./util/theme";
 import { useState } from "react";
 
-type Status = 'ACTIVE' | 'INACTIVE' | 'HOLD';
-
 interface ISecondaryCard {
-  id: string;
-  status: Status;
+  id: number;
+  status: string;
   code: string;
   origin: string;
   handleActive: (code: string) => Promise<void>;
-  handleChecked: (id: string) => Promise<void>;
-  handleFilter: (id: string) => Promise<void>;
+  handleChecked: (id: number) => Promise<void>;
+  handleFilter: (id: number) => Promise<void>;
 };
 
 const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActive, handleChecked, handleFilter, origin }) => {
   const [_, copy] = useCopyToClipboard();
   const [isChecked, setIsChecked] = useState(false);
 
-  const onChecked = (id: string) => {
+  const onChecked = (id: number) => {
     handleChecked(id);
     setIsChecked(!isChecked);
   };
 
-  const onFilter = (id: string) => {
+  const onFilter = (id: number) => {
     handleFilter(id);
     setIsChecked(!isChecked);
   };
@@ -70,7 +68,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActiv
 };
 
 interface IRoot {
-  $status: Status;
+  $status: string;
 };
 
 const Root = styled.div<IRoot>`
@@ -181,7 +179,7 @@ const StatusWrapper = styled.div`
 `;
 
 interface IStatus {
-  $status?: Status;
+  $status?: string;
 }
 
 const Status = styled.p<IStatus>`

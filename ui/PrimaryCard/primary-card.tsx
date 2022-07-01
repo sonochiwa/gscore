@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import Button from "../Button";
 import dateFormat from "dateformat";
-
-
+import { IProducts } from "../../store/types";
 
 interface IPrimaryCard {
   status: string;
-  product: { name: string, prices: Array<any> };
-  currentPeriodEnd: string;
-  handleView: () => {};
   isActive: boolean;
-}
+  currentPeriodEnd: string;
+  product: IProducts;
+  handleView: () => {};
+};
 
 const PrimaryCard: React.FC<IPrimaryCard> = ({ status, product, currentPeriodEnd, handleView, isActive }) => {
   return (

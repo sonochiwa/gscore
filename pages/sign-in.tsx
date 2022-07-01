@@ -24,7 +24,7 @@ const schema = yup.object().shape({
 });
 
 export default function SignInPage() {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema), mode: 'onChange' });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();
@@ -42,8 +42,8 @@ export default function SignInPage() {
         username: data.user.username,
       }));
       router.push('/checkout');
-    } catch (error: any) {
-      setError(error.response?.data?.message || error.message);
+    } catch (e: any) {
+      setError(e.response?.data?.message || e.message);
     };
 
     setIsActive(false);
@@ -65,7 +65,7 @@ export default function SignInPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
             name="email"
@@ -79,9 +79,9 @@ export default function SignInPage() {
                 placeholder="Password"
                 onChange={onChange}
                 onBlur={onBlur}
-                type="password"
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
+                type="password"
               />
             )}
             name="password"

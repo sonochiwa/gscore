@@ -8,52 +8,49 @@ import PrimaryCard from "../ui/PrimaryCard";
 import api from "../services";
 import { useEffect, useState } from "react";
 import SecondaryCard from "../ui/SecondaryCard";
+import { ISubscribe } from "../store/types";
 
 const SubscriptionsPage: React.FC = () => {
-  const router = useRouter();
-  const [position, setPosition] = useState<any>(0);
-  const [currentCard, setCurrentCard] = useState<any>(1);
+  const [position, setPosition] = useState(0);
+  const [currentCard, setCurrentCard] = useState(1);
   const [subscriptionList, setSubscriptionList] = useState<Array<any>>([]);
   const [selectedProduct, setSelectedProduct] = useState(0);
+  const [checked, setChecked] = useState<any>([]);
   const productId = subscriptionList[selectedProduct]?.productId;
   const subscribeId = subscriptionList[selectedProduct]?.id;
-  const [checked, setChecked] = useState<any>([]);
-
+  const router = useRouter();
 
   const handleConfirm = async () => {
-    console.log('confirm')
-    // const codes = await api.auth.subscribeSelf().then(response => response.data[selectedProduct].codes.map((code: any) => code.id));
-
     await api.auth.codeManage({
       codesIds: checked,
       subscribeId: subscribeId
     });
     setChecked([]);
-    const { data } = await api.auth.subscribeSelf();
+    const { data } = await api.auth.productself();
     setSubscriptionList(data);
-  }
+  };
 
   const handleDowngrade = async () => {
-    await api.auth.upgradeProduct({
+    await api.auth.changeSubscribe({
       productId: productId - 1,
       subscribeId: subscribeId
     });
-    const { data } = await api.auth.subscribeSelf();
+    const { data } = await api.auth.productself();
     setSubscriptionList(data);
   };
 
   const handleUpgrade = async () => {
-    await api.auth.upgradeProduct({
+    await api.auth.changeSubscribe({
       productId: productId + 1,
       subscribeId: subscribeId
     });
-    const { data } = await api.auth.subscribeSelf();
+    const { data } = await api.auth.productself();
     setSubscriptionList(data);
   };
 
   const getSubscriptionList = async () => {
     try {
-      const { data } = await api.auth.subscribeSelf();
+      const { data } = await api.auth.productself();
       setSubscriptionList(data);
       setSelectedProduct(0);
     } catch (error) {
@@ -89,13 +86,13 @@ const SubscriptionsPage: React.FC = () => {
     })))
   };
 
-  const handleChecked = async (id: string) => {
+  const handleChecked = async (id: number) => {
     setChecked([...checked, id]);
   };
 
-  const handleFilter = async (id: string) => {
-    const filtered = checked.filter((item: any) => item !== id)
-    setChecked(filtered)
+  const handleFilter = async (id: number) => {
+    const filtered = checked.filter((item: any) => item !== id);
+    setChecked(filtered);
   };
 
   return (
@@ -134,7 +131,7 @@ const SubscriptionsPage: React.FC = () => {
             </ControlWrapper>
 
             <Cards>
-              {subscriptionList[selectedProduct]?.codes.map(({ id, code, status, origin }: any) => (
+              {subscriptionList[selectedProduct]?.codes.map(({ id, code, status, origin }: ISubscribe) => (
                 <SecondaryCard
                   key={id}
                   code={code}
@@ -213,7 +210,7 @@ const CarouselWrapper = styled.div`
 `;
 
 interface ICarousel {
-  $position: any;
+  $position: number;
 };
 
 const Carousel = styled.div<ICarousel>`

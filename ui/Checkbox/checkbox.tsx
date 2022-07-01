@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { InputHTMLAttributes } from "react";
 
-const Checkbox: React.FC<any> = (props) => {
+interface ICheckbox extends InputHTMLAttributes<HTMLInputElement> { };
+
+const Checkbox: React.FC<ICheckbox> = (props) => {
   return (
     <Root>
       <input type="checkbox" {...props} />

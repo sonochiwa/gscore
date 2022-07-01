@@ -28,7 +28,7 @@ const schema = yup.object().shape({
 }).test('oneOfRequired', (schema: ISchema) => { return schema.username != null || schema.email != null });
 
 export default function PersonalInfoPage() {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema), mode: 'onChange' });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();
@@ -39,7 +39,7 @@ export default function PersonalInfoPage() {
       await api.auth.updateUser({
         username: data.username,
         email: data.email
-      }).then(response => console.log(response));
+      });
 
       if (data.username) {
         dispatch(setUsername({ username: data.username }));
@@ -70,7 +70,7 @@ export default function PersonalInfoPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
             name="username"
@@ -85,7 +85,7 @@ export default function PersonalInfoPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
             name="email"

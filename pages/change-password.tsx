@@ -21,7 +21,7 @@ const schema = yup.object().shape({
 });
 
 export default function ChangePasswordPage() {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema), mode: "onChange" });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
 
@@ -34,7 +34,7 @@ export default function ChangePasswordPage() {
           newPassword: data.newPassword
         })
       }
-      alert('password updated');
+      alert("password updated");
       setError(null);
     } catch (e: any) {
       setError(e.response?.data?.message || e.message);
@@ -60,7 +60,7 @@ export default function ChangePasswordPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
             name="currentPassword"
@@ -75,7 +75,7 @@ export default function ChangePasswordPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
             name="newPassword"

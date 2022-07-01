@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { HeadingH2, Typography, ErrorText, Subtitle } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginTab from "../ui/LoginTab";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setAccessToken } from '../store/root-slice';
@@ -27,13 +27,11 @@ const schema = yup.object().shape({
 });
 
 export default function SignUpPage() {
-  const { handleSubmit, control, formState: { errors }, getFieldState } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({ resolver: yupResolver(schema), mode: 'onChange' });
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  useEffect(() => console.log(getFieldState('username')));
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -44,7 +42,6 @@ export default function SignUpPage() {
         password: data.password
       })
         .then((response) => {
-          console.log(response);
           dispatch(setAccessToken({
             token: response.data.token,
             username: response.data.username,
@@ -80,7 +77,7 @@ export default function SignUpPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
           />
@@ -93,7 +90,7 @@ export default function SignUpPage() {
                 onChange={onChange}
                 onBlur={onBlur}
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
               />
             )}
             name="email"
@@ -107,9 +104,9 @@ export default function SignUpPage() {
                 placeholder="Password"
                 onChange={onChange}
                 onBlur={onBlur}
-                type="password"
                 errorMessage={errors}
-                isValid={fieldState}
+                fieldState={fieldState}
+                type="password"
               />
             )}
             name="password"

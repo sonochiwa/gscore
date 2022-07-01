@@ -4,22 +4,22 @@ import { ErrorMessage } from "@hookform/error-message";
 import { ErrorText } from "../../styles/main";
 import { InputTheme } from "./util/theme";
 
+type Theme = "success" | "error" | "default";
+
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
-  errorMessage?: any;
+  errorMessage?: object;
   name: string;
-  isValid: any;
+  fieldState: { isTouched: boolean, invalid: boolean, isDirty: boolean; };
 };
 
-const Input: React.FC<IInput> = ({ errorMessage, isValid, name, children, ...props }: IInput) => {
-  const invalid = isValid.invalid;
-  const isTouched = isValid.isTouched;
-  const isDirty = isValid.isDirty;
+const Input: React.FC<IInput> = ({ errorMessage, fieldState, name, children, ...props }: IInput) => {
+  const { isTouched, isDirty, invalid } = fieldState;
 
   return (
     <div>
       <Root
         type="text"
-        $isValid={isTouched && !invalid ? "success" : isTouched && "error"}
+        $theme={isTouched && isDirty ? (!invalid ? "success" : "error") : "default"}
         {...props}
       />
       <ErrorMessage
@@ -32,7 +32,7 @@ const Input: React.FC<IInput> = ({ errorMessage, isValid, name, children, ...pro
 };
 
 interface IRoot {
-  $isValid?: any;
+  $theme?: Theme;
 };
 
 const Root = styled.input<IRoot>`
@@ -41,7 +41,6 @@ const Root = styled.input<IRoot>`
   line-height: 18px;
   outline: none;
   border-radius: 6px;
-  outline: 1px solid var(--color_300);
   border: none;
   padding: 23px 25px;
   caret-color: var(--primary_1);
@@ -59,7 +58,7 @@ const Root = styled.input<IRoot>`
       color: var(--color_700);
     }
   }
-  ${({ $isValid }) => $isValid && InputTheme[$isValid]};
+  ${({ $theme }) => $theme && InputTheme[$theme]};
 `;
 
 export default Input;

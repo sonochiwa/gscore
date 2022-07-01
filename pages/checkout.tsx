@@ -11,12 +11,12 @@ import api from "../services";
 
 export default function CheckoutPage() {
   const token = useAppSelector(state => state.root.token);
-  const productId = useAppSelector(state => state.root.cartProduct[0]?.prices[0]?.productId);
+  const productId = useAppSelector(state => state.root.products[0]?.prices[0]?.productId);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const cart = useAppSelector(({ root }: any) => ({
-    product: root.cartProduct[0],
+  const cart = useAppSelector(({ root }) => ({
+    product: root.products[0],
   }));
 
   const onClearBasket = () => {
@@ -25,7 +25,7 @@ export default function CheckoutPage() {
 
   const onSubmit = () => {
     router.push("/start-your-subscription");
-    api.auth.buyProduct({ priceId: productId });
+    api.auth.buySubscribe({ priceId: productId });
   };
 
   useEffect(() => {

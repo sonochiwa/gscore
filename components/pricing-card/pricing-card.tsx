@@ -3,11 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks/app-dispatch';
 import { addProductToCart } from "../../store/root-slice";
 import Button from "../../ui/Button";
 import styled from "styled-components";
-import { IAddProductToCart } from "../../store/types";
+import { IProducts } from "../../store/types";
 
-interface IPricingCard extends IAddProductToCart {
+interface IPricingCard extends IProducts {
   isProfit: boolean;
-  prices: any;
 };
 
 const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit, productId }) => {
@@ -27,7 +26,7 @@ const PricingCard: React.FC<IPricingCard> = ({ prices, name, isProfit, productId
   return (
     <Root isProfit={isProfit}>
       <CardTop isProfit={isProfit}>
-        {prices.map(({ price }: any, index: number) => <Price key={index}>${price}</Price>)}
+        {prices.map(({ price }, index: number) => <Price key={index}>${price}</Price>)}
         <Title>{name} license</Title>
         <Text isProfit={isProfit}>Get the advanced WordPress plugin
           that optimizes content with GSC keywords at one low annual price</Text>

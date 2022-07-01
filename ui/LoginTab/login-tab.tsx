@@ -8,24 +8,23 @@ interface ILoginTab {
 
 const LoginTab: React.FC<ILoginTab> = ({ currentTab }) => {
   const router = useRouter();
+  const tabs = [
+    { title: "Create account", route: "/sign-up" },
+    { title: "Log in", route: "/sign-in" },
+    { title: "Checkout", route: "/checkout" }
+  ];
 
   return (
     <TabWrapper>
       <Tab tab={currentTab}>
-        <TabItem>
-          <Typography color="var(--color_100)">Create account</Typography>
-          <TabButton type="button" onClick={() => router.push("/sign-up")} />
-        </TabItem>
 
-        <TabItem>
-          <Typography color="var(--color_100)">Log in</Typography>
-          <TabButton type="button" onClick={() => router.push("/sign-in")} />
-        </TabItem>
+        {tabs.map((tab, index) => (
+          <TabItem key={index}>
+            <Typography color="var(--color_100)">{tab.title}</Typography>
+            <TabButton type="button" onClick={() => router.push(`${tab.route}`)} />
+          </TabItem>
+        ))}
 
-        <TabItem>
-          <Typography color="var(--color_100)">Checkout</Typography>
-          <TabButton type="button" onClick={() => router.push("/checkout")} />
-        </TabItem>
       </Tab>
     </TabWrapper>
   )

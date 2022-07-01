@@ -6,7 +6,7 @@ import { Container, HeadingH2, Typography } from "../styles/main";
 import api from "../services";
 
 export async function getServerSideProps() {
-  const { data }: any = await api.auth.products();
+  const { data } = await api.auth.products();
 
   return {
     props: {
