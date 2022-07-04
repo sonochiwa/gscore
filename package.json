@@ -15,6 +15,7 @@
     "@types/dateformat": "^5.0.0",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/redux-persist": "^4.3.1",
+    "@types/scroll-lock": "^2.1.0",
     "@types/styled-components": "^5.1.25",
     "@types/yup": "^0.29.14",
     "axios": "^0.27.2",
@@ -30,6 +31,7 @@
     "react-hook-form": "^7.31.3",
     "react-redux": "^8.0.2",
     "redux-persist": "^6.0.0",
+    "scroll-lock": "^2.1.5",
     "styled-components": "^5.3.5",
     "uuidv4": "^6.2.13",
     "yup": "^0.32.11"

@@ -1,15 +1,13 @@
 import styled, { createGlobalStyle } from "styled-components";
 
 const size = {
-  mobile: '375px',
-  tablet: '768px',
-  laptop: '1440px',
+  mobile: '560px',
+  tablet: '1024px',
 };
 
 export const device = {
-  mobileS: `(min-width: ${size.mobile})`,
-  tablet: `(min-width: ${size.tablet})`,
-  laptop: `(min-width: ${size.laptop})`,
+  tablet: `(max-width: ${size.tablet})`,
+  mobile: `(max-width: ${size.mobile})`,
 };
 
 export const GlobalStyles = createGlobalStyle`
@@ -77,14 +75,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html, body, #__next {
-    height: 100%;
+    /* height: 100%; */
+    overflow-x: hidden;
   }
 
   body {
     background-color: var(--color_800);
     color: var(--color_100);
-    padding: 0 15px;
-    overflow-x: hidden;
   }
 
   :root {
@@ -130,9 +127,21 @@ export const FilledCheckMark = styled.div`
 /* container width 1268px */
 export const Container = styled.div`
   width: 100%;
-  max-width: 1320px;
-  padding: 0 26px;
+  max-width: 1268px;
   margin: 0 auto;
+  padding: 0 15px;
+  /* background-color: red; */
+
+  @media ${device.tablet} {
+    /* background-color: green; */
+    max-width: 740px;
+  }
+
+  @media ${device.mobile} {
+    /* background-color: brown; */
+    /* min-width: 375px; */
+    max-width: 100%;
+  }
 `;
 
 // UI kit
@@ -151,18 +160,34 @@ export const HeadingH2 = styled.div<IHeadingH2>`
   font-family: "Thicccboi";
   text-align: ${props => props.left ? "left" : "center"};
   font-weight: 700;
-  font-size: 44px;
   line-height: 54px;
   color: var(--color_100);
+  font-size: 44px;
+
+  @media ${device.tablet} {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  @media ${device.mobile} {
+    font-size: 28px;
+    line-height: 34px;
+  }
 `;
 
 export const HeadingH3 = styled.div`
   font-family: "Thicccboi";
   text-align: left;
   font-weight: 700;
-  font-size: 28px;
   line-height: 40px;
   color: var(--color_100);
+  font-size: 28px;
+
+  @media ${device.tablet} {
+    font-size: 24px;
+  }
+  @media ${device.mobile} {
+    font-size: 20px;
+  }
 `;
 
 export const Typography = styled.p`

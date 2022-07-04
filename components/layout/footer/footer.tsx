@@ -2,24 +2,25 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import { Container, Typography } from "../../../styles/main";
+import { device } from "../../../styles/main";
 
 export default function FooterComponent() {
   return (
     <Footer>
       <Container>
         <FooterTop>
-          <Image src="/logo.svg" width="170" height="42" alt="" />
-          <Typography color="var(--color_400)">Ut enim ad minim veniam quis <br /> nostrud exercitation  ea commodo</Typography>
+          <LogoWrapper>
+            <Image src="/logo.svg" width="170" height="42" alt="" />
+          </LogoWrapper>
+          <Typography color="var(--color_400)">Ut enim ad minim veniam quis nostrud <br /> exercitation  ea commodo</Typography>
         </FooterTop>
         <FooterBottom>
-          <div>
-            <List>
-              <Item>Copyright © 2022 GScore</Item>
-              <Item>All Rights Reserved</Item>
-              <Item><Link href="/cookies"><a>Cookies</a></Link></Item>
-              <Item><Link href="/privacy-policy"><a>Privacy Policy</a></Link></Item>
-            </List>
-          </div>
+          <List>
+            <Item>Copyright © 2022 GScore</Item>
+            <Item>All Rights Reserved</Item>
+            <Item><Link href="/cookies"><a>Cookies</a></Link></Item>
+            <Item><Link href="/privacy-policy"><a>Privacy Policy</a></Link></Item>
+          </List>
           <Socials>
             <SocialItem>
               <Link href="https://facebook.com">
@@ -49,6 +50,12 @@ export default function FooterComponent() {
   )
 };
 
+const LogoWrapper = styled.div`
+  @media ${device.mobile} {
+    width: 130px;
+  }
+`;
+
 const Footer = styled.footer`
   display: flex;
   flex-direction: column;
@@ -56,6 +63,11 @@ const Footer = styled.footer`
   margin-top: 42px;
   padding: 60px 0 42px;
   border-top: 1px solid var(--color_700);
+
+  @media ${device.tablet} {
+    padding-bottom: 0;
+    padding-top: 40px;
+  }
 `;
 
 const FooterTop = styled.div`
@@ -63,6 +75,18 @@ const FooterTop = styled.div`
   ${Typography} {
     margin-top: 24px;
   }
+
+  @media ${device.tablet} {
+    margin-bottom: 40px;
+  }
+`;
+
+const Socials = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 140px;
 `;
 
 const FooterBottom = styled.div`
@@ -71,13 +95,32 @@ const FooterBottom = styled.div`
   align-items: center;
   padding-top: 44px;
   border-top: 1px solid var(--color_700);
+
+  @media ${device.tablet} {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 30px;
+    ${Socials} {
+      margin: 24px 0;
+    }
+  }
+  @media ${device.mobile} {
+  }
 `;
 
 const List = styled.ul`
-  display: flex;
+  display: inline;
 `;
 
-const Item = styled(Typography)`
+const Item = styled.li`
+  display: inline;
+  list-style-type: none;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color_400);
   margin-right: 10px;
   &:not(:last-child) {
     &::after {
@@ -88,15 +131,8 @@ const Item = styled(Typography)`
   & a {
     padding-bottom: 2px;
     border-bottom: 1px solid;
+    line-height: 30px;
   }
-`;
-
-const Socials = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 140px;
 `;
 
 const SocialItem = styled.div`

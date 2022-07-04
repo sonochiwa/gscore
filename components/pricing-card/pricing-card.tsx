@@ -4,6 +4,7 @@ import { addProductToCart } from "../../store/root-slice";
 import Button from "../../ui/Button";
 import styled from "styled-components";
 import { IProducts } from "../../store/types";
+import { device } from "../../styles/main";
 
 interface IPricingCard extends IProducts {
   isProfit: boolean;
@@ -55,6 +56,15 @@ const Root = styled.div<isProfitProps>`
   border-radius: 12px;
   width: 100%;
   height: 100%;
+
+  @media ${device.tablet} {
+    margin: 0;
+    :first-child {
+      margin-top: 30px;
+    }
+  };
+  @media ${device.mobile} {
+  };
 `;
 
 const CardTop = styled.div<isProfitProps>`

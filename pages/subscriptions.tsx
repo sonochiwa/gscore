@@ -1,5 +1,5 @@
 import Layout from "../components/layout";
-import { Container, HeadingH2, HeadingH3, Typography } from "../styles/main";
+import { Container, device, HeadingH2, HeadingH3, Typography } from "../styles/main";
 import Image from "next/image";
 import Button from "../ui/Button";
 import styled from "styled-components";
@@ -101,10 +101,10 @@ const SubscriptionsPage: React.FC = () => {
         <Row>
           <HeadingH2 left>My subscriptions</HeadingH2>
           {subscriptionList.length > 0 && (
-            <div>
+            <ButtonWrapper>
               <NewButton theme="primary" onClick={handleDowngrade}>Downgrade</NewButton>
               <NewButton theme="primary" onClick={handleUpgrade}>Upgrade</NewButton>
-            </div>
+            </ButtonWrapper>
           )}
         </Row>
         {subscriptionList.length > 0 ? (
@@ -126,7 +126,7 @@ const SubscriptionsPage: React.FC = () => {
 
             <ControlWrapper>
               <Arrow onClick={handlePrev} />
-              <Position>{currentCard}<span>/{subscriptionList.length}</span></Position>
+              <Position>{selectedProduct + 1}<span>/{subscriptionList.length}</span></Position>
               <Arrow onClick={handleNext} />
             </ControlWrapper>
 
@@ -166,6 +166,16 @@ const SubscriptionsPage: React.FC = () => {
   )
 };
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: end;
+  @media ${device.mobile} {
+    flex-direction: column;
+    align-items: right;
+    gap: 8px;    
+  }
+`;
+
 const NoSubsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -200,6 +210,30 @@ const NewButton = styled(Button)`
   min-width: 152px;
   margin-top: 0;
   margin-left: 24px;
+  &:hover {
+    background-color: inherit;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    opacity: .6;
+    &:hover {
+      background-color: var(--primary_1);
+    }
+  }
+      
+  @media ${device.tablet} {
+    min-width: 30px;
+    margin-left: 14px;
+  }
+  @media ${device.mobile} {
+    background-color: transparent;
+    box-shadow: none;
+    height: 18px;
+    padding: 0;
+    color: var(--primary_1);
+  }
 `;
 
 const CarouselWrapper = styled.div`
@@ -207,6 +241,15 @@ const CarouselWrapper = styled.div`
   width: calc(100vw - (100vw - 100%) / 2);
   height: 327px;
   overflow-x: hidden;
+  @media ${device.tablet} {
+    height: 321px;
+    overflow-x: scroll;
+    margin-bottom: 10px;
+  }
+  @media ${device.mobile} {
+    height: 304px;
+    margin-bottom: 5px;
+  }
 `;
 
 interface ICarousel {
@@ -220,6 +263,23 @@ const Carousel = styled.div<ICarousel>`
   position: absolute;
   gap: 28px;
   margin-left: ${props => props.$position + "px"};
+  @media ${device.tablet} {
+    gap: 20px;
+    padding-right: 15px;
+  }
+  @media ${device.mobile} {
+    gap: 12px;
+    padding-right: 15px;
+  }
+`;
+
+const Arrow = styled.button`
+  cursor: pointer;
+  background-image: url('/icons/arrow.svg');
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: none;
 `;
 
 const ControlWrapper = styled.div`
@@ -231,15 +291,15 @@ const ControlWrapper = styled.div`
   & :last-child {
     transform: rotate(180deg);
   }
-`;
-
-const Arrow = styled.button`
-  cursor: pointer;
-  background-image: url('/icons/arrow.svg');
-  width: 44px;
-  height: 44px;
-  background-color: transparent;
-  border: none;
+  @media ${device.tablet} {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    ${Arrow} {
+      display: none;
+    }
+  }
 `;
 
 const Position = styled.p`
@@ -275,11 +335,17 @@ const Text = styled.p`
   font-size: 20px;
   line-height: 22px;
   color: #FFFFFF;
+  @media ${device.mobile} {
+    display: none;
+  }
 `;
 
 const ConfirmButton = styled(Button)`
   min-width: 148px;
   margin-top: 0;
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `;
 
 export default SubscriptionsPage;

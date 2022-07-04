@@ -1,4 +1,4 @@
-import { Typography } from "../../styles/main";
+import { device, Typography } from "../../styles/main";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -25,6 +25,9 @@ const TabWrapper = styled.div`
   max-width: 100%;
   width: 100%;
   padding: 48px 0;
+  @media ${device.tablet} {
+   padding: 24px 0;
+  }
 `;
 
 interface ITab {
@@ -42,7 +45,11 @@ const Tab = styled.div<ITab>`
     color: var(--primary_1);
     margin-bottom: -2px;
     border-bottom: 2px solid var(--primary_1);
-    z-index: 999;
+  }
+  @media ${device.tablet} {
+    ${Typography} {
+      padding: 0 12px 0;
+    }
   }
 `;
 

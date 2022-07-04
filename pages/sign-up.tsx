@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { HeadingH2, Typography, ErrorText, Subtitle } from "../styles/main";
+import { HeadingH2, Typography, ErrorText, Subtitle, Container, device } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginTab from "../ui/LoginTab";
 import { useState } from "react";
@@ -48,8 +48,8 @@ export default function SignUpPage() {
           }));
         });
       router.push("/checkout");
-    } catch (e: any) {
-      setError(e.response?.data?.message || e.message);
+    } catch (error: any) {
+      setError(error.response?.data?.message || error.message);
     } finally {
       setIsActive(false);
     }
@@ -57,75 +57,77 @@ export default function SignUpPage() {
 
   return (
     <Layout title="Sign up">
-      <Wrapper>
-        <LoginTab currentTab={1} />
-        <HeadingH2>Create account</HeadingH2>
-        <Subtitle>
-          You need to enter your name and email.
-          We will send you a temporary password by email
-        </Subtitle>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          {error && <ErrorText>{error}</ErrorText>}
+      <Container>
+        <Wrapper>
+          <LoginTab currentTab={1} />
+          <HeadingH2>Create account</HeadingH2>
+          <Subtitle>
+            You need to enter your name and email.
+            We will send you a temporary password by email
+          </Subtitle>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            {error && <ErrorText>{error}</ErrorText>}
 
-          <Controller
-            name="username"
-            control={control}
-            render={({ field: { onChange, onBlur }, fieldState }) => (
-              <Input
-                name="username"
-                placeholder="Username"
-                onChange={onChange}
-                onBlur={onBlur}
-                errorMessage={errors}
-                fieldState={fieldState}
-              />
-            )}
-          />
+            <Controller
+              name="username"
+              control={control}
+              render={({ field: { onChange, onBlur }, fieldState }) => (
+                <Input
+                  name="username"
+                  placeholder="Username"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  errorMessage={errors}
+                  fieldState={fieldState}
+                />
+              )}
+            />
 
-          <Controller
-            render={({ field: { onChange, onBlur }, fieldState }) => (
-              <Input
-                name="email"
-                placeholder="Email"
-                onChange={onChange}
-                onBlur={onBlur}
-                errorMessage={errors}
-                fieldState={fieldState}
-              />
-            )}
-            name="email"
-            control={control}
-          />
+            <Controller
+              render={({ field: { onChange, onBlur }, fieldState }) => (
+                <Input
+                  name="email"
+                  placeholder="Email"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  errorMessage={errors}
+                  fieldState={fieldState}
+                />
+              )}
+              name="email"
+              control={control}
+            />
 
-          <Controller
-            render={({ field: { onChange, onBlur }, fieldState }) => (
-              <Input
-                name="password"
-                placeholder="Password"
-                onChange={onChange}
-                onBlur={onBlur}
-                errorMessage={errors}
-                fieldState={fieldState}
-                type="password"
-              />
-            )}
-            name="password"
-            control={control}
-          />
+            <Controller
+              render={({ field: { onChange, onBlur }, fieldState }) => (
+                <Input
+                  name="password"
+                  placeholder="Password"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  errorMessage={errors}
+                  fieldState={fieldState}
+                  type="password"
+                />
+              )}
+              name="password"
+              control={control}
+            />
 
-          <Button
-            theme="primary"
-            isLoading={isActive}
-            disabled={isActive}
-            onClick={() => onSubmit}
-          >Send password</Button>
+            <NewButton
+              theme="primary"
+              isLoading={isActive}
+              disabled={isActive}
+              onClick={() => onSubmit}
+            >Send password</NewButton>
 
-        </Form>
-        <NextStep>
-          <Typography color="var(--color_100)">Have an account?</Typography>
-          <Link href="/sign-in"><a><Typography>Go to the next step</Typography></a></Link>
-        </NextStep>
-      </Wrapper>
+          </Form>
+          <NextStep>
+            <Typography color="var(--color_100)">Have an account?</Typography>
+            <Link href="/sign-in"><a><Typography>Go to the next step</Typography></a></Link>
+          </NextStep>
+        </Wrapper>
+      </Container>
     </Layout>
   )
 };
@@ -134,6 +136,12 @@ const Form = styled.form`
   display: grid;
   flex-direction: column;
   gap: 24px;
+`;
+
+const NewButton = styled(Button)`
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `;
 
 const NextStep = styled.div`

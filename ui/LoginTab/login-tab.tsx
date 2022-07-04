@@ -1,4 +1,4 @@
-import { Typography } from "../../styles/main";
+import { device, Typography } from "../../styles/main";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -20,7 +20,7 @@ const LoginTab: React.FC<ILoginTab> = ({ currentTab }) => {
 
         {tabs.map((tab, index) => (
           <TabItem key={index}>
-            <Typography color="var(--color_100)">{tab.title}</Typography>
+            <TabTypography color="var(--color_100)">{tab.title}</TabTypography>
             <TabButton type="button" onClick={() => router.push(`${tab.route}`)} />
           </TabItem>
         ))}
@@ -49,7 +49,19 @@ const TabButton = styled.input`
   margin: 0;
 `;
 
+const TabTypography = styled(Typography)`
+  @media ${device.mobile} {
+    line-height: 18px;
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+`;
+
 const TabItem = styled.label`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
   cursor: pointer;
   user-select: none;
   width: 100%;

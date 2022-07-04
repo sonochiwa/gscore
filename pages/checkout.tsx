@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Layout from "../components/layout";
-import { HeadingH2, Typography } from "../styles/main";
+import { Container, device, HeadingH2, Typography } from "../styles/main";
 import LoginTab from "../ui/LoginTab";
 import { useAppDispatch, useAppSelector } from "../hooks/app-dispatch";
 import { removeProductFromСart } from "../store/root-slice";
@@ -36,43 +36,44 @@ export default function CheckoutPage() {
 
   return (
     <Layout title="Checkout">
-      <Wrapper>
-        <LoginTab currentTab={3} />
-        <HeadingH2 left>Checkout</HeadingH2>
-        <Package>
-          <Row>
-            <Typography>Package name</Typography>
-            <Typography>Price</Typography>
-          </Row>
-          <Hr />
-          {cart.product &&
+      <Container>
+        <Wrapper>
+          <LoginTab currentTab={3} />
+          <HeadingH2 left>Checkout</HeadingH2>
+          <Package>
             <Row>
-              <Typography>{cart.product?.name} license</Typography>
-              <Row>
-                <Typography>${cart.product?.prices[0]?.price}</Typography>
-                <ClearBasket onClick={() => onClearBasket()} />
-              </Row>
+              <Typography>Package name</Typography>
+              <Typography>Price</Typography>
             </Row>
+            <Hr />
+            {cart.product &&
+              <Row>
+                <NewTypography>{cart.product?.name} license</NewTypography>
+                <Row>
+                  <Typography>${cart.product?.prices[0]?.price}</Typography>
+                  <ClearBasket onClick={() => onClearBasket()} />
+                </Row>
+              </Row>
+            }
+          </Package>
+          {cart.product &&
+            <Total>
+              <Typography>Total:</Typography>
+              <Typography>
+                ${cart.product?.prices[0]?.price}
+              </Typography>
+            </Total>
           }
-        </Package>
-        {cart.product &&
-          <Total>
-            <Typography>Total:</Typography>
-            <Typography>
-              ${cart.product?.prices[0]?.price}
-            </Typography>
-          </Total>
-        }
-        {cart.product &&
-          <Button
-            theme="primary"
-            onClick={onSubmit}
-          >
-            Purchase
-          </Button>
-        }
-
-      </Wrapper>
+          {cart.product &&
+            <NewButton
+              theme="primary"
+              onClick={onSubmit}
+            >
+              Purchase
+            </NewButton>
+          }
+        </Wrapper>
+      </Container>
     </Layout >
   )
 };
@@ -84,6 +85,16 @@ const Wrapper = styled.div`
   ${HeadingH2} {
     margin-bottom: 16px;
   }
+`;
+
+const NewButton = styled(Button)`
+  @media ${device.mobile} {
+    width: 100%;
+  }
+`;
+
+const NewTypography = styled(Typography)`
+  font-size: 10px;
 `;
 
 const Row = styled.div`

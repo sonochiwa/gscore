@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "../Button";
 import dateFormat from "dateformat";
 import { IProducts } from "../../store/types";
+import { device } from "../../styles/main";
 
 interface IPrimaryCard {
   status: string;
@@ -42,6 +43,16 @@ const Root = styled.div<IRoot>`
   border-radius: 12px;
   min-width: 620px;
   ${props => props.$disabled && 'opacity: 0.6; user-select: none;'}
+
+  @media ${device.tablet} {
+    min-width: 500px;
+    padding: 40px 20px;
+  }
+
+  @media ${device.mobile} {
+    min-width: 318px;
+    padding: 32px 16px;
+  }
 `;
 
 const Row = styled.div`
@@ -76,6 +87,14 @@ const Hr = styled.div`
   bottom: 0;
   background-color: #969696;
   margin: 32px 0;
+  @media ${device.tablet} {
+    width: calc(100% + 40px);
+    left: -20px;
+  }
+  @media ${device.mobile} {
+    width: calc(100% + 32px);
+    left: -16px;
+  }
 `;
 
 const LicenseInfo = styled.p`

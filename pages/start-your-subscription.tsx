@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { HeadingH2, Subtitle, Typography } from "../styles/main";
+import { Container, HeadingH2, Subtitle, Typography } from "../styles/main";
 import { useAppSelector } from "../hooks/app-dispatch";
 import { useRouter } from "next/router";
 import Button from "../ui/Button";
@@ -13,31 +13,33 @@ export default function SubscribePage() {
 
   return (
     <Layout title="Start your subscription">
-      <Wrapper>
-        <HeadingH2 left>Start your subscription</HeadingH2>
-        <Subtitle>
-          We have sent you a payment receipt by e-mail and a
-          link to download the plugin with a license key.
-        </Subtitle>
-        <Package>
-          <Row>
-            <Typography>Package name</Typography>
-            <Typography>Price</Typography>
-          </Row>
-          <Hr />
-          <Row>
-            <Typography>{cart.product.name} license</Typography>
+      <Container>
+        <Wrapper>
+          <HeadingH2 left>Start your subscription</HeadingH2>
+          <Subtitle>
+            We have sent you a payment receipt by e-mail and a
+            link to download the plugin with a license key.
+          </Subtitle>
+          <Package>
             <Row>
-              <Typography>${cart.product.prices[0].price}</Typography>
+              <Typography>Package name</Typography>
+              <Typography>Price</Typography>
             </Row>
-          </Row>
-        </Package>
-        <Button
-          theme="primary"
-          onClick={() => router.push("/subscriptions")}
-          style={{ width: "100%" }}
-        >Go to my subscriptions</Button>
-      </Wrapper>
+            <Hr />
+            <Row>
+              <Typography>{cart.product.name} license</Typography>
+              <Row>
+                <Typography>${cart.product.prices[0].price}</Typography>
+              </Row>
+            </Row>
+          </Package>
+          <Button
+            theme="primary"
+            onClick={() => router.push("/subscriptions")}
+            style={{ width: "100%" }}
+          >Go to my subscriptions</Button>
+        </Wrapper>
+      </Container>
     </Layout>
   )
 };

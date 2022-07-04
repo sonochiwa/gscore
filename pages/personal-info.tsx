@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 import styled from "styled-components";
-import { Container, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
+import { Container, device, ErrorText, HeadingH2, HeadingH3 } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch } from "../hooks/app-dispatch";
 import { setUsername } from "../store/root-slice";
@@ -47,8 +47,8 @@ export default function PersonalInfoPage() {
 
       alert('user info updated');
       setError(null);
-    } catch (e: any) {
-      setError(e.response?.data?.message || e.message);
+    } catch (error: any) {
+      setError(error.response?.data?.message || error.message);
     } finally {
       setIsActive(false);
     };
@@ -92,18 +92,20 @@ export default function PersonalInfoPage() {
             control={control}
           />
 
-          <Button
+          <NewButton
             theme="primary"
             isLoading={isActive}
             disabled={isActive}
             onClick={() => onSubmit}
-          >Save</Button>
+          >Save</NewButton>
 
         </Form>
       </Container>
     </Layout>
   )
 };
+
+const NewButton = styled(Button)``;
 
 const Form = styled.form`
   display: flex;
@@ -112,4 +114,10 @@ const Form = styled.form`
   width: 100%;
   max-width: 512px;
   margin-bottom: 48px;
+
+  @media ${device.mobile} {
+    ${NewButton} {
+    width: 100%;
+    } 
+  }
 `;

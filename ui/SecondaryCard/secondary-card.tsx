@@ -4,6 +4,7 @@ import useCopyToClipboard from "../../hooks/copy-to-clipboard";
 import Button from "../Button";
 import { StatusTheme } from "./util/theme";
 import { useState } from "react";
+import { device } from "../../styles/main";
 
 interface ISecondaryCard {
   id: number;
@@ -31,19 +32,24 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActiv
 
   return (
     <Root $status={status}>
-      <Col>
-        <CheckboxWrapper>
-          <Checkbox disabled={status !== 'HOLD'} onClick={() => (!isChecked ? (onChecked(id)) : (onFilter(id)))} />
-        </CheckboxWrapper>
-      </Col>
 
-      <Col>
-        <CardText>License code</CardText>
-        <ButtonWrapper>
-          <LicenseCodeInput defaultValue={code} />
-          <LicenseCodeButton onClick={() => copy(code)} />
-        </ButtonWrapper>
-      </Col>
+      <FirstColWrapper>
+        <Col>
+          <CheckboxWrapper>
+            <Checkbox disabled={status !== 'HOLD'} onClick={() => (!isChecked ? (onChecked(id)) : (onFilter(id)))} />
+          </CheckboxWrapper>
+        </Col>
+      </FirstColWrapper>
+
+      <LicenseCodeWrapper>
+        <Col>
+          <CardText>License code</CardText>
+          <ButtonWrapper>
+            <LicenseCodeInput defaultValue={code} />
+            <LicenseCodeButton onClick={() => copy(code)} />
+          </ButtonWrapper>
+        </Col>
+      </LicenseCodeWrapper>
 
       <DomainWrapper>
         <DomainCol>
@@ -58,7 +64,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActiv
       </DomainWrapper>
 
       <StatusCol>
-        <CardText>Status</CardText>
+        <CardStatus>Status</CardStatus>
         <StatusWrapper>
           <Status $status={status}>{status}</Status>
         </StatusWrapper>
@@ -71,15 +77,6 @@ interface IRoot {
   $status: string;
 };
 
-const Root = styled.div<IRoot>`
-  background-color: #272727;
-  border-radius: 12px;
-  width: 100%;
-  padding: 24px 32px;
-  display: flex;
-  flex-direction: row;
-  gap: 28px;
-`;
 
 const Col = styled.div`
   display: flex;
@@ -89,10 +86,6 @@ const Col = styled.div`
 
 const DomainCol = styled(Col)`
   width: 100%;
-`;
-
-const StatusCol = styled(Col)`
-  flex-direction: column;
 `;
 
 const DomainWrapper = styled.div`
@@ -170,12 +163,20 @@ const CheckboxWrapper = styled.div`
   align-items: center;
   margin-top: 100%;
   height: 68px;
+  @media ${device.tablet} {
+    height: auto;
+    margin-top: 0;
+  }
 `;
 
 const StatusWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 68px;
+  @media ${device.tablet} {
+    grid-area: b;
+    height: auto;
+  }
 `;
 
 interface IStatus {
@@ -189,7 +190,7 @@ const Status = styled.p<IStatus>`
   font-size: 22px;
   line-height: 28px;
   ${({ $status }) => $status && StatusTheme[$status]};
-`;
+  `;
 
 const NewButton = styled(Button)`
   min-width: 111px;
@@ -203,6 +204,54 @@ const NewButtonWrapper = styled.div`
   height: 100%;
   justify-content: flex-end;
   align-items: bottom;
+`;
+
+const CardStatus = styled(CardText)`
+`;
+
+const LicenseCodeWrapper = styled.div`
+  @media ${device.tablet} {
+    grid-area: c;
+  }`;
+const FirstColWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  @media ${device.tablet} {
+    grid-area: a;
+  }
+`;
+
+const StatusCol = styled(Col)`
+  display: flex;
+`;
+
+const Root = styled.div<IRoot>`
+  background-color: #272727;
+  border-radius: 12px;
+  width: 100%;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+  @media ${device.tablet} {
+    display: grid;
+    grid-template-areas: "a b" "c c" "d d";
+    grid-template-columns: min-content;
+    padding: 34px 20px;
+    ${LicenseCodeInput} {
+      width: 100%;
+    }
+    ${DomainWrapper} {
+      grid-area: d;
+      max-width: 100%;
+    }
+    ${CardStatus} {
+      display: none;
+    }
+    ${Col} {
+      height: auto;
+    }
+  }
 `;
 
 export default SecondaryCard;

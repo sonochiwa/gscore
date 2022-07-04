@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { Container, HeadingH2, Typography } from "../styles/main";
 import api from "../services";
+import { device } from "../styles/main";
 
 export async function getServerSideProps() {
   const { data } = await api.auth.products();
@@ -39,9 +40,24 @@ export default function HomePage({ products }: IHomePage) {
   )
 };
 
+const Cards = styled.div`
+  display: flex;
+  gap: 28px;
+
+  @media ${device.tablet} {
+    flex-direction: column;
+    max-width: 560px;
+  };
+  @media ${device.mobile} {
+  };
+`;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  @media ${device.tablet} {
+    align-items: center;
+  };
 `;
 
 const HomeTextInfo = styled.div`
@@ -59,9 +75,4 @@ const CardLink = styled.a`
   color: var(--primary_1);
   padding-bottom: 2px;
   border-bottom: 1px solid var(--primary_1);
-`;
-
-const Cards = styled.div`
-  display: flex;
-  gap: 28px;
 `;

@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 import styled from 'styled-components';
-import { HeadingH2, ErrorText } from "../styles/main";
+import { HeadingH2, ErrorText, device, Container } from "../styles/main";
 import { useForm, Controller } from "react-hook-form";
 import LoginTab from "../ui/LoginTab";
 import { useState } from "react";
@@ -33,17 +33,17 @@ export default function SignInPage() {
   const onSubmit = async (credentials: FormValues) => {
     setError(null);
     setIsActive(true);
-    
+
     try {
       const { data } = await api.auth.signIn(credentials);
-      
+
       dispatch(setAccessToken({
         token: data.token,
         username: data.user.username,
       }));
       router.push('/checkout');
-    } catch (e: any) {
-      setError(e.response?.data?.message || e.message);
+    } catch (error: any) {
+      setError(error.response?.data?.message || error.message);
     };
 
     setIsActive(false);
@@ -51,55 +51,63 @@ export default function SignInPage() {
 
   return (
     <Layout title="Sign in">
-      <Wrapper>
-        <LoginTab currentTab={2} />
-        <HeadingH2>Log in</HeadingH2>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          {error && <ErrorText>{error}</ErrorText>}
+      <Container>
+        <Wrapper>
+          <LoginTab currentTab={2} />
+          <HeadingH2>Log in</HeadingH2>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            {error && <ErrorText>{error}</ErrorText>}
 
-          <Controller
-            render={({ field: { onChange, onBlur }, fieldState }) => (
-              <Input
-                name="email"
-                placeholder="Email"
-                onChange={onChange}
-                onBlur={onBlur}
-                errorMessage={errors}
-                fieldState={fieldState}
-              />
-            )}
-            name="email"
-            control={control}
-          />
+            <Controller
+              render={({ field: { onChange, onBlur }, fieldState }) => (
+                <Input
+                  name="email"
+                  placeholder="Email"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  errorMessage={errors}
+                  fieldState={fieldState}
+                />
+              )}
+              name="email"
+              control={control}
+            />
 
-          <Controller
-            render={({ field: { onChange, onBlur }, fieldState }) => (
-              <Input
-                name="password"
-                placeholder="Password"
-                onChange={onChange}
-                onBlur={onBlur}
-                errorMessage={errors}
-                fieldState={fieldState}
-                type="password"
-              />
-            )}
-            name="password"
-            control={control}
-          />
+            <Controller
+              render={({ field: { onChange, onBlur }, fieldState }) => (
+                <Input
+                  name="password"
+                  placeholder="Password"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  errorMessage={errors}
+                  fieldState={fieldState}
+                  type="password"
+                />
+              )}
+              name="password"
+              control={control}
+            />
 
-          <Button
-            theme="primary"
-            isLoading={isActive}
-            disabled={isActive}
-            onClick={() => onSubmit}
-          >Log in</Button>
+            <NewButton
+              theme="primary"
+              isLoading={isActive}
+              disabled={isActive}
+              onClick={() => onSubmit}
+            >Log in</NewButton>
 
-        </Form>
-      </Wrapper>
+          </Form>
+        </Wrapper>
+      </Container>
     </Layout>
   )
 };
+
+const NewButton = styled(Button)`
+  @media ${device.mobile} {
+    width: 100%;
+  }
+`;
 
 const Form = styled.form`
   display: grid;
