@@ -17,7 +17,7 @@ interface ISecondaryCard {
 };
 
 const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActive, handleChecked, handleFilter, origin }) => {
-  const [_, copy] = useCopyToClipboard();
+  const { copyTextToClipboard } = useCopyToClipboard();
   const [isChecked, setIsChecked] = useState(false);
 
   const onChecked = (id: number) => {
@@ -36,7 +36,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActiv
       <FirstColWrapper>
         <Col>
           <CheckboxWrapper>
-            <Checkbox disabled={status !== 'HOLD'} onClick={() => (!isChecked ? (onChecked(id)) : (onFilter(id)))} />
+            <Checkbox disabled={status !== 'HOLD'} onClick={() => (isChecked ? (onFilter(id)) : (onChecked(id)))} />
           </CheckboxWrapper>
         </Col>
       </FirstColWrapper>
@@ -46,7 +46,7 @@ const SecondaryCard: React.FC<ISecondaryCard> = ({ id, status, code, handleActiv
           <CardText>License code</CardText>
           <ButtonWrapper>
             <LicenseCodeInput defaultValue={code} />
-            <LicenseCodeButton onClick={() => copy(code)} />
+            <LicenseCodeButton onClick={() => copyTextToClipboard(code)} />
           </ButtonWrapper>
         </Col>
       </LicenseCodeWrapper>

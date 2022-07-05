@@ -9,7 +9,7 @@ interface IPrimaryCard {
   isActive: boolean;
   currentPeriodEnd: string;
   product: IProducts;
-  handleView: () => {};
+  handleView: () => void;
 };
 
 const PrimaryCard: React.FC<IPrimaryCard> = ({ status, product, currentPeriodEnd, handleView, isActive }) => {

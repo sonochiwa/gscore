@@ -210,9 +210,7 @@ const NewButton = styled(Button)`
   min-width: 152px;
   margin-top: 0;
   margin-left: 24px;
-  &:hover {
-    background-color: inherit;
-  }
+  
   &:focus {
     outline: none;
   }
@@ -222,7 +220,6 @@ const NewButton = styled(Button)`
       background-color: var(--primary_1);
     }
   }
-      
   @media ${device.tablet} {
     min-width: 30px;
     margin-left: 14px;
@@ -233,6 +230,9 @@ const NewButton = styled(Button)`
     height: 18px;
     padding: 0;
     color: var(--primary_1);
+    :hover {
+      background-color: inherit;
+    }
   }
 `;
 

@@ -7,7 +7,7 @@ import { InputTheme } from "./util/theme";
 type Theme = "success" | "error" | "default";
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
-  errorMessage?: object;
+  errorMessage?: Record<string, any>;
   name: string;
   fieldState: { isTouched: boolean, invalid: boolean, isDirty: boolean; };
 };
@@ -19,7 +19,7 @@ const Input: React.FC<IInput> = ({ errorMessage, fieldState, name, children, ...
     <div>
       <Root
         type="text"
-        $theme={isTouched && isDirty ? (!invalid ? "success" : "error") : "default"}
+        $theme={isTouched && isDirty ? (invalid ? "error" : "success") : "default"}
         {...props}
       />
       <ErrorMessage
