@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Container, HeadingH2, Typography } from "../styles/main";
 import api from "../services";
 import { device } from "../styles/main";
+import { IProducts } from "../store/types";
 
 export async function getServerSideProps() {
   const { data } = await api.auth.products();
@@ -17,8 +18,8 @@ export async function getServerSideProps() {
 };
 
 interface IHomePage {
-  products: [];
-}
+  products: IProducts[];
+};
 
 export default function HomePage({ products }: IHomePage) {
 
