@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "./../services";
 
 interface FormValues {
+  token: string;
   username: string;
   email: string;
   password: string;
@@ -39,7 +40,8 @@ export default function SignUpPage() {
       await api.auth.signUp({
         username: data.username,
         email: data.email,
-        password: data.password
+        password: data.password,
+        token: data.token,
       })
         .then((response) => {
           dispatch(setAccessToken({

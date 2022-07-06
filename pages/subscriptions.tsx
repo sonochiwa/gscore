@@ -9,13 +9,16 @@ import api from "../services";
 import { useEffect, useState } from "react";
 import SecondaryCard from "../ui/SecondaryCard";
 import { ISubscribe } from "../store/types";
+import { IActivateCode, IProductSelf } from "../services/types";
+import { AxiosResponse } from "axios";
+import { IPrimaryCard } from "../ui/PrimaryCard/primary-card";
 
 const SubscriptionsPage: React.FC = () => {
   const [position, setPosition] = useState(0);
   const [currentCard, setCurrentCard] = useState(1);
-  const [subscriptionList, setSubscriptionList] = useState<Array<any>>([]);
+  const [subscriptionList, setSubscriptionList] = useState<Array<IProductSelf>>([]);
   const [selectedProduct, setSelectedProduct] = useState(0);
-  const [checked, setChecked] = useState<any>([]);
+  const [checked, setChecked] = useState<Array<number>>([]);
   const productId = subscriptionList[selectedProduct]?.productId;
   const subscribeId = subscriptionList[selectedProduct]?.id;
   const router = useRouter();
@@ -23,10 +26,10 @@ const SubscriptionsPage: React.FC = () => {
   const handleConfirm = async () => {
     await api.auth.codeManage({
       codesIds: checked,
-      subscribeId: subscribeId
+      subscribeId: subscribeId,
     });
     setChecked([]);
-    const { data } = await api.auth.productself();
+    const { data } = await api.auth.productSelf();
     setSubscriptionList(data);
   };
 
@@ -35,7 +38,7 @@ const SubscriptionsPage: React.FC = () => {
       productId: productId - 1,
       subscribeId: subscribeId
     });
-    const { data } = await api.auth.productself();
+    const { data } = await api.auth.productSelf();
     setSubscriptionList(data);
   };
 
@@ -44,13 +47,13 @@ const SubscriptionsPage: React.FC = () => {
       productId: productId + 1,
       subscribeId: subscribeId
     });
-    const { data } = await api.auth.productself();
+    const { data } = await api.auth.productSelf();
     setSubscriptionList(data);
   };
 
   const getSubscriptionList = async () => {
     try {
-      const { data } = await api.auth.productself();
+      const { data } = await api.auth.productSelf();
       setSubscriptionList(data);
       setSelectedProduct(0);
     } catch (error) {
@@ -77,11 +80,11 @@ const SubscriptionsPage: React.FC = () => {
   };
 
   const handleActive = async (code: string) => {
-    const { data } = await api.auth.activateCode(code);
-    setSubscriptionList(subscriptionList.map(subscription => ({
+    const { data } = await api.auth.activateCode({ code, id: 0, status: "", origin: "" });
+    setSubscriptionList(subscriptionList.map((subscription: IProductSelf) => ({
       ...subscription,
       codes: subscription.codes.map(
-        (codeData: any) => codeData.code === code ? data : codeData
+        (codeData: IActivateCode) => codeData.code === code ? data : codeData
       )
     })))
   };
@@ -91,7 +94,7 @@ const SubscriptionsPage: React.FC = () => {
   };
 
   const handleFilter = async (id: number) => {
-    const filtered = checked.filter((item: any) => item !== id);
+    const filtered = checked.filter((item: number) => item !== id);
     setChecked(filtered);
   };
 
@@ -112,7 +115,7 @@ const SubscriptionsPage: React.FC = () => {
             <CarouselWrapper>
               <Carousel $position={position}>
 
-                {subscriptionList.map((subscription: any, index: number) => (
+                {subscriptionList.map((subscription: IProductSelf, index: number) => (
                   <PrimaryCard
                     key={index}
                     isActive={index === selectedProduct}
@@ -242,12 +245,12 @@ const CarouselWrapper = styled.div`
   height: 327px;
   overflow-x: hidden;
   @media ${device.tablet} {
-    height: 321px;
+    height: 341px;
     overflow-x: scroll;
     margin-bottom: 10px;
   }
   @media ${device.mobile} {
-    height: 304px;
+    height: 324px;
     margin-bottom: 5px;
   }
 `;

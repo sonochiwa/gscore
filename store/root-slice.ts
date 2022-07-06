@@ -12,7 +12,6 @@ const rootSlice = createSlice({
     },
 
     logOut(state) {
-      // state = initialState;
       state.token = undefined;
     },
 

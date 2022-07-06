@@ -5,6 +5,7 @@ import Button from "../Button";
 import { StatusTheme } from "./util/theme";
 import { useState } from "react";
 import { device } from "../../styles/main";
+import { IActivateCode } from "../../services/types";
 
 interface ISecondaryCard {
   id: number;

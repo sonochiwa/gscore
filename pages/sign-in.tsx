@@ -12,10 +12,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import { IUser } from "../services/types";
 
 interface FormValues {
   email: string;
   password: string;
+  token: string;
+  user: IUser;
 };
 
 const schema = yup.object().shape({

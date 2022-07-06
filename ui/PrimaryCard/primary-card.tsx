@@ -4,7 +4,7 @@ import dateFormat from "dateformat";
 import { IProducts } from "../../store/types";
 import { device } from "../../styles/main";
 
-interface IPrimaryCard {
+export interface IPrimaryCard {
   status: string;
   isActive: boolean;
   currentPeriodEnd: string;
@@ -21,8 +21,8 @@ const PrimaryCard: React.FC<IPrimaryCard> = ({ status, product, currentPeriodEnd
       </Row>
       <Hr />
       <Row>
-        <LicenseInfo>{product.name} license</LicenseInfo>
-        <LicenseInfo>${product.prices[0]?.price}</LicenseInfo>
+        <LicenseInfo>{product?.name} license</LicenseInfo>
+        <LicenseInfo>${product?.prices[0]?.price}</LicenseInfo>
       </Row>
       <DateInfo>valid until {dateFormat(Number(currentPeriodEnd) * 1000, "d.mm.yyyy")}</DateInfo>
 

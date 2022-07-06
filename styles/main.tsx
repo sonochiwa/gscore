@@ -75,7 +75,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html, body, #__next {
-    /* height: 100%; */
     overflow-x: hidden;
   }
 
@@ -124,22 +123,17 @@ export const FilledCheckMark = styled.div`
   background-image: url("/icons/FilledCheckMark.svg");
 `;
 
-/* container width 1268px */
 export const Container = styled.div`
   width: 100%;
   max-width: 1268px;
   margin: 0 auto;
   padding: 0 15px;
-  /* background-color: red; */
 
   @media ${device.tablet} {
-    /* background-color: green; */
     max-width: 740px;
   }
 
   @media ${device.mobile} {
-    /* background-color: brown; */
-    /* min-width: 375px; */
     max-width: 100%;
   }
 `;
